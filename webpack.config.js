@@ -1,4 +1,6 @@
-module.exports = {
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = (env={}, argv={}) => ({
     module: {
         rules: [
             {
@@ -6,5 +8,10 @@ module.exports = {
                 use: "babel-loader"
             }
         ]
-    }
-}
+    },
+    plugins: [
+        argv.mode === "development" ? new HtmlWebpackPlugin : null
+    ].filter(
+        plugin => !!plugin
+    )
+})
