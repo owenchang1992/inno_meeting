@@ -13,5 +13,6 @@ module.exports = (env={}, argv={}) => ({
         argv.mode === "development" ? new HtmlWebpackPlugin : null
     ].filter(
         plugin => !!plugin
-    )
+    ),
+    devtool: "source-map"
 })
