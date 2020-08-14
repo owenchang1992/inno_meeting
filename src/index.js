@@ -1,3 +1,7 @@
-import { hello } from "./hello"
+import flower from "./assets/flower.jpeg"
 
-hello("OLX Dev!")
+document.body.innerHTML = '<div id="myMemes"></div>';
+document.getElementById('myMemes').innerHTML = `
+    <h1>And his name is...</h1>
+    <img src="${flower}"/>
+`

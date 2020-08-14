@@ -6,6 +6,10 @@ module.exports = (env={}, argv={}) => ({
             {
                 test: /\.js$/,
                 use: "babel-loader"
+            },
+            {
+                test: /\.(gif|png|jpe?g|svg)$/i,
+                use: "file-loader"
             }
         ]
     },
