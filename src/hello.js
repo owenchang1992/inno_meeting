@@ -1,1 +1,1 @@
-export const hello = subject = console.log(`Hello ${subject}!`)
+export const hello = subject => console.log(`Hello ${subject}!`)
