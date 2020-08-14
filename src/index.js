@@ -1,3 +1,3 @@
-const hello = subject = console.log(`Hello ${subject}!`)
+import { hello } from "./hello"
 
 hello("OLX Dev!")
