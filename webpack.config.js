@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env={}, argv={}) => ({
     module: {
-        rules: [ require('./module.rules')(env, argv) ]
+        rules: require('./module.rules')(env, argv)
     },
     plugins: [
         argv.mode === 'development' ? new HtmlWebpackPlugin : null,
