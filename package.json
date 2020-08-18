@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode=production",
     "start:dev": "webpack-dev-server --mode=development",
-    "analyse": "npm run build --env.analyse"
+    "analyse": "webpack --mode=production --env.analyse=true"
   },
   "repository": {
     "type": "git",
