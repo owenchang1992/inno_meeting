@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env={}, argv={}) => ({
     module: {
@@ -22,11 +23,34 @@ module.exports = (env={}, argv={}) => ({
             {
                 test: /\.(ogg|mp3|wav|mpe?g)/i,
                 use: 'file-loader'
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    argv.mode === "production"
+                        ? MiniCssExtractPlugin.loader
+                        : 'style-loader', 
+                    {
+                        loader: 'css-loader', options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'sass-loader', options: {
+                            sourceMap: true
+                        }
+                    } 
+                ]
             }
         ]
     },
     plugins: [
-        argv.mode === 'development' ? new HtmlWebpackPlugin : null
+        argv.mode === 'development' ? new HtmlWebpackPlugin : null,
+        argv.mode === "production"
+            ? new MiniCssExtractPlugin({
+                filename: "[name].css",
+                chunkFilename: "[id].css"
+            }) : null
     ].filter(
         plugin => !!plugin
     ),
