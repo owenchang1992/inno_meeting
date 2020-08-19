@@ -20,5 +20,8 @@ module.exports = (env={}, argv={}) => ({
             return plugin !== null
         }
     ),
+    resolve: {
+        extensions: [".wasm", ".mjs", ".js", ".json", ".jsx"]
+    },
     devtool: 'source-map'
 })
