@@ -4,7 +4,7 @@ module.exports = (env, argv) => [
     {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: ["babel-loader", "eslint-loader"],
         query: {
             presets: ['@babel/preset-env', '@babel/react'],
         },
