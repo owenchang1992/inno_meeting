@@ -9,7 +9,9 @@ module.exports = (env={}, argv={}) => ({
     },
     plugins: [
         env.analyse ? new BundleAnalyzerPlugin() : null,  
-        new HtmlWebpackPlugin,
+        new HtmlWebpackPlugin({
+            template: './index.html',
+          }),
         argv.mode === "production"
             ? new MiniCssExtractPlugin({
                 filename: "[name].css",
