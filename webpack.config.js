@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const { DefinePlugin } = require('webpack')
 
 module.exports = (env={}, argv={}) => ({
     module: {
@@ -8,12 +9,17 @@ module.exports = (env={}, argv={}) => ({
     },
     plugins: [
         env.analyse ? new BundleAnalyzerPlugin() : null,  
-        argv.mode === 'development' ? new HtmlWebpackPlugin : null,
+        new HtmlWebpackPlugin,
         argv.mode === "production"
             ? new MiniCssExtractPlugin({
                 filename: "[name].css",
                 chunkFilename: "[id].css"
-            }) : null  
+            }) : null,
+        new  DefinePlugin({
+            "process.env": {
+                NODE_ENV: JSON.stringify(argv.mode)
+            }    
+        })      
     ].filter(
         plugin => {
             console.log(plugin)
