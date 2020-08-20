@@ -10,7 +10,7 @@ module.exports = (env={}, argv={}) => ({
     plugins: [
         env.analyse ? new BundleAnalyzerPlugin() : null,  
         new HtmlWebpackPlugin({
-            template: './index.html',
+            template: './src/index.html',
           }),
         argv.mode === "production"
             ? new MiniCssExtractPlugin({
