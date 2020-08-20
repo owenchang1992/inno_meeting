@@ -1,1 +1,0 @@
-export default () => "I'm totally useless! Deal with it!"
