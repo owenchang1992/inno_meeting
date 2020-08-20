@@ -4,10 +4,7 @@ module.exports = (env, argv) => [
     {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: ["babel-loader", "eslint-loader"],
-        query: {
-            presets: ['@babel/preset-env', '@babel/react'],
-        },
+        use: ["babel-loader", "eslint-loader"]
     },
     {
         test: /\.(gif|png|jpe?g|svg)$/i,
