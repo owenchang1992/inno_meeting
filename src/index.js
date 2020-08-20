@@ -7,9 +7,15 @@ document.getElementById('myMemes').innerHTML = `
     <img src="${flower}"/>
 `
 
-import('./module-1').then(mod => {
-    const nothing = mod.default();
-    const nothingToo = mod.useless();
+const outputs = [1,2].map(modNum => 
+    import(`./module-${modNum}`).then(mod => mod.default())
+)
 
-    console.log(`${nothing} and ${nothingToo}`)
-})
+Promise.all(outputs).then(outs => console.log(outs.join(" and ")))
+
+// import('./module-1').then(mod => {
+//     const nothing = mod.default();
+//     const nothingToo = mod.useless();
+
+//     console.log(`${nothing} and ${nothingToo}`)
+// })
