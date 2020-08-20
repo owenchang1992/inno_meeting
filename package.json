@@ -19,11 +19,15 @@
     "url": "https://github.com/owenchang1992/media_viewer/issues"
   },
   "homepage": "https://github.com/owenchang1992/media_viewer#readme",
-  "dependencies": {},
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.11.1",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^4.2.1",
     "eslint": "^7.2.0",
@@ -38,8 +42,6 @@
     "image-webpack-loader": "^6.0.0",
     "mini-css-extract-plugin": "^0.10.0",
     "node-sass": "^4.14.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "sass-loader": "^9.0.3",
     "style-loader": "^1.2.1",
     "webpack": "^4.44.1",
