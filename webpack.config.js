@@ -31,5 +31,16 @@ module.exports = (env={}, argv={}) => ({
     resolve: {
         extensions: [".wasm", ".mjs", ".js", ".json", ".jsx"]
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
+    optimization: {
+        splitChunks: {
+        cacheGroups: {
+            commons: {
+                test: /[\\/]node_modules[\\/]/,
+                name: 'vendors',
+                chunks: 'all'
+            }
+        }
+        }
+    },
 })
