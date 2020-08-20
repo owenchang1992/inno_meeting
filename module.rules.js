@@ -3,7 +3,11 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 module.exports = (env, argv) => [
     {
         test: /\.jsx?$/,
-        use: 'babel-loader'
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+            presets: ['@babel/preset-env', '@babel/react'],
+        },
     },
     {
         test: /\.(gif|png|jpe?g|svg)$/i,
