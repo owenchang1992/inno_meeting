@@ -34,13 +34,13 @@ module.exports = (env={}, argv={}) => ({
     devtool: 'source-map',
     optimization: {
         splitChunks: {
-        cacheGroups: {
-            commons: {
-                test: /[\\/]node_modules[\\/]/,
-                name: 'vendors',
-                chunks: 'all'
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all'
+                }
             }
-        }
         }
     },
 })
