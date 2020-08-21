@@ -8,7 +8,7 @@ module.exports = (env={}, argv={}) => ({
     target: 'web',
     entry: { app: './renderer/index.js'},
     output: {
-        path: path.resolve('./renderer/build'),
+        path: path.resolve('./build'),
         filename: '[name].js'
     },
     module: {
