@@ -1,9 +1,10 @@
 {
   "name": "media_viewer",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/main.js",
   "scripts": {
+    "start": "electron .",
     "build": "webpack --mode=production",
     "start:dev": "webpack-dev-server --mode=development",
     "analyse": "webpack --mode=production --env.analyse=true"
@@ -31,6 +32,7 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^4.2.1",
+    "electron": "^9.2.1",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-loader": "^4.0.2",
