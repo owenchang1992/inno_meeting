@@ -7,7 +7,8 @@
     "start": "electron .",
     "build": "webpack --config ./webpack.renderer.config.js --mode=production",
     "start:dev": "webpack-dev-server --mode=development",
-    "analyse": "webpack --mode=production --env.analyse=true"
+    "analyse": "webpack --mode=production --env.analyse=true",
+    "lint": "eslint ./renderer"
   },
   "repository": {
     "type": "git",
