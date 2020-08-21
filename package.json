@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "webpack --mode=production",
+    "build": "webpack --config ./webpack.renderer.config.js --mode=production",
     "start:dev": "webpack-dev-server --mode=development",
     "analyse": "webpack --mode=production --env.analyse=true"
   },

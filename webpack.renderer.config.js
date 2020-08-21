@@ -2,15 +2,22 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const { DefinePlugin } = require('webpack')
+const path = require('path')
 
 module.exports = (env={}, argv={}) => ({
+    target: 'web',
+    entry: { app: './renderer/index.js'},
+    output: {
+        path: path.resolve('./renderer/build'),
+        filename: '[name].js'
+    },
     module: {
         rules: require('./module.rules')(env, argv)
     },
     plugins: [
         env.analyse ? new BundleAnalyzerPlugin() : null,  
         new HtmlWebpackPlugin({
-            template: './src/index.html',
+            template: './renderer/index.html',
           }),
         argv.mode === "production"
             ? new MiniCssExtractPlugin({
@@ -29,6 +36,9 @@ module.exports = (env={}, argv={}) => ({
         }
     ),
     resolve: {
+        modules: [
+            path.resolve('./node_modules')
+        ],
         extensions: [".wasm", ".mjs", ".js", ".json", ".jsx"]
     },
     devtool: 'source-map',
