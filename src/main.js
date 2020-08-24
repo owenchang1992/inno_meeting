@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron')
 
 const path = require('path')
 const URL = require('url');
+const isDev = require('electron-is-dev')
 
 function createWindow () {
   // Create the browser window.
@@ -12,11 +13,9 @@ function createWindow () {
       nodeIntegration: true
     }
 	})
-	
 
 	// Path to root directory.
-	// const basePath = isDev ? __dirname : app.getAppPath();
-	const basePath = app.getAppPath();
+	const basePath = isDev ?  path.resolve( __dirname, '../') : app.getAppPath();
 
 	// URL for index.html which will be our entry point.
 	const indexURL = URL.format({
@@ -26,7 +25,7 @@ function createWindow () {
 	});
 
   // and load the index.html of the app.
-  win.loadURL(indexURL)
+	win.loadURL(indexURL)
 
   // Open the DevTools.
   //win.webContents.openDevTools()
