@@ -9,6 +9,9 @@ module.exports = {
         path: path.resolve('./build'),
         filename: '[name].js'
     },
+    node: {
+        __dirname: true
+    },
     resolve: {
         modules: [
             path.resolve('./node_modules')

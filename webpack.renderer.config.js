@@ -31,7 +31,6 @@ module.exports = (env={}, argv={}) => ({
         })      
     ].filter(
         plugin => {
-            console.log(plugin)
             return plugin !== null
         }
     ),
@@ -52,5 +51,8 @@ module.exports = (env={}, argv={}) => ({
                 }
             }
         }
+    },
+    node: {
+        __dirname: true
     },
 })

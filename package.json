@@ -4,13 +4,17 @@
   "description": "",
   "main": "./build/main.js",
   "scripts": {
+    "start:test": "electron build/main.js",
     "start": "webpack --config ./webpack.main.config.js --mode=development && concurrently \"npm:watch\" \"electron ./build/main.js\"",
     "build:main": "webpack --config ./webpack.main.config.js --mode=production",
     "build:renderer": "webpack --config ./webpack.renderer.config.js --mode=production",
     "build": "npm run build:main && npm run build:renderer",
     "analyse": "webpack --config ./webpack.renderer.config.js --mode=production --env.analyse=true",
     "lint": "eslint ./renderer",
-    "watch": "webpack --config ./webpack.renderer.config.js --mode=development --watch --watch-poll"
+    "watch": "webpack --config ./webpack.renderer.config.js --mode=development --watch --watch-poll",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "clean": "rm -rf build dist"
   },
   "repository": {
     "type": "git",
@@ -22,7 +26,23 @@
   "bugs": {
     "url": "https://github.com/owenchang1992/media_viewer/issues"
   },
-  "homepage": "https://github.com/owenchang1992/media_viewer#readme",
+  "build": {
+    "appId": "media-manager",
+    "productName": "media-manager",
+    "files": [
+      "**/*",
+      "assets",
+      "!renderer",
+      "!src/main.js"
+    ],
+    "mac": {
+      "artifactName": "media-manager.${ext}",
+      "category": "public.app-category.developer-tools"
+    },
+    "directories":{
+      "buildResources": "assets"
+    }
+  },
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
