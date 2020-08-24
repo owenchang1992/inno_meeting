@@ -4,6 +4,15 @@ const path = require('path')
 const URL = require('url');
 const isDev = require('electron-is-dev')
 
+/**
+ * When in development mode:
+ * - Enable automatic reloads
+ */
+if (isDev) {
+	// require('electron-reload')(path.join(__dirname, 'build'));
+	require('electron-reload')(path.join(__dirname, '../build'));
+}
+
 function createWindow () {
   // Create the browser window.
   const win = new BrowserWindow({
