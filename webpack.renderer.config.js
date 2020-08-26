@@ -19,16 +19,11 @@ module.exports = (env={}, argv={}) => ({
         new HtmlWebpackPlugin({
             template: './renderer/index.html',
           }),
-        argv.mode === "production"
+        process.env.NODE_ENV === "production"
             ? new MiniCssExtractPlugin({
                 filename: "[name].css",
                 chunkFilename: "[id].css"
             }) : null,
-        new  DefinePlugin({
-            "process.env": {
-                NODE_ENV: JSON.stringify(argv.mode)
-            }    
-        })      
     ].filter(
         plugin => {
             return plugin !== null
