@@ -1,9 +1,8 @@
 import React from 'react';
-import { Route, HashRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import '../sources/css/photon.css';
 
-import Page1 from '../components/page1';
-import Page2 from '../components/page2';
+import Main from './main_pane';
 import SideBar from './sidebar';
 
 const App = () => (
@@ -12,13 +11,7 @@ const App = () => (
       <div className="window-content">
         <div className="pane-group">
           <SideBar />
-          <div className="pane">
-            <>
-              <Route path="/" exact component={() => <h1>Home Page asb</h1>} />
-              <Route path="/page1" component={Page1} />
-              <Route path="/page2" component={Page2} />
-            </>
-          </div>
+          <Main />
         </div>
       </div>
     </div>
