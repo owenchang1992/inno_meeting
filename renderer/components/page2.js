@@ -1,3 +1,4 @@
 import React from 'react';
+import { Button } from '@material-ui/core'
 
-export default () => <h1>Page 2</h1>;
+export default () => <Button>Page 2</Button>;
