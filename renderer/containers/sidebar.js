@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom';
 
 const SideBar = () => (
   <div className="pane-sm sidebar">
-    <ul>
+    <nav className="nav-group">
+      <h5 className="nav-group-title">Pages</h5>
       {[1, 2].map((number) => (
-        <li key={number}>
-          <Link to={`/page${number}`}>
+        <span className="nav-group-item">
+          <span className="icon icon-doc-text-inv" />
+          <Link to={`/page${number}`} style={{ textDecoration: 'none', color: '#333' }}>
             {`Page ${number}`}
           </Link>
-        </li>
+        </span>
       ))}
-    </ul>
+    </nav>
   </div>
 );
 
