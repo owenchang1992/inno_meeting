@@ -39,5 +39,30 @@ module.exports = (env, argv) => [
                 }
             } 
         ]
-    }
+    },
+    {
+        test: /\.css$/,
+        use: [
+            argv.mode === "production"
+                ? MiniCssExtractPlugin.loader
+                : 'style-loader', 
+            {
+                loader: 'css-loader', options: {
+                    sourceMap: true
+                }
+            }
+        ]
+    },
+    {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
+            }
+          }
+        ]
+      }
 ]
