@@ -4,7 +4,7 @@ import '../sources/css/photon.css';
 
 import Page1 from '../components/page1';
 import Page2 from '../components/page2';
-import SideBar from './sidebar_container';
+import SideBar from './sidebar';
 
 const App = () => (
   <Router>
