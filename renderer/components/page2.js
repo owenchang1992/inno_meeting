@@ -1,21 +1,26 @@
 import React, { useEffect } from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
-// import Grid from '@material-ui/core/Grid';
+import styled from 'styled-components';
 
-// const useStyles = makeStyles(() => ({
-//   root: {
-//     flexGrow: 1,
-//   },
-// }));
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+`;
+
+// Create a Wrapper component that'll render a <section> tag with some styles
+const Wrapper = styled.section`
+  padding: 4em;
+  background: papayawhip;
+`;
 
 export default function imageViewer() {
-//   const classes = useStyles();
-
-  useEffect(() => {
-    // console.log(prevProps);
-  });
+  useEffect(() => {});
 
   return (
-    <div>Page 2</div>
+    <Wrapper>
+      <Title>
+        Hello World!
+      </Title>
+    </Wrapper>
   );
 }
