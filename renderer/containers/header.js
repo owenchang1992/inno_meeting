@@ -2,9 +2,9 @@ import React from 'react';
 
 const Header = () => (
   <div className="toolbar toolbar-header">
-    <h1 className="title">Title</h1>
+    {/* <h1 className="title">Title</h1> */}
 
-    {/* <div className="toolbar-actions">
+    <div className="toolbar-actions">
       <div className="btn-group">
         <button type="button" className="btn btn-default">
           <span className="icon icon-home" />
@@ -12,7 +12,7 @@ const Header = () => (
         <button type="button" className="btn btn-default">
           <span className="icon icon-folder" />
         </button>
-        <button type="button" className="btn btn-default active">
+        {/* <button type="button" className="btn btn-default active">
           <span className="icon icon-cloud" />
         </button>
         <button type="button" className="btn btn-default">
@@ -20,9 +20,18 @@ const Header = () => (
         </button>
         <button type="button" className="btn btn-default">
           <span className="icon icon-shuffle" />
-        </button>
+        </button> */}
       </div>
-    </div> */}
+
+      {/* <button type="button" className="btn btn-default">
+        <span className="icon icon-home icon-text" />
+        Filters
+      </button> */}
+
+      <button type="button" className="btn btn-default btn-dropdown pull-right">
+        <span className="icon icon-cog" />
+      </button>
+    </div>
   </div>
 );
 
