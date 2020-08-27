@@ -8,11 +8,11 @@ import React, { useEffect } from 'react';
 //   },
 // }));
 
-export default function imageViewer({ prevProps }) {
+export default function imageViewer() {
   // const classes = useStyles();
 
   useEffect(() => {
-    console.log(prevProps);
+    // console.log(prevProps);
   });
 
   return (
