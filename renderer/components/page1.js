@@ -1,3 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+// import { makeStyles } from '@material-ui/core/styles';
+// import Grid from '@material-ui/core/Grid';
 
-export default () => <h1>Page 1</h1>;
+// const useStyles = makeStyles(() => ({
+//   root: {
+//     flexGrow: 1,
+//   },
+// }));
+
+export default function imageViewer({ prevProps }) {
+  // const classes = useStyles();
+
+  useEffect(() => {
+    console.log(prevProps);
+  });
+
+  return (
+    <div>Page 1</div>
+  );
+}
