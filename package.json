@@ -31,7 +31,7 @@
     "productName": "media-manager",
     "files": [
       "**/*",
-      "assets",
+      "public",
       "!node_module",
       "!renderer",
       "!src/main.js"
@@ -41,7 +41,7 @@
       "category": "public.app-category.developer-tools"
     },
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "public"
     }
   },
   "dependencies": {

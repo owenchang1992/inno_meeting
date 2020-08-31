@@ -17,7 +17,7 @@ module.exports = (env={}, argv={}) => ({
     plugins: [
         env.analyse ? new BundleAnalyzerPlugin() : null,  
         new HtmlWebpackPlugin({
-            template: './assets/index.html',
+            template: './public/index.html',
           }),
         process.env.NODE_ENV === "production"
             ? new MiniCssExtractPlugin({
