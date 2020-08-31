@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const SideBar = () => {
+const sideBar = ({ list }) => {
   const history = useHistory();
 
   const handleClick = (path) => {
@@ -12,16 +12,16 @@ const SideBar = () => {
     <div className="pane-sm sidebar">
       <nav className="nav-group">
         <h5 className="nav-group-title">Pages</h5>
-        {[1, 2].map((number) => (
+        {list.map((name) => (
           <span
             role="button"
-            onClick={() => handleClick(`Page${number}`)}
+            onClick={() => handleClick(name)}
             onKeyDown={() => { console.log('key down'); }}
             tabIndex={0}
             className="nav-group-item"
           >
             <span className="icon icon-doc-text-inv" />
-            {`Page ${number}`}
+            {name}
           </span>
         ))}
       </nav>
@@ -29,4 +29,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default sideBar;
