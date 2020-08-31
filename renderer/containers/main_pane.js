@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import ImageEditor from '../components/image_editor';
+import ImageEditor from '../components/image_editor/image_editor';
 import Page2 from '../components/page2';
 
 const Main = () => (
