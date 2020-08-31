@@ -1,43 +1,62 @@
-import React, { useEffect, useRef } from 'react';
-import Grid from '@material-ui/core/Grid';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function imageViewer() {
   const canvasRef = useRef(null);
+  const dpi = window.devicePixelRatio;
+  const [canvas]
 
-  const getImg = (src) => {
+  const loadImage = (src) => new Promise((resolve, reject) => {
     const img = new Image();
-    img.src = src;
+    const timeoutTimer = setTimeout(() => {
+      reject(new Error('loading image time out'));
+    }, 1000);
 
-    return img;
+    img.src = src;
+    img.onload = () => {
+      resolve(img);
+      clearTimeout(timeoutTimer);
+    };
+  });
+  
+  const drawImage = (path, canvas, ctx) => {
+    return loadImage(path)
+      .then((img) => {
+        const width = img.naturalWidth * dpi;
+        const height = img.naturalHeight * dpi;
+        canvas.setAttribute('width', width);
+        canvas.setAttribute('height', height);
+        ctx.drawImage(img, 0, 0, width, height);
+        return 
+      })
+      .catch((err) => console.log('loading image error'))
   };
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const dpi = window.devicePixelRatio;
-    const context = canvas.getContext('2d');
-    const elem = document.getElementById('canvas-container');
-    canvas.style.width = `${elem.offsetWidth} px`;
-    canvas.style.height = `${elem.offsetHeight} px`;
-    canvas.setAttribute('width', elem.offsetWidth * dpi);
-    canvas.setAttribute('height', elem.offsetHeight * dpi);
+  const drawＲectangle = (ctx) => {
+    ctx.beginPath();
+    ctx.strokeStyle = 'red';
+    ctx.rect(20, 20, 150, 100);
+    ctx.stroke();
+  };
 
-    const img = getImg('67B70A8E-C389-4660-BEC3-8C39E8082287_1_105_c.jpeg');
-    img.onload = () => {
-      const width = ((img.naturalWidth * elem.offsetWidth) / img.naturalWidth) * dpi;
-      const height = ((img.naturalHeight * elem.offsetHeight) / img.naturalHeight) * dpi;
-      context.drawImage(img, 0, 0, width, height);
-      context.beginPath();
-      context.strokeStyle = 'red';
-      context.rect(20, 20, 150, 100);
-      context.stroke();
-    };
-  }, []);
+  const reDraw = () => {
+
+  };
+
+  const loadConvas = () => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    return 
+  }
+
+  useEffect(() => {
+    drawＲectangle
+  });
+
+  drawImage('67B70A8E-C389-4660-BEC3-8C39E8082287_1_105_c.jpeg', )
 
   return (
     <div id="canvas-container" style={{ width: '100%', height: '100%' }}>
-      <Grid container justify="center">
-        <canvas ref={canvasRef} />
-      </Grid>
+      <canvas ref={canvasRef} style={{width: "100%"}}/>
     </div>
   );
 }
