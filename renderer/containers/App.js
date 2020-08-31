@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashRouter as Router } from 'react-router-dom';
-import '../sources/css/photon.css';
+import '../assets/css/photon.css';
 
 import Main from './main_pane';
 import Header from './header';
