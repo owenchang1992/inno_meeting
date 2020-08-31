@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export default function tabs({ pages }) {
   const history = useHistory();
+  const [focusTab, setFocusTab] = useState();
 
-  const handleClick = (path) => {
-    history.push(path);
+  const handleClick = (page) => {
+    history.push(page.routingPath);
+    setFocusTab(page.name);
   };
+
+  const getTab = (page) => (page.name === focusTab ? 'active' : '');
 
   return (
     <div className="tab-group">
       {
         pages.map((page) => (
           <div
-            className="tab-item"
+            className={`tab-item ${getTab(page)}`}
             role="button"
-            onClick={() => handleClick(page.routingPath)}
+            onClick={() => handleClick(page)}
             onKeyDown={() => { console.log('key down'); }}
             tabIndex={0}
           >
