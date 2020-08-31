@@ -6,10 +6,32 @@ import Main from './main_pane';
 import Header from './header';
 import SideBar from './sidebar';
 
-const testPageList = ['page1', 'page2'];
+/**
+ * name: the name for listing at sideBar
+ * type:
+ */
+const createNewPage = () => ({
+  name: 'page 1',
+  state: 'show',
+  type: 'image_editor',
+  routingPath: '/page1',
+  path: '../conponents/image_editor',
+  fileName: 'index.js',
+  props: {},
+});
+
+const page2 = {
+  name: 'page 2',
+  state: 'show',
+  type: 'image_editor',
+  routingPath: '/page2',
+  path: '../conponents/image_editor',
+  fileName: 'index.js',
+  props: {},
+};
 
 const App = () => {
-  const [pages] = useState(testPageList);
+  const [pages] = useState([createNewPage(), page2]);
 
   return (
     <Router>
@@ -18,7 +40,7 @@ const App = () => {
         <div className="window-content">
           <div className="pane-group">
             <SideBar list={pages} />
-            <Main />
+            <Main pages={pages} />
           </div>
         </div>
       </div>

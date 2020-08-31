@@ -12,16 +12,16 @@ const sideBar = ({ list }) => {
     <div className="pane-sm sidebar">
       <nav className="nav-group">
         <h5 className="nav-group-title">Pages</h5>
-        {list.map((name) => (
+        {list.map((page) => (
           <span
             role="button"
-            onClick={() => handleClick(name)}
+            onClick={() => handleClick(page.routingPath)}
             onKeyDown={() => { console.log('key down'); }}
             tabIndex={0}
             className="nav-group-item"
           >
             <span className="icon icon-doc-text-inv" />
-            {name}
+            {page.name}
           </span>
         ))}
       </nav>
