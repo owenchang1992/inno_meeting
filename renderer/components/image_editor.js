@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-export default function imageViewer({ imagePath }) {
+export default function imageEditor({ imagePath }) {
   const canvasRef = useRef(null);
   const dpi = window.devicePixelRatio;
 
