@@ -20,6 +20,10 @@ audio:not([controls]) {
   display: none;
 }
 
+*:focus {
+  outline: none;
+}
+
 a:active,
 a:hover {
   outline: 0;
