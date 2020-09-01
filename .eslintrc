@@ -9,7 +9,7 @@
     },
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "multiline": "never"
+        "object-curly-newline": ["waring", { "multiline": false, "minProperties": 5 }]
     }
 }
   

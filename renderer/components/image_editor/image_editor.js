@@ -1,24 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import loadImage from './editor_utilities';
 
 export default function imageEditor({ imagePath }) {
   const canvasRef = useRef(null);
+  const [canvasStyle, setCanvasStyle] = useState({ width: '100%' });
   const dpi = window.devicePixelRatio;
-
-  const loadImage = (src) => new Promise((resolve, reject) => {
-    const img = new Image();
-    const timeoutTimer = setTimeout(() => {
-      reject(new Error('loading image time out'));
-    }, 1000);
-
-    img.src = src;
-    img.onload = () => {
-      resolve(img);
-      clearTimeout(timeoutTimer);
-    };
-  });
 
   const drawImage = (path, canvas, ctx) => loadImage(path)
     .then((img) => {
+      if (img.naturalWidth < img.naturalHeight) setCanvasStyle({ height: '100%' });
+      else setCanvasStyle({ width: '100%' });
       const width = img.naturalWidth * dpi;
       const height = img.naturalHeight * dpi;
       canvas.setAttribute('width', width);
@@ -27,10 +18,14 @@ export default function imageEditor({ imagePath }) {
     })
     .catch(() => console.log('loading image error'));
 
-  const drawRectangle = (ctx) => {
+  const drawRectangle = (props, ctx) => {
+    const {
+      left, top, width, height, color,
+    } = props;
+
     ctx.beginPath();
-    ctx.strokeStyle = 'red';
-    ctx.rect(20, 20, 150, 100);
+    ctx.strokeStyle = color;
+    ctx.rect(left, top, width, height);
     ctx.stroke();
   };
 
@@ -39,12 +34,27 @@ export default function imageEditor({ imagePath }) {
     const context = canvas.getContext('2d');
 
     drawImage(imagePath, canvas, context)
-      .then(() => drawRectangle(context));
+      .then(() => drawRectangle({
+        left: 60,
+        top: 70,
+        width: 400,
+        height: 300,
+        color: 'red',
+      }, context));
   }, [imagePath]);
 
   return (
-    <div id="canvas-container" style={{ width: '100%', height: '100%' }}>
-      <canvas ref={canvasRef} style={{ width: '100%' }} />
+    <div
+      id="canvas-container"
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignContent: 'center',
+      }}
+    >
+      <canvas ref={canvasRef} style={canvasStyle} />
     </div>
   );
 }
