@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { loadImage, drawRectangle } from './editor_utilities';
+import { loadImage, drawRectangle } from './editor_utils';
 
 export default function imageEditor({ imagePath }) {
   const canvasRef = useRef(null);
