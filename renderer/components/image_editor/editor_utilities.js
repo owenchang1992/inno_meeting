@@ -1,4 +1,4 @@
-export default function loadImage(src) {
+export function loadImage(src) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     const timeoutTimer = setTimeout(() => {
@@ -11,4 +11,15 @@ export default function loadImage(src) {
       clearTimeout(timeoutTimer);
     };
   });
+}
+
+export function drawRectangle(props, ctx) {
+  const {
+    left, top, width, height, color,
+  } = props;
+
+  ctx.beginPath();
+  ctx.strokeStyle = color;
+  ctx.rect(left, top, width, height);
+  ctx.stroke();
 }

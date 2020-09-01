@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import loadImage from './editor_utilities';
+import { loadImage, drawRectangle } from './editor_utilities';
 
 export default function imageEditor({ imagePath }) {
   const canvasRef = useRef(null);
@@ -17,17 +17,6 @@ export default function imageEditor({ imagePath }) {
       ctx.drawImage(img, 0, 0, width, height);
     })
     .catch(() => console.log('loading image error'));
-
-  const drawRectangle = (props, ctx) => {
-    const {
-      left, top, width, height, color,
-    } = props;
-
-    ctx.beginPath();
-    ctx.strokeStyle = color;
-    ctx.rect(left, top, width, height);
-    ctx.stroke();
-  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
