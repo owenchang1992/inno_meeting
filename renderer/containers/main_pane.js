@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import ImageEditor from '../components/pages/image_editor/image_editor';
+// import ImageEditor from '../components/pages/image_editor/image_editor';
+import LoadPage from '../components/page_list';
 // import Page2 from '../components/page2';
 import Tabs from '../components/tabs';
 
@@ -14,11 +15,9 @@ const main = ({ pages }) => (
         pages.map((page) => (
           <Route
             path={page.routingPath}
-            component={() => (
-              <ImageEditor
-                imagePath="67B70A8E-C389-4660-BEC3-8C39E8082287_1_105_c.jpeg"
-              />
-            )}
+            component={() => LoadPage({
+              imagePath: '67B70A8E-C389-4660-BEC3-8C39E8082287_1_105_c.jpeg',
+            }, page)}
           />
         ))
       }
