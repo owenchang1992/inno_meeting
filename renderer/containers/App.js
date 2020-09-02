@@ -14,15 +14,12 @@ import SideBar from './sidebar';
 let counter = 1;
 
 const createNewPage = () => {
-  console.log(counter);
   counter += 1;
   return ({
     name: `Page ${counter}`,
     state: 'show',
     type: 'image_editor',
     routingPath: `/page${counter}`,
-    path: '../conponents/image_editor',
-    fileName: 'index.js',
     props: {
       imagePath: '67B70A8E-C389-4660-BEC3-8C39E8082287_1_105_c.jpeg',
     },
@@ -34,8 +31,6 @@ const page1 = {
   state: 'show',
   type: 'image_editor',
   routingPath: '/page1',
-  path: '../conponents/image_editor',
-  fileName: 'index.js',
   props: {
     imagePath: '67B70A8E-C389-4660-BEC3-8C39E8082287_1_105_c.jpeg',
   },
