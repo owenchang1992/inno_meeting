@@ -31,7 +31,10 @@ const page2 = {
 };
 
 const App = () => {
-  const [pages] = useState([createNewPage(), page2]);
+  const [pages, setPages] = useState([createNewPage()]);
+  const addPage = (page) => {
+    setPages(pages.concat([page]));
+  };
 
   return (
     <Router>
@@ -39,7 +42,7 @@ const App = () => {
         <Header />
         <div className="window-content">
           <div className="pane-group">
-            <SideBar list={pages} />
+            <SideBar addPage={() => addPage(page2)} />
             <Main pages={pages} />
           </div>
         </div>
