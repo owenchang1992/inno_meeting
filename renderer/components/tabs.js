@@ -8,7 +8,12 @@ export default function tabs({ pages, closePage }) {
   const handleClick = (e, page) => {
     if (e.target.className.indexOf('icon-cancel') !== -1) {
       closePage(page);
-      setFocusTab(focusTab);
+      if (page.name !== focusTab) {
+        setFocusTab(focusTab);
+      } else {
+        history.push('/');
+        setFocusTab(null);
+      }
     } else {
       history.push(page.routingPath);
       setFocusTab(page.name);
