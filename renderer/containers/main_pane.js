@@ -15,9 +15,7 @@ const main = ({ pages }) => (
         pages.map((page) => (
           <Route
             path={page.routingPath}
-            component={() => LoadPage({
-              imagePath: '67B70A8E-C389-4660-BEC3-8C39E8082287_1_105_c.jpeg',
-            }, page)}
+            component={() => LoadPage(page)}
           />
         ))
       }
