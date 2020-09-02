@@ -6,9 +6,9 @@ import LoadPage from '../components/page_list';
 // import Page2 from '../components/page2';
 import Tabs from '../components/tabs';
 
-const main = ({ pages }) => (
+const main = ({ pages, closePage }) => (
   <div className="pane">
-    <Tabs pages={pages} />
+    <Tabs pages={pages} closePage={closePage} />
     <>
       <Route path="/" exact component={() => <h1>Home Page asb</h1>} />
       {

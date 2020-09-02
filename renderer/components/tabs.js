@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-export default function tabs({ pages }) {
+export default function tabs({ pages, closePage }) {
   const history = useHistory();
   const [focusTab, setFocusTab] = useState();
 
-  const handleClick = (page) => {
-    history.push(page.routingPath);
-    setFocusTab(page.name);
+  const handleClick = (e, page) => {
+    if (e.target.className.indexOf('icon-cancel') !== -1) {
+      closePage(page);
+      setFocusTab(focusTab);
+    } else {
+      history.push(page.routingPath);
+      setFocusTab(page.name);
+    }
   };
 
   const getTab = (page) => (page.name === focusTab ? 'active' : '');
@@ -19,7 +24,7 @@ export default function tabs({ pages }) {
           <div
             className={`tab-item ${getTab(page)}`}
             role="button"
-            onClick={() => handleClick(page)}
+            onClick={(e) => handleClick(e, page)}
             onKeyDown={() => { console.log('key down'); }}
             tabIndex={0}
           >

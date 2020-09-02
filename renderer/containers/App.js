@@ -40,6 +40,14 @@ const App = () => {
     setPages(pages.concat([page]));
   };
 
+  const closePage = (removedPage) => {
+    const rmPageIndex = pages.findIndex(
+      (page) => removedPage.routingPath === page.routingPath,
+    );
+    pages.splice(rmPageIndex, 1);
+    setPages(pages.concat([]));
+  };
+
   return (
     <Router>
       <div className="window">
@@ -47,7 +55,7 @@ const App = () => {
         <div className="window-content">
           <div className="pane-group">
             <SideBar addPage={() => addPage(createNewPage())} />
-            <Main pages={pages} />
+            <Main pages={pages} closePage={closePage} />
           </div>
         </div>
       </div>
