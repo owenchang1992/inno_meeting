@@ -17,7 +17,6 @@ const createNewPage = () => {
   counter += 1;
   return ({
     name: `Page ${counter}`,
-    state: 'show',
     type: 'image_editor',
     routingPath: `/page${counter}`,
     props: {
@@ -28,7 +27,6 @@ const createNewPage = () => {
 
 const page1 = {
   name: 'page 1',
-  state: 'show',
   type: 'image_editor',
   routingPath: '/page1',
   props: {
