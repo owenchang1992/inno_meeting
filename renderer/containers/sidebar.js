@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const sideBar = ({ addPage }) => {
+  const [searchContents, setSearchContents] = useState('adc');
   const handleClick = () => {
     addPage();
   };
@@ -10,7 +11,16 @@ const sideBar = ({ addPage }) => {
       <nav className="nav-group">
         <h5 className="nav-group-title">Search Media</h5>
         <div className="list-group-header">
-          <input className="form-control" type="text" placeholder="path" />
+          <input
+            className="form-control"
+            value={searchContents}
+            onChange={(e) => setSearchContents(e.target.value)}
+            type="text"
+            placeholder="path"
+          />
+        </div>
+        <div className="list-group-header">
+          <button type="button" className="btn btn-default">Add</button>
         </div>
         <h5 className="nav-group-title">Pages</h5>
         <span
