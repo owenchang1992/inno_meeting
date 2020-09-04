@@ -14,17 +14,18 @@ if (isDev) {
 }
 
 function createWindow () {
+  	// Path to root directory.
+  const basePath = isDev ?  path.resolve( __dirname, '../') : app.getAppPath();
+  
   // Create the browser window.
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: false,
+      preload: path.resolve(basePath, './preload')
     }
 	})
-
-	// Path to root directory.
-	const basePath = isDev ?  path.resolve( __dirname, '../') : app.getAppPath();
 
 	// URL for index.html which will be our entry point.
 	const indexURL = URL.format({
