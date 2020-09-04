@@ -8,8 +8,9 @@ const sideBar = ({ addPage }) => {
   return (
     <div className="pane-sm sidebar">
       <nav className="nav-group">
+        <h5 className="nav-group-title">Search Media</h5>
         <div className="list-group-header">
-          <input className="form-control" type="text" placeholder="media path" />
+          <input className="form-control" type="text" placeholder="path" />
         </div>
         <h5 className="nav-group-title">Pages</h5>
         <span

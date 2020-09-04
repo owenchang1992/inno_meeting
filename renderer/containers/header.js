@@ -5,14 +5,14 @@ const Header = () => (
     {/* <h1 className="title">Title</h1> */}
 
     <div className="toolbar-actions">
-      <div className="btn-group">
+      {/* <div className="btn-group">
         <button type="button" className="btn btn-default">
           <span className="icon icon-home" />
         </button>
         <button type="button" className="btn btn-default">
           <span className="icon icon-folder" />
         </button>
-        {/* <button type="button" className="btn btn-default active">
+        <button type="button" className="btn btn-default active">
           <span className="icon icon-cloud" />
         </button>
         <button type="button" className="btn btn-default">
@@ -20,8 +20,8 @@ const Header = () => (
         </button>
         <button type="button" className="btn btn-default">
           <span className="icon icon-shuffle" />
-        </button> */}
-      </div>
+        </button>
+      </div> */}
 
       {/* <button type="button" className="btn btn-default">
         <span className="icon icon-home icon-text" />
