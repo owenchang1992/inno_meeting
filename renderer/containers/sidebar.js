@@ -1,9 +1,25 @@
 import React, { useState } from 'react';
 
+const createNewPage = (path) => {
+  const getName = (splitedPath) => {
+    const splitedName = splitedPath.split('/');
+    return splitedName[splitedName.length - 1];
+  };
+
+  return ({
+    name: getName(path),
+    type: 'image_editor',
+    routingPath: `/${getName(path)}`,
+    props: {
+      imagePath: path,
+    },
+  });
+};
+
 const sideBar = ({ addPage }) => {
-  const [searchContents, setSearchContents] = useState('adc');
+  const [searchContents, setSearchContents] = useState('');
   const handleClick = () => {
-    addPage();
+    addPage(createNewPage(searchContents));
   };
 
   return (
@@ -19,11 +35,11 @@ const sideBar = ({ addPage }) => {
             placeholder="path"
           />
         </div>
-        <div className="list-group-header">
-          <button type="button" className="btn btn-default">Add</button>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <button onClick={handleClick} type="button" className="btn btn-default">Add</button>
         </div>
-        <h5 className="nav-group-title">Pages</h5>
-        <span
+        {/* <h5 className="nav-group-title">Pages</h5> */}
+        {/* <span
           role="button"
           onClick={handleClick}
           onKeyDown={() => { console.log('key down'); }}
@@ -32,7 +48,7 @@ const sideBar = ({ addPage }) => {
         >
           <span className="icon icon-doc-text-inv" />
           Add
-        </span>
+        </span> */}
       </nav>
     </div>
   );
