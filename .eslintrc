@@ -8,8 +8,7 @@
         "commonjs": true
     },
     "rules": {
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "object-curly-newline": ["waring", { "multiline": false, "minProperties": 5 }]
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     }
 }
   
