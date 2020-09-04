@@ -42,8 +42,8 @@ function createWindow () {
   // Open the DevTools.
   // win.webContents.openDevTools()
 
-  ipcMain.on('toMain', () => {
-    console.log('>>>>>>>load_image')
+  ipcMain.on('toMain', (e, arg) => {
+    console.log('apb', arg)
   })
 }
 

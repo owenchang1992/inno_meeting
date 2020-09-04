@@ -5,7 +5,9 @@ export function loadImage(src) {
       reject(new Error('loading image time out'));
     }, 1000);
 
-    window.api.send('toMain', 'HI');
+    // window.api.send('toMain', 'HI');
+
+    console.log(window.api.getHomeDir());
     img.src = src;
     img.onload = () => {
       resolve(img);

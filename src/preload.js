@@ -3,6 +3,8 @@ const {
     ipcRenderer
 } = require("electron");
 
+const nodeTools = require('./utils')
+
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld(
@@ -20,6 +22,7 @@ contextBridge.exposeInMainWorld(
                 // Deliberately strip event as it includes `sender` 
                 ipcRenderer.on(channel, (event, ...args) => func(...args));
             }
-        }
+        },
+        getHomeDir: nodeTools.getHomeDir
     }
 );
