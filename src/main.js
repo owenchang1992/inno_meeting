@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 
 const path = require('path')
 const URL = require('url');
@@ -23,7 +23,9 @@ function createWindow () {
     height: 600,
     webPreferences: {
       nodeIntegration: false,
-      preload: path.resolve(basePath, './preload')
+      contextIsolation: true, // protect against prototype pollution
+      enableRemoteModule: false, // turn off remote
+      preload: path.resolve(basePath, './build/preload.js')
     }
 	})
 
@@ -38,7 +40,11 @@ function createWindow () {
 	win.loadURL(indexURL)
 
   // Open the DevTools.
-  //win.webContents.openDevTools()
+  // win.webContents.openDevTools()
+
+  ipcMain.on('toMain', () => {
+    console.log('>>>>>>>load_image')
+  })
 }
 
 // This method will be called when Electron has finished

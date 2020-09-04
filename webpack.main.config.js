@@ -4,6 +4,7 @@ module.exports = {
     target: 'electron-main',
     entry: { 
         main: './src/main.js',
+        preload: './src/preload.js'
     },
     output: {
         path: path.resolve('./build'),
