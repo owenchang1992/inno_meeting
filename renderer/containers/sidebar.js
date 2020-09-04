@@ -18,8 +18,11 @@ const createNewPage = (path) => {
 
 const sideBar = ({ addPage }) => {
   const [searchContents, setSearchContents] = useState('');
-  const handleClick = () => {
-    addPage(createNewPage(searchContents));
+
+  const keyUpHandler = (e) => {
+    if (e.keyCode === 13) {
+      addPage(createNewPage(searchContents));
+    }
   };
 
   return (
@@ -32,13 +35,14 @@ const sideBar = ({ addPage }) => {
             value={searchContents}
             onChange={(e) => setSearchContents(e.target.value)}
             type="text"
+            onKeyUp={(e) => keyUpHandler(e)}
             placeholder="path"
           />
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
           <button onClick={handleClick} type="button" className="btn btn-default">Add</button>
-        </div>
-        {/* <h5 className="nav-group-title">Pages</h5> */}
+        </div> */}
+        <h5 className="nav-group-title">Working Path</h5>
         {/* <span
           role="button"
           onClick={handleClick}
