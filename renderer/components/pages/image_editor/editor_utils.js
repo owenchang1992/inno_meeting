@@ -1,3 +1,6 @@
+const URL = require('url');
+const path = require('path');
+
 export function loadImage(src) {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -7,8 +10,12 @@ export function loadImage(src) {
 
     // window.api.send('toMain', 'HI');
 
-    console.log(window.api.getHomeDir());
-    img.src = src;
+    img.src = URL.format({
+      pathname: path.resolve(window.api.getHomeDir(), src),
+      protocol: 'file:',
+      slashes: true,
+    });
+
     img.onload = () => {
       resolve(img);
       clearTimeout(timeoutTimer);

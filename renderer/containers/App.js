@@ -30,7 +30,7 @@ const page1 = {
   type: 'image_editor',
   routingPath: '/page1',
   props: {
-    imagePath: '67B70A8E-C389-4660-BEC3-8C39E8082287_1_105_c.jpeg',
+    imagePath: 'dev/icon.png',
   },
 };
 
