@@ -39,9 +39,6 @@ const sideBar = ({ addPage }) => {
             placeholder="path"
           />
         </div>
-        {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <button onClick={handleClick} type="button" className="btn btn-default">Add</button>
-        </div> */}
         <h5 className="nav-group-title">Working Path</h5>
         {/* <span
           role="button"
