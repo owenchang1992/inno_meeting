@@ -8,7 +8,7 @@ export default function imageEditor({ imagePath }) {
 
   const drawImage = (path, canvas, ctx) => loadImage(path)
     .then((img) => {
-      if (img.naturalWidth < img.naturalHeight) setCanvasStyle({ height: '100%' });
+      if (img.naturalWidth < img.naturalHeight + 25) setCanvasStyle({ height: 'calc(100% - 25px)' });
       else setCanvasStyle({ width: '100%' });
       const width = img.naturalWidth * dpi;
       const height = img.naturalHeight * dpi;
