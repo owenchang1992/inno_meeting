@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, screen } = require('electron')
 
 const path = require('path')
 const URL = require('url');
@@ -9,18 +9,18 @@ const isDev = require('electron-is-dev')
  * - Enable automatic reloads
  */
 if (isDev) {
-	// require('electron-reload')(path.join(__dirname, 'build'));
 	require('electron-reload')(path.join(__dirname, '../build'));
 }
 
 function createWindow () {
+  const { width, height } = screen.getPrimaryDisplay().rotation
   	// Path to root directory.
   const basePath = isDev ?  path.resolve( __dirname, '../') : app.getAppPath();
   
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: width,
+    height: height,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true, // protect against prototype pollution
