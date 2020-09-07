@@ -9,43 +9,58 @@ const baseStyle = {
 export default function imageEditor({ imagePath }) {
   const canvasRef = useRef(null);
   const [canvasStyle, setCanvasStyle] = useState({ width: '100%' });
-  const [mouseDownPoint] = useState({ left: 23, top: 56 });
+  const [mouseDownPoint, setMouseDownPoint] = useState({ left: 23, top: 56 });
   const dpi = window.devicePixelRatio;
+  console.log('iamge page');
 
-  const drawImage = (path, canvas, ctx) => loadImage(path)
-    .then((img) => {
-      if (img.naturalWidth < img.naturalHeight + 25) {
-        setCanvasStyle({
-          ...baseStyle,
-          height: 'calc(100%)',
-        });
-      } else {
-        setCanvasStyle({
-          ...baseStyle,
-          width: '100%',
-        });
-      }
-      const width = img.naturalWidth * dpi;
-      const height = img.naturalHeight * dpi;
-      canvas.setAttribute('width', width);
-      canvas.setAttribute('height', height);
-      ctx.drawImage(img, 0, 0, width, height);
-    })
-    .catch(() => console.log('loading image error'));
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    const drawImage = (path, imgCanvas, ctx) => loadImage(path)
+      .then((img) => {
+        if (img.naturalWidth < img.naturalHeight + 25) {
+          setCanvasStyle({
+            ...baseStyle,
+            height: 'calc(100%)',
+          });
+        } else {
+          setCanvasStyle({
+            ...baseStyle,
+            width: '100%',
+          });
+        }
+        const width = img.naturalWidth * dpi;
+        const height = img.naturalHeight * dpi;
+        imgCanvas.setAttribute('width', width);
+        imgCanvas.setAttribute('height', height);
+        ctx.drawImage(img, 0, 0, width, height);
+      })
+      .catch(() => console.log('loading image error'));
+
+    drawImage(imagePath, canvas, context);
+  }, [imagePath]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
-    drawImage(imagePath, canvas, context)
-      .then(() => drawRectangle({
-        left: 60,
-        top: 70,
-        width: 400,
-        height: 300,
-        color: 'red',
-      }, context));
-  }, [imagePath]);
+    drawRectangle({
+      left: mouseDownPoint.left,
+      top: mouseDownPoint.top,
+      width: 400,
+      height: 300,
+      color: 'red',
+    }, canvas, context);
+  }, [mouseDownPoint]);
+
+  const onMouseDown = (e) => {
+    if (e.type === 'mousedown') {
+      setMouseDownPoint({
+        left: e.nativeEvent.offsetX,
+        top: e.nativeEvent.offsetY,
+      });
+    }
+  };
 
   return (
     <div
@@ -59,7 +74,11 @@ export default function imageEditor({ imagePath }) {
         padding: '5px',
       }}
     >
-      <canvas ref={canvasRef} style={canvasStyle} />
+      <canvas
+        ref={canvasRef}
+        style={canvasStyle}
+        onMouseDown={(e) => onMouseDown(e)}
+      />
     </div>
   );
 }
