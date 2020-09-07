@@ -8,6 +8,7 @@ const baseStyle = {
 
 export default function imageEditor({ imagePath }) {
   const canvasRef = useRef(null);
+  const [content, setContent] = useState(null);
   const [canvasStyle, setCanvasStyle] = useState({ width: '100%' });
   const [mouseDownPoint, setMouseDownPoint] = useState({ left: 23, top: 56 });
   const dpi = window.devicePixelRatio;
@@ -16,6 +17,7 @@ export default function imageEditor({ imagePath }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
+    // setContent(<div>Loading</div>);
     const drawImage = (path, imgCanvas, ctx) => loadImage(path)
       .then((img) => {
         if (img.naturalWidth < img.naturalHeight + 25) {
@@ -35,7 +37,10 @@ export default function imageEditor({ imagePath }) {
         imgCanvas.setAttribute('height', height);
         ctx.drawImage(img, 0, 0, width, height);
       })
-      .catch(() => console.log('loading image error'));
+      .catch(() => {
+        console.log('loading image error');
+        setContent(<div>Loading Media Error</div>);
+      });
 
     drawImage(imagePath, canvas, context);
   }, [imagePath]);
@@ -75,15 +80,19 @@ export default function imageEditor({ imagePath }) {
         height: 'calc(100% - 25px)',
         display: 'flex',
         justifyContent: 'center',
-        alignContent: 'center',
+        alignItems: 'center',
         padding: '5px',
       }}
     >
-      <canvas
-        ref={canvasRef}
-        style={canvasStyle}
-        onMouseDown={(e) => onMouseDown(e)}
-      />
+      {
+        content !== null ? content : (
+          <canvas
+            ref={canvasRef}
+            style={canvasStyle}
+            onMouseDown={(e) => onMouseDown(e)}
+          />
+        )
+      }
     </div>
   );
 }
