@@ -16,27 +16,29 @@ export default function imageEditor({ imagePath }) {
 
   useEffect(() => {
     const onMouseDown = (e) => {
-      if (e.type === 'mousedown') {
-        setMouseDownPoint({
-          left: e.nativeEvent.offsetX,
-          top: e.nativeEvent.offsetY,
-        });
-      }
-    };
-
-    const onMouseMove = (e) => {
-      if (e.type === 'mousemove') {
-        setCurrentMousePoint({
-          left: e.nativeEvent.offsetX,
-          top: e.nativeEvent.offsetY,
-        });
-      }
-    };
-
-    const onMouseUp = () => {
-      setMouseDownPoint({
+      setCurrentMousePoint({
         left: -1,
         top: -1,
+      });
+      setMouseDownPoint({
+        left: e.nativeEvent.offsetX,
+        top: e.nativeEvent.offsetY,
+      });
+    };
+
+    // const onMouseMove = (e) => {
+    //   if (e.type === 'mousemove') {
+    //     setCurrentMousePoint({
+    //       left: e.nativeEvent.offsetX,
+    //       top: e.nativeEvent.offsetY,
+    //     });
+    //   }
+    // };
+
+    const onMouseUp = (e) => {
+      setCurrentMousePoint({
+        left: e.nativeEvent.offsetX,
+        top: e.nativeEvent.offsetY,
       });
     };
 
@@ -55,7 +57,7 @@ export default function imageEditor({ imagePath }) {
                 : { ...baseStyle, width: '100%' }
             }
             onMouseDown={(e) => onMouseDown(e)}
-            onMouseMove={(e) => onMouseMove(e)}
+            // onMouseMove={(e) => onMouseMove(e)}
             onMouseUp={(e) => onMouseUp(e)}
           />,
         );
@@ -69,7 +71,7 @@ export default function imageEditor({ imagePath }) {
       });
 
     drawImage(imagePath);
-  }, []);
+  }, [imagePath]);
 
   useEffect(() => {
     if (content.type === 'canvas') {
@@ -81,7 +83,13 @@ export default function imageEditor({ imagePath }) {
         scaleY: canvas.height / context.canvas.offsetHeight,
       });
 
-      if (mouseDownPoint.left !== -1 && mouseDownPoint.top !== -1 && content !== null) {
+      if (
+        mouseDownPoint.left !== -1
+        && mouseDownPoint.top !== -1
+        && content !== null
+        && currentMousePoint.top !== -1
+        && currentMousePoint.left !== -1
+      ) {
         drawRectangle({
           left: mouseDownPoint.left * scale().scaleX,
           top: mouseDownPoint.top * scale().scaleY,
