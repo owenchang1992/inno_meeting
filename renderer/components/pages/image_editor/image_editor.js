@@ -10,6 +10,7 @@ export default function imageEditor({ imagePath }) {
   const canvasRef = useRef(null);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState({ left: -1, top: -1 });
+  const [currentMousePoint, setCurrentMousePoint] = useState({ left: -1, top: -1 });
   const dpi = window.devicePixelRatio;
   console.log('iamge page');
 
@@ -21,6 +22,22 @@ export default function imageEditor({ imagePath }) {
           top: e.nativeEvent.offsetY,
         });
       }
+    };
+
+    const onMouseMove = (e) => {
+      if (e.type === 'mousemove') {
+        setCurrentMousePoint({
+          left: e.nativeEvent.offsetX,
+          top: e.nativeEvent.offsetY,
+        });
+      }
+    };
+
+    const onMouseUp = () => {
+      setMouseDownPoint({
+        left: -1,
+        top: -1,
+      });
     };
 
     const drawImage = (path) => loadImage(path)
@@ -38,6 +55,8 @@ export default function imageEditor({ imagePath }) {
                 : { ...baseStyle, width: '100%' }
             }
             onMouseDown={(e) => onMouseDown(e)}
+            onMouseMove={(e) => onMouseMove(e)}
+            onMouseUp={(e) => onMouseUp(e)}
           />,
         );
         const canvas = canvasRef.current;
@@ -66,13 +85,13 @@ export default function imageEditor({ imagePath }) {
         drawRectangle({
           left: mouseDownPoint.left * scale().scaleX,
           top: mouseDownPoint.top * scale().scaleY,
-          width: 400,
-          height: 300,
+          width: (currentMousePoint.left - mouseDownPoint.left) * scale().scaleX,
+          height: (currentMousePoint.top - mouseDownPoint.top) * scale().scaleY,
           color: 'red',
         }, canvas, context);
       }
     }
-  }, [mouseDownPoint]);
+  }, [mouseDownPoint, currentMousePoint]);
 
   return (
     <div
