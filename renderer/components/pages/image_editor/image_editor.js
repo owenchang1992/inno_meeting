@@ -44,9 +44,14 @@ export default function imageEditor({ imagePath }) {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
+    const scale = () => ({
+      scaleX: canvas.width / context.canvas.offsetWidth,
+      scaleY: canvas.height / context.canvas.offsetHeight,
+    });
+
     drawRectangle({
-      left: (mouseDownPoint.left * canvas.width) / context.canvas.offsetWidth,
-      top: (mouseDownPoint.top * canvas.height) / context.canvas.offsetHeight,
+      left: mouseDownPoint.left * scale().scaleX,
+      top: mouseDownPoint.top * scale().scaleY,
       width: 400,
       height: 300,
       color: 'red',
