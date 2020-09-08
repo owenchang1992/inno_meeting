@@ -10,13 +10,14 @@ export default function imageEditor({ imagePath }) {
   const canvasRef = useRef(null);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState({ left: -1, top: -1 });
-  const [currentMousePoint, setCurrentMousePoint] = useState({ left: -1, top: -1 });
+  // const [currentMousePoint, setCurrentMousePoint] = useState({ left: -1, top: -1 });
+  const [mouseUpPoint, setMouseUpPoint] = useState({ left: -1, top: -1 });
   const dpi = window.devicePixelRatio;
   console.log('iamge page');
 
   useEffect(() => {
     const onMouseDown = (e) => {
-      setCurrentMousePoint({
+      setMouseUpPoint({
         left: -1,
         top: -1,
       });
@@ -36,7 +37,7 @@ export default function imageEditor({ imagePath }) {
     // };
 
     const onMouseUp = (e) => {
-      setCurrentMousePoint({
+      setMouseUpPoint({
         left: e.nativeEvent.offsetX,
         top: e.nativeEvent.offsetY,
       });
@@ -57,7 +58,6 @@ export default function imageEditor({ imagePath }) {
                 : { ...baseStyle, width: '100%' }
             }
             onMouseDown={(e) => onMouseDown(e)}
-            // onMouseMove={(e) => onMouseMove(e)}
             onMouseUp={(e) => onMouseUp(e)}
           />,
         );
@@ -71,7 +71,7 @@ export default function imageEditor({ imagePath }) {
       });
 
     drawImage(imagePath);
-  }, [imagePath]);
+  }, []);
 
   useEffect(() => {
     if (content.type === 'canvas') {
@@ -87,19 +87,19 @@ export default function imageEditor({ imagePath }) {
         mouseDownPoint.left !== -1
         && mouseDownPoint.top !== -1
         && content !== null
-        && currentMousePoint.top !== -1
-        && currentMousePoint.left !== -1
+        && mouseUpPoint.top !== -1
+        && mouseUpPoint.left !== -1
       ) {
         drawRectangle({
           left: mouseDownPoint.left * scale().scaleX,
           top: mouseDownPoint.top * scale().scaleY,
-          width: (currentMousePoint.left - mouseDownPoint.left) * scale().scaleX,
-          height: (currentMousePoint.top - mouseDownPoint.top) * scale().scaleY,
+          width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
+          height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
           color: 'red',
-        }, canvas, context);
+        }, context);
       }
     }
-  }, [mouseDownPoint, currentMousePoint]);
+  }, [mouseDownPoint, mouseUpPoint]);
 
   return (
     <div
