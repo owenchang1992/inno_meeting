@@ -23,7 +23,7 @@ export function loadImage(src) {
   });
 }
 
-export function drawRectangle(props, canvas, ctx) {
+export function drawRectangle(props, ctx) {
   const {
     left, top, width, height, color,
   } = props;
@@ -32,4 +32,13 @@ export function drawRectangle(props, canvas, ctx) {
   ctx.strokeStyle = color;
   ctx.rect(left, top, width, height);
   ctx.stroke();
+}
+
+export function fillRectangle(props, ctx) {
+  const {
+    left, top, width, height, color,
+  } = props;
+
+  ctx.fillStyle = color;
+  ctx.fillRect(left, top, width, height);
 }
