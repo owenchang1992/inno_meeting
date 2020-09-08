@@ -118,7 +118,7 @@ export default function imageEditor({ imagePath }) {
           mouseUpPoint.top !== -1
           && mouseUpPoint.left !== -1
         ) {
-          context.putImageData(history[0].snapshot, 0, 0);
+          context.putImageData(history[history.length - 1].snapshot, 0, 0);
           drawRectangle({
             left: mouseDownPoint.left * scale().scaleX,
             top: mouseDownPoint.top * scale().scaleY,
@@ -126,11 +126,15 @@ export default function imageEditor({ imagePath }) {
             height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
             color: 'red',
           }, context);
+          dispatch([
+            'draw-rectangle',
+            context.getImageData(0, 0, canvas.width, canvas.height),
+          ]);
         } else if (
           currentMousePoint.top !== -1
           && currentMousePoint.left !== -1
         ) {
-          context.putImageData(history[0].snapshot, 0, 0);
+          context.putImageData(history[history.length - 1].snapshot, 0, 0);
           drawRectangle({
             left: mouseDownPoint.left * scale().scaleX,
             top: mouseDownPoint.top * scale().scaleY,
@@ -146,10 +150,6 @@ export default function imageEditor({ imagePath }) {
             color: 'rgba(179, 179, 179, 0.3)',
           }, context);
         }
-        // dispatch([
-        //   'draw-rectangle',
-        //   JSON.stringify(context.getImageData(0, 0, canvas.width, canvas.height)),
-        // ]);
       }
     }
   }, [mouseDownPoint, mouseUpPoint, currentMousePoint]);
