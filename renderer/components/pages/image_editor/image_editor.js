@@ -12,17 +12,19 @@ const baseStyle = {
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
 };
 
-const historyReducer = function (state, [type, payload]) {
+const historyReducer = function (state, [type, payload, properties]) {
   switch (type) {
     case 'draw-image':
       return [...state, {
         action: type,
         snapshot: payload,
+        properties,
       }];
     case 'draw-rectangle':
       return [...state, {
         action: type,
         snapshot: payload,
+        properties,
       }];
     default:
       return state;
@@ -89,6 +91,7 @@ export default function imageEditor({ imagePath }) {
         dispatch([
           'draw-image',
           context.getImageData(0, 0, canvas.width, canvas.height),
+          { path: imagePath },
         ]);
       })
       .catch(() => {
@@ -119,17 +122,20 @@ export default function imageEditor({ imagePath }) {
           && mouseUpPoint.left !== -1
         ) {
           context.putImageData(history[history.length - 1].snapshot, 0, 0);
-          drawRectangle({
+          const properties = {
             left: mouseDownPoint.left * scale().scaleX,
             top: mouseDownPoint.top * scale().scaleY,
             width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
             height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
             color: 'red',
-          }, context);
+          };
+          drawRectangle(properties, context);
           dispatch([
             'draw-rectangle',
             context.getImageData(0, 0, canvas.width, canvas.height),
+            properties,
           ]);
+          console.log(history);
         } else if (
           currentMousePoint.top !== -1
           && currentMousePoint.left !== -1
