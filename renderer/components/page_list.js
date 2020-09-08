@@ -5,7 +5,7 @@ export default (page) => {
   switch (page.type) {
     case 'image_editor':
       // TODO: Check properties
-      return <ImageEditor imagePath={page.props.imagePath} />;
+      return <ImageEditor page={page} />;
     default:
       return null;
   }

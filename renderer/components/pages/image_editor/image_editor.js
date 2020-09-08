@@ -31,7 +31,7 @@ const historyReducer = function (state, [type, payload, properties]) {
   }
 };
 
-export default function imageEditor({ imagePath }) {
+export default function imageEditor({ page }) {
   const canvasRef = useRef(null);
   const [history, dispatch] = useReducer(historyReducer, []);
   const [content, setContent] = useState(<div>loading</div>);
@@ -39,7 +39,7 @@ export default function imageEditor({ imagePath }) {
   const [currentMousePoint, setCurrentMousePoint] = useState({ left: -1, top: -1 });
   const [mouseUpPoint, setMouseUpPoint] = useState({ left: -1, top: -1 });
   const dpi = window.devicePixelRatio;
-  console.log('iamge page');
+  console.log('image page');
 
   useEffect(() => {
     const onMouseDown = (e) => {
@@ -91,7 +91,7 @@ export default function imageEditor({ imagePath }) {
         dispatch([
           'draw-image',
           context.getImageData(0, 0, canvas.width, canvas.height),
-          { path: imagePath },
+          { path: page.props.imagePath },
         ]);
       })
       .catch(() => {
@@ -99,7 +99,7 @@ export default function imageEditor({ imagePath }) {
         setContent(<div>Loading Media Error</div>);
       });
 
-    drawImage(imagePath);
+    drawImage(page.props.imagePath);
   }, []);
 
   useEffect(() => {
