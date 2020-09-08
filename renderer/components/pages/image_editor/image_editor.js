@@ -54,7 +54,7 @@ export default function imageEditor({ imagePath }) {
             height={height}
             style={
               img.naturalWidth < img.naturalHeight + 25
-                ? { ...baseStyle, height: 'calc(100%)' }
+                ? { ...baseStyle, height: '100%' }
                 : { ...baseStyle, width: '100%' }
             }
             onMouseDown={(e) => onMouseDown(e)}
