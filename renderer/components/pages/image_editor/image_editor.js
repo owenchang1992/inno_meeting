@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useReducer,
+} from 'react';
+
 import { loadImage, drawRectangle } from './editor_utils';
 
 const baseStyle = {
@@ -6,8 +12,21 @@ const baseStyle = {
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
 };
 
+const historyReducer = function (state, [type, payload]) {
+  switch (type) {
+    case 'draw-image':
+      return [...state, {
+        action: type,
+        snapshot: payload,
+      }];
+    default:
+      return state;
+  }
+};
+
 export default function imageEditor({ imagePath }) {
   const canvasRef = useRef(null);
+  const [history, dispatch] = useReducer(historyReducer, []);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState({ left: -1, top: -1 });
   // const [currentMousePoint, setCurrentMousePoint] = useState({ left: -1, top: -1 });
@@ -64,6 +83,10 @@ export default function imageEditor({ imagePath }) {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
         context.drawImage(img, 0, 0, width, height);
+        dispatch([
+          'draw-image',
+          JSON.stringify(context.getImageData(0, 0, canvas.width, canvas.height)),
+        ]);
       })
       .catch(() => {
         console.log('loading image error');
@@ -99,6 +122,7 @@ export default function imageEditor({ imagePath }) {
         }, context);
       }
     }
+    console.log(history[0]);
   }, [mouseDownPoint, mouseUpPoint]);
 
   return (
