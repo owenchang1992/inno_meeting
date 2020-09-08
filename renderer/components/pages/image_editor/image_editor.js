@@ -5,7 +5,7 @@ import React, {
   useReducer,
 } from 'react';
 
-import { loadImage, drawRectangle } from './editor_utils';
+import { loadImage, drawRectangle, fillRectangle } from './editor_utils';
 
 const baseStyle = {
   borderRadius: '4px',
@@ -34,37 +34,35 @@ export default function imageEditor({ imagePath }) {
   const [history, dispatch] = useReducer(historyReducer, []);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState({ left: -1, top: -1 });
-  // const [currentMousePoint, setCurrentMousePoint] = useState({ left: -1, top: -1 });
+  const [currentMousePoint, setCurrentMousePoint] = useState({ left: -1, top: -1 });
   const [mouseUpPoint, setMouseUpPoint] = useState({ left: -1, top: -1 });
   const dpi = window.devicePixelRatio;
   console.log('iamge page');
 
   useEffect(() => {
     const onMouseDown = (e) => {
-      setMouseUpPoint({
-        left: -1,
-        top: -1,
-      });
+      setMouseUpPoint({ left: -1, top: -1 });
       setMouseDownPoint({
         left: e.nativeEvent.offsetX,
         top: e.nativeEvent.offsetY,
       });
+      const canvas = canvasRef.current;
+      canvas.onmousemove = (event) => {
+        setCurrentMousePoint({
+          left: event.offsetX,
+          top: event.offsetY,
+        });
+      };
     };
-
-    // const onMouseMove = (e) => {
-    //   if (e.type === 'mousemove') {
-    //     setCurrentMousePoint({
-    //       left: e.nativeEvent.offsetX,
-    //       top: e.nativeEvent.offsetY,
-    //     });
-    //   }
-    // };
 
     const onMouseUp = (e) => {
       setMouseUpPoint({
         left: e.nativeEvent.offsetX,
         top: e.nativeEvent.offsetY,
       });
+      const canvas = canvasRef.current;
+      canvas.onmousemove = null;
+      setCurrentMousePoint({ left: -1, top: -1 });
     };
 
     const drawImage = (path) => loadImage(path)
@@ -115,24 +113,46 @@ export default function imageEditor({ imagePath }) {
         mouseDownPoint.left !== -1
         && mouseDownPoint.top !== -1
         && content !== null
-        && mouseUpPoint.top !== -1
-        && mouseUpPoint.left !== -1
       ) {
-        context.putImageData(history[0].snapshot, 0, 0);
-        drawRectangle({
-          left: mouseDownPoint.left * scale().scaleX,
-          top: mouseDownPoint.top * scale().scaleY,
-          width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
-          height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
-          color: 'red',
-        }, context);
+        if (
+          mouseUpPoint.top !== -1
+          && mouseUpPoint.left !== -1
+        ) {
+          context.putImageData(history[0].snapshot, 0, 0);
+          drawRectangle({
+            left: mouseDownPoint.left * scale().scaleX,
+            top: mouseDownPoint.top * scale().scaleY,
+            width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
+            height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
+            color: 'red',
+          }, context);
+        } else if (
+          currentMousePoint.top !== -1
+          && currentMousePoint.left !== -1
+        ) {
+          context.putImageData(history[0].snapshot, 0, 0);
+          drawRectangle({
+            left: mouseDownPoint.left * scale().scaleX,
+            top: mouseDownPoint.top * scale().scaleY,
+            width: (currentMousePoint.left - mouseDownPoint.left) * scale().scaleX,
+            height: (currentMousePoint.top - mouseDownPoint.top) * scale().scaleY,
+            color: 'rgba(179, 179, 179, 1)',
+          }, context);
+          fillRectangle({
+            left: mouseDownPoint.left * scale().scaleX,
+            top: mouseDownPoint.top * scale().scaleY,
+            width: (currentMousePoint.left - mouseDownPoint.left) * scale().scaleX,
+            height: (currentMousePoint.top - mouseDownPoint.top) * scale().scaleY,
+            color: 'rgba(179, 179, 179, 0.3)',
+          }, context);
+        }
         // dispatch([
         //   'draw-rectangle',
         //   JSON.stringify(context.getImageData(0, 0, canvas.width, canvas.height)),
         // ]);
       }
     }
-  }, [mouseDownPoint, mouseUpPoint]);
+  }, [mouseDownPoint, mouseUpPoint, currentMousePoint]);
 
   return (
     <div
