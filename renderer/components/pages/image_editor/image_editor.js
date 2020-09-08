@@ -19,6 +19,11 @@ const historyReducer = function (state, [type, payload]) {
         action: type,
         snapshot: payload,
       }];
+    case 'draw-rectangle':
+      return [...state, {
+        action: type,
+        snapshot: payload,
+      }];
     default:
       return state;
   }
@@ -85,7 +90,7 @@ export default function imageEditor({ imagePath }) {
         context.drawImage(img, 0, 0, width, height);
         dispatch([
           'draw-image',
-          JSON.stringify(context.getImageData(0, 0, canvas.width, canvas.height)),
+          context.getImageData(0, 0, canvas.width, canvas.height),
         ]);
       })
       .catch(() => {
@@ -113,6 +118,7 @@ export default function imageEditor({ imagePath }) {
         && mouseUpPoint.top !== -1
         && mouseUpPoint.left !== -1
       ) {
+        context.putImageData(history[0].snapshot, 0, 0);
         drawRectangle({
           left: mouseDownPoint.left * scale().scaleX,
           top: mouseDownPoint.top * scale().scaleY,
@@ -120,9 +126,12 @@ export default function imageEditor({ imagePath }) {
           height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
           color: 'red',
         }, context);
+        // dispatch([
+        //   'draw-rectangle',
+        //   JSON.stringify(context.getImageData(0, 0, canvas.width, canvas.height)),
+        // ]);
       }
     }
-    console.log(history[0]);
   }, [mouseDownPoint, mouseUpPoint]);
 
   return (
