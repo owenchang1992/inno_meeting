@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import '../assets/css/photon.css';
 
@@ -19,20 +19,18 @@ const page1 = {
 };
 
 const App = () => {
-  const [pages, setPages] = useState([page1]);
-  const [newpages, dispatch] = useReducer(pageReducer, []);
+  const [newpages, dispatch] = useReducer(pageReducer, [page1]);
 
   const addPage = (page) => {
-    setPages(pages.concat([page]));
     dispatch(addNewPage(page));
   };
 
   const closePage = (removedPage) => {
-    const rmPageIndex = pages.findIndex(
-      (page) => removedPage.routingPath === page.routingPath,
-    );
-    pages.splice(rmPageIndex, 1);
-    setPages(pages.concat([]));
+    // const rmPageIndex = pages.findIndex(
+    //   (page) => removedPage.routingPath === page.routingPath,
+    // );
+    // pages.splice(rmPageIndex, 1);
+    console.log(removedPage);
   };
 
   return (
@@ -42,7 +40,7 @@ const App = () => {
         <div className="window-content">
           <div className="pane-group">
             <SideBar addPage={addPage} />
-            <Main pages={pages} newpages={newpages} closePage={closePage} />
+            <Main newpages={newpages} closePage={closePage} />
           </div>
         </div>
       </div>

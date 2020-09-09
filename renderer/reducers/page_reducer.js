@@ -1,7 +1,6 @@
 import { ADD_PAGE } from './constants';
 
 export const pageReducer = function (state, action) {
-  console.log(action);
   switch (action.type) {
     case ADD_PAGE:
       return [...state, action.payload];
