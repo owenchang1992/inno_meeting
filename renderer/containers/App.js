@@ -19,7 +19,7 @@ const page1 = {
 };
 
 const App = () => {
-  const [newpages, dispatch] = useReducer(pageReducer, [page1]);
+  const [pages, dispatch] = useReducer(pageReducer, [page1]);
 
   const addPage = (page) => {
     dispatch(addNewPage(page));
@@ -36,7 +36,7 @@ const App = () => {
         <div className="window-content">
           <div className="pane-group">
             <SideBar addPage={addPage} />
-            <Main newpages={newpages} closePage={onClosePage} />
+            <Main pages={pages} closePage={onClosePage} />
           </div>
         </div>
       </div>
