@@ -1,4 +1,4 @@
-import { ADD_PAGE, CLOSE_PAGE, UPDATE_PAGE_PROPERTIES } from './constants';
+import { ADD_PAGE, CLOSE_PAGE } from './constants';
 
 export const addNewPage = (page) => ({
   type: ADD_PAGE,
@@ -7,10 +7,5 @@ export const addNewPage = (page) => ({
 
 export const closePage = (page) => ({
   type: CLOSE_PAGE,
-  payload: page,
-});
-
-export const updatePageProperties = (page) => ({
-  type: UPDATE_PAGE_PROPERTIES,
   payload: page,
 });
