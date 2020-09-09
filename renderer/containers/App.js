@@ -3,7 +3,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import '../assets/css/photon.css';
 
 import { pageReducer } from '../reducers/page_reducer';
-import { addNewPage } from '../reducers/page_actions';
+import { addNewPage, closePage } from '../reducers/page_actions';
 
 import Main from './main_pane';
 import Header from './header';
@@ -25,12 +25,8 @@ const App = () => {
     dispatch(addNewPage(page));
   };
 
-  const closePage = (removedPage) => {
-    // const rmPageIndex = pages.findIndex(
-    //   (page) => removedPage.routingPath === page.routingPath,
-    // );
-    // pages.splice(rmPageIndex, 1);
-    console.log(removedPage);
+  const onClosePage = (removedPage) => {
+    dispatch(closePage(removedPage));
   };
 
   return (
@@ -40,7 +36,7 @@ const App = () => {
         <div className="window-content">
           <div className="pane-group">
             <SideBar addPage={addPage} />
-            <Main newpages={newpages} closePage={closePage} />
+            <Main newpages={newpages} closePage={onClosePage} />
           </div>
         </div>
       </div>
