@@ -3,7 +3,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import '../assets/css/photon.css';
 
 import pageReducer from '../reducers/page_reducer';
-import { addNewPage, closePage } from '../reducers/page_actions';
+import { addNewPage, closePage, updatePageProperties } from '../reducers/page_actions';
 
 import Main from './main_pane';
 import Header from './header';
@@ -19,7 +19,7 @@ const page1 = {
 };
 
 const App = () => {
-  const [pages, dispatch] = useReducer(pageReducer, [page1]);
+  const [pages, dispatch] = useReducer(pageReducer, []);
 
   const addPage = (page) => {
     dispatch(addNewPage(page));
@@ -29,6 +29,10 @@ const App = () => {
     dispatch(closePage(removedPage));
   };
 
+  const onUpdatePage = () => {
+    dispatch(updatePageProperties(page1));
+  };
+
   return (
     <Router>
       <div className="window">
@@ -36,7 +40,7 @@ const App = () => {
         <div className="window-content">
           <div className="pane-group">
             <SideBar addPage={addPage} />
-            <Main pages={pages} closePage={onClosePage} />
+            <Main pages={pages} closePage={onClosePage} onUpdatePage={onUpdatePage} />
           </div>
         </div>
       </div>

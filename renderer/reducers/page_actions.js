@@ -10,7 +10,7 @@ export const closePage = (page) => ({
   payload: page,
 });
 
-export const updatePageProperties = (props) => ({
+export const updatePageProperties = (page) => ({
   type: UPDATE_PAGE_PROPERTIES,
-  payload: props,
+  payload: page,
 });
