@@ -31,9 +31,9 @@ const historyReducer = function (state, [type, payload, properties]) {
   }
 };
 
-export default function imageEditor({ page }) {
+export default function imageEditor({ page, store }) {
   const canvasRef = useRef(null);
-  const [history, dispatch] = useReducer(historyReducer, []);
+  const [history, dispatch] = useReducer(historyReducer, store.getStore(page.routingPath) || []);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState({ left: -1, top: -1 });
   const [currentMousePoint, setCurrentMousePoint] = useState({ left: -1, top: -1 });
@@ -100,6 +100,7 @@ export default function imageEditor({ page }) {
       });
 
     drawImage(page.props.imagePath);
+    console.log(history);
   }, []);
 
   useEffect(() => {
@@ -158,6 +159,11 @@ export default function imageEditor({ page }) {
         }
       }
     }
+
+    return () => store.addStore({
+      name: page.routingPath,
+      content: history,
+    });
   }, [mouseDownPoint, mouseUpPoint, currentMousePoint]);
 
   return (

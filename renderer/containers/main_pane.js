@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import LoadPage from '../components/page_list';
 import Tabs from '../components/tabs';
 
-const main = ({ closePage, pages }) => {
+const main = ({ closePage, pages, store }) => {
   console.log('new page', pages);
   return (
     <div className="pane">
@@ -15,7 +15,7 @@ const main = ({ closePage, pages }) => {
           pages.map((page) => (
             <Route
               path={page.routingPath}
-              component={() => LoadPage(page)}
+              component={() => LoadPage(page, store)}
             />
           ))
         }

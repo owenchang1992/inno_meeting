@@ -9,14 +9,21 @@ import Main from './main_pane';
 import Header from './header';
 import SideBar from './sidebar';
 
-// const page1 = {
-//   name: 'page 1',
-//   type: 'image_editor',
-//   routingPath: '/page1',
-//   props: {
-//     imagePath: 'dev/icon.png',
-//   },
-// };
+const reactStore = (() => {
+  const store = {};
+
+  const addStore = ({ name, content }) => {
+    store[name] = content;
+    console.log(store);
+  };
+
+  const getStore = (name) => store[name];
+
+  return {
+    addStore,
+    getStore,
+  };
+})();
 
 const App = () => {
   const [pages, dispatch] = useReducer(pageReducer, []);
@@ -36,7 +43,7 @@ const App = () => {
         <div className="window-content">
           <div className="pane-group">
             <SideBar addPage={addPage} />
-            <Main pages={pages} closePage={onClosePage} />
+            <Main pages={pages} closePage={onClosePage} store={reactStore} />
           </div>
         </div>
       </div>
