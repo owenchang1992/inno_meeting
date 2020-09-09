@@ -1,4 +1,4 @@
-import { ADD_PAGE, CLOSE_PAGE } from './constants';
+import { ADD_PAGE, CLOSE_PAGE, UPDATE_PAGE_PROPERTIES } from './constants';
 
 const removePageFromState = (pages, removedPage) => {
   const rmPageIndex = pages.findIndex(
@@ -8,22 +8,15 @@ const removePageFromState = (pages, removedPage) => {
   return [...pages];
 };
 
-export const pageReducer = function (state, action) {
+export default function (state, action) {
   switch (action.type) {
     case ADD_PAGE:
       return [...state, action.payload];
     case CLOSE_PAGE:
       return removePageFromState(state, action.payload);
+    case UPDATE_PAGE_PROPERTIES:
+      return state;
     default:
       return state;
   }
-};
-
-export const otherReducer = function (state, action) {
-  switch (action.type) {
-    case 'add_other':
-      return [...state, action.payload];
-    default:
-      return state;
-  }
-};
+}

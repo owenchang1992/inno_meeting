@@ -1,2 +1,3 @@
 export const ADD_PAGE = 'ADD_PAGE';
 export const CLOSE_PAGE = 'CLOSE_PAGE';
+export const UPDATE_PAGE_PROPERTIES = 'UPDATE_PAGE_PROPERTIES';
