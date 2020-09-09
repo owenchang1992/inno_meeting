@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import '../assets/css/photon.css';
+
+import { pageReducer } from '../reducers/page_reducer';
+import { addNewPage } from '../reducers/page_actions';
 
 import Main from './main_pane';
 import Header from './header';
@@ -17,8 +20,11 @@ const page1 = {
 
 const App = () => {
   const [pages, setPages] = useState([page1]);
+  const [newpages, dispatch] = useReducer(pageReducer, []);
+
   const addPage = (page) => {
     setPages(pages.concat([page]));
+    dispatch(addNewPage(page));
   };
 
   const closePage = (removedPage) => {
@@ -36,7 +42,7 @@ const App = () => {
         <div className="window-content">
           <div className="pane-group">
             <SideBar addPage={addPage} />
-            <Main pages={pages} closePage={closePage} />
+            <Main pages={pages} newpages={newpages} closePage={closePage} />
           </div>
         </div>
       </div>

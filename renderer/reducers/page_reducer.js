@@ -1,12 +1,20 @@
 import { ADD_PAGE } from './constants';
 
-const initialState = [];
-
-const pageReducer = function (state, action) {
-  switch(action.type) {
+export const pageReducer = function (state, action) {
+  console.log(action);
+  switch (action.type) {
     case ADD_PAGE:
-      return [...state, action.paylaod];
-    default: 
+      return [...state, action.payload];
+    default:
       return state;
   }
-} 
+};
+
+export const otherReducer = function (state, action) {
+  switch (action.type) {
+    case 'add_other':
+      return [...state, action.payload];
+    default:
+      return state;
+  }
+};
