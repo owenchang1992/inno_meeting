@@ -52,7 +52,6 @@ export default function imageEditor({ page, store }) {
   const dpi = window.devicePixelRatio;
   // console.log('image page');
   const getLastRecord = () => (history[history.length - 1]);
-  
 
   useEffect(() => {
     const onMouseDown = (e) => {
@@ -61,8 +60,9 @@ export default function imageEditor({ page, store }) {
         left: e.nativeEvent.offsetX,
         top: e.nativeEvent.offsetY,
       });
-      const canvas = canvasRef.current;
-      canvas.onmousemove = (event) => {
+
+      // Add mouse move event
+      canvasRef.current.onmousemove = (event) => {
         setCurrentMousePoint({
           left: event.offsetX,
           top: event.offsetY,
@@ -75,8 +75,9 @@ export default function imageEditor({ page, store }) {
         left: e.nativeEvent.offsetX,
         top: e.nativeEvent.offsetY,
       });
-      const canvas = canvasRef.current;
-      canvas.onmousemove = null;
+
+      // remove mouse move event
+      canvasRef.current.onmousemove = null;
       setCurrentMousePoint(initialPoint);
     };
 
