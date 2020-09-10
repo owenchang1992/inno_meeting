@@ -96,17 +96,22 @@ export default function imageEditor({ page, store }) {
       />
     );
 
-    if (history.length > 0) {
-      const lastWidth = getLastRecord().snapshot.width;
-      const lastHeight = getLastRecord().snapshot.height;
-      setContent(createCanvas(lastWidth, lastHeight));
+    const drawSnapshot = () => {
+      setContent(
+        createCanvas(
+          getLastRecord().snapshot.width,
+          getLastRecord().snapshot.height,
+        ),
+      );
 
       setTimeout(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
         context.putImageData(getLastRecord().snapshot, 0, 0);
       }, 0);
-    } else {
+    };
+
+    const drawImage = () => {
       loadImage(page.props.imagePath)
         .then((img) => {
           const width = img.naturalWidth * dpi;
@@ -116,9 +121,11 @@ export default function imageEditor({ page, store }) {
           const canvas = canvasRef.current;
           const context = canvas.getContext('2d');
           context.drawImage(img, 0, 0, width, height);
+
+          // Record initail snapshot
           dispatch([
             'draw-image',
-            context.getImageData(0, 0, canvas.width, canvas.height),
+            context.getImageData(0, 0, width, height),
             { path: page.props.imagePath },
           ]);
         })
@@ -126,6 +133,12 @@ export default function imageEditor({ page, store }) {
           console.log('loading image error');
           setContent(<div>Loading Media Error</div>);
         });
+    };
+
+    if (history.length > 0) {
+      drawSnapshot();
+    } else {
+      drawImage();
     }
   }, []);
 
