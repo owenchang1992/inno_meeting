@@ -42,3 +42,15 @@ export function fillRectangle(props, ctx) {
   ctx.fillStyle = color;
   ctx.fillRect(left, top, width, height);
 }
+
+export const drawPreviewingRectangle = (position, context) => {
+  drawRectangle({
+    ...position,
+    color: 'rgba(179, 179, 179, 1)',
+  }, context);
+
+  fillRectangle({
+    ...position,
+    color: 'rgba(179, 179, 179, 0.3)',
+  }, context);
+};

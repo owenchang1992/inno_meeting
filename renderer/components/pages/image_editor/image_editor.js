@@ -5,7 +5,7 @@ import React, {
   useReducer,
 } from 'react';
 
-import { loadImage, drawRectangle, fillRectangle } from './editor_utils';
+import { loadImage, drawRectangle, drawPreviewingRectangle } from './editor_utils';
 
 const baseStyle = {
   borderRadius: '4px',
@@ -167,6 +167,11 @@ export default function imageEditor({ page, store }) {
         ]);
       };
 
+      const returnToLastRecord = () => {
+        // Refresh to last snapshot
+        context.putImageData(history[history.length - 1].snapshot, 0, 0);
+      };
+
       if (
         mouseDownPoint.left !== -1
         && mouseDownPoint.top !== -1
@@ -181,22 +186,12 @@ export default function imageEditor({ page, store }) {
           currentMousePoint.top !== -1
           && currentMousePoint.left !== -1
         ) {
-          // Refresh to last snapshot
-          context.putImageData(history[history.length - 1].snapshot, 0, 0);
-          const position = {
+          returnToLastRecord();
+          drawPreviewingRectangle({
             left: mouseDownPoint.left * scale().scaleX,
             top: mouseDownPoint.top * scale().scaleY,
             width: (currentMousePoint.left - mouseDownPoint.left) * scale().scaleX,
             height: (currentMousePoint.top - mouseDownPoint.top) * scale().scaleY,
-          };
-
-          drawRectangle({
-            ...position,
-            color: 'rgba(179, 179, 179, 1)',
-          }, context);
-          fillRectangle({
-            ...position,
-            color: 'rgba(179, 179, 179, 0.3)',
           }, context);
         }
       }
