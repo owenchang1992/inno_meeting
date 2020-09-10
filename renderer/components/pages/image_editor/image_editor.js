@@ -135,11 +135,8 @@ export default function imageEditor({ page, store }) {
         });
     };
 
-    if (history.length > 0) {
-      drawSnapshot();
-    } else {
-      drawImage();
-    }
+    if (history.length > 0) drawSnapshot();
+    else drawImage();
   }, []);
 
   useEffect(
