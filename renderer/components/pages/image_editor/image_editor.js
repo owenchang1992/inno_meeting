@@ -96,26 +96,6 @@ export default function imageEditor({ page, store }) {
       />
     );
 
-    const drawImage = (path) => loadImage(path)
-      .then((img) => {
-        const width = img.naturalWidth * dpi;
-        const height = img.naturalHeight * dpi;
-        setContent(createCanvas(width, height));
-
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
-        context.drawImage(img, 0, 0, width, height);
-        dispatch([
-          'draw-image',
-          context.getImageData(0, 0, canvas.width, canvas.height),
-          { path: page.props.imagePath },
-        ]);
-      })
-      .catch(() => {
-        console.log('loading image error');
-        setContent(<div>Loading Media Error</div>);
-      });
-
     if (history.length > 0) {
       const lastWidth = getLastRecord().snapshot.width;
       const lastHeight = getLastRecord().snapshot.height;
@@ -127,7 +107,25 @@ export default function imageEditor({ page, store }) {
         context.putImageData(getLastRecord().snapshot, 0, 0);
       }, 0);
     } else {
-      drawImage(page.props.imagePath);
+      loadImage(page.props.imagePath)
+        .then((img) => {
+          const width = img.naturalWidth * dpi;
+          const height = img.naturalHeight * dpi;
+          setContent(createCanvas(width, height));
+
+          const canvas = canvasRef.current;
+          const context = canvas.getContext('2d');
+          context.drawImage(img, 0, 0, width, height);
+          dispatch([
+            'draw-image',
+            context.getImageData(0, 0, canvas.width, canvas.height),
+            { path: page.props.imagePath },
+          ]);
+        })
+        .catch(() => {
+          console.log('loading image error');
+          setContent(<div>Loading Media Error</div>);
+        });
     }
   }, []);
 
