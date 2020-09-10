@@ -54,3 +54,15 @@ export const drawPreviewingRectangle = (position, context) => {
     color: 'rgba(179, 179, 179, 0.3)',
   }, context);
 };
+
+export const drawTagRectangle = (properties, context, width, height, dispatch) => {
+  // Draw Rectangle
+  drawRectangle(properties, context);
+
+  // Record
+  dispatch([
+    'draw-rectangle',
+    context.getImageData(0, 0, width, height),
+    properties,
+  ]);
+};

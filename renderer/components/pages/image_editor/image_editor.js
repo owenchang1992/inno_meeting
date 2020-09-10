@@ -5,7 +5,7 @@ import React, {
   useReducer,
 } from 'react';
 
-import { loadImage, drawRectangle, drawPreviewingRectangle } from './editor_utils';
+import { loadImage, drawTagRectangle, drawPreviewingRectangle } from './editor_utils';
 
 const baseStyle = {
   borderRadius: '4px',
@@ -145,47 +145,24 @@ export default function imageEditor({ page, store }) {
         scaleY: canvas.height / context.canvas.offsetHeight,
       });
 
-      const drawTagRectangle = () => {
-        // Refresh to last snapshot
-        context.putImageData(history[history.length - 1].snapshot, 0, 0);
-
-        // Draw Rectangle
-        const properties = {
-          left: mouseDownPoint.left * scale().scaleX,
-          top: mouseDownPoint.top * scale().scaleY,
-          width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
-          height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
-          color: 'red',
-        };
-        drawRectangle(properties, context);
-
-        // Record
-        dispatch([
-          'draw-rectangle',
-          context.getImageData(0, 0, canvas.width, canvas.height),
-          properties,
-        ]);
-      };
-
+      // Refresh to last snapshot
       const returnToLastRecord = () => {
-        // Refresh to last snapshot
         context.putImageData(history[history.length - 1].snapshot, 0, 0);
       };
 
-      if (
-        mouseDownPoint.left !== -1
-        && mouseDownPoint.top !== -1
-        && content !== null
-      ) {
-        if (
-          mouseUpPoint.top !== -1
-          && mouseUpPoint.left !== -1
-        ) {
-          drawTagRectangle();
-        } else if (
-          currentMousePoint.top !== -1
-          && currentMousePoint.left !== -1
-        ) {
+      const checkPoint = (point) => (point.left !== -1 && point.top !== -1);
+
+      if (checkPoint(mouseDownPoint) && content !== null) {
+        if (checkPoint(mouseUpPoint)) {
+          returnToLastRecord();
+          drawTagRectangle({
+            left: mouseDownPoint.left * scale().scaleX,
+            top: mouseDownPoint.top * scale().scaleY,
+            width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
+            height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
+            color: 'red',
+          }, context, canvas.width, canvas.height, dispatch);
+        } else if (checkPoint(currentMousePoint)) {
           returnToLastRecord();
           drawPreviewingRectangle({
             left: mouseDownPoint.left * scale().scaleX,
