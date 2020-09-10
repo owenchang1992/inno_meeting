@@ -40,20 +40,23 @@ const historyReducer = function (state, [type, payload, properties]) {
   }
 };
 
+const initialPoint = { left: -1, top: -1 };
+
 export default function imageEditor({ page, store }) {
   const canvasRef = useRef(null);
   const [history, dispatch] = useReducer(historyReducer, store.getStore(page.routingPath) || []);
   const [content, setContent] = useState(<div>loading</div>);
-  const [mouseDownPoint, setMouseDownPoint] = useState({ left: -1, top: -1 });
-  const [currentMousePoint, setCurrentMousePoint] = useState({ left: -1, top: -1 });
-  const [mouseUpPoint, setMouseUpPoint] = useState({ left: -1, top: -1 });
+  const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
+  const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
+  const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
   // console.log('image page');
   const getLastRecord = () => (history[history.length - 1]);
+  
 
   useEffect(() => {
     const onMouseDown = (e) => {
-      setMouseUpPoint({ left: -1, top: -1 });
+      setMouseUpPoint(initialPoint);
       setMouseDownPoint({
         left: e.nativeEvent.offsetX,
         top: e.nativeEvent.offsetY,
@@ -74,7 +77,7 @@ export default function imageEditor({ page, store }) {
       });
       const canvas = canvasRef.current;
       canvas.onmousemove = null;
-      setCurrentMousePoint({ left: -1, top: -1 });
+      setCurrentMousePoint(initialPoint);
     };
 
     const drawImage = (path) => loadImage(path)
