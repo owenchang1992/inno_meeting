@@ -98,10 +98,17 @@ export default function imageEditor({ page, store }) {
         console.log('loading image error');
         setContent(<div>Loading Media Error</div>);
       });
-
+    // TODO: rethink of the history to setup canvas without drawImage
     drawImage(page.props.imagePath);
-    console.log(history);
+    // console.log(history);
   }, []);
+
+  useEffect(
+    () => store.addStore({
+      name: page.routingPath,
+      content: history,
+    }), [history],
+  );
 
   useEffect(() => {
     if (content.type === 'canvas') {
@@ -159,11 +166,6 @@ export default function imageEditor({ page, store }) {
         }
       }
     }
-
-    return () => store.addStore({
-      name: page.routingPath,
-      content: history,
-    });
   }, [mouseDownPoint, mouseUpPoint, currentMousePoint]);
 
   return (
