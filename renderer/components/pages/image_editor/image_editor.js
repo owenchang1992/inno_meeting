@@ -81,24 +81,27 @@ export default function imageEditor({ page, store }) {
       setCurrentMousePoint(initialPoint);
     };
 
+    const createCanvas = (width, height) => (
+      <canvas
+        ref={canvasRef}
+        width={width}
+        height={height}
+        style={
+          width < height + 50
+            ? { ...baseStyle, height: '100%' }
+            : { ...baseStyle, width: '100%' }
+        }
+        onMouseDown={(e) => onMouseDown(e)}
+        onMouseUp={(e) => onMouseUp(e)}
+      />
+    );
+
     const drawImage = (path) => loadImage(path)
       .then((img) => {
         const width = img.naturalWidth * dpi;
         const height = img.naturalHeight * dpi;
-        setContent(
-          <canvas
-            ref={canvasRef}
-            width={width}
-            height={height}
-            style={
-              img.naturalWidth < img.naturalHeight + 25
-                ? { ...baseStyle, height: '100%' }
-                : { ...baseStyle, width: '100%' }
-            }
-            onMouseDown={(e) => onMouseDown(e)}
-            onMouseUp={(e) => onMouseUp(e)}
-          />,
-        );
+        setContent(createCanvas(width, height));
+
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
         context.drawImage(img, 0, 0, width, height);
@@ -116,20 +119,7 @@ export default function imageEditor({ page, store }) {
     if (history.length > 0) {
       const lastWidth = getLastRecord().snapshot.width;
       const lastHeight = getLastRecord().snapshot.height;
-      setContent(
-        <canvas
-          ref={canvasRef}
-          width={lastWidth}
-          height={lastHeight}
-          style={
-            lastWidth < lastHeight + 50
-              ? { ...baseStyle, height: '100%' }
-              : { ...baseStyle, width: '100%' }
-          }
-          onMouseDown={(e) => onMouseDown(e)}
-          onMouseUp={(e) => onMouseUp(e)}
-        />,
-      );
+      setContent(createCanvas(lastWidth, lastHeight));
 
       setTimeout(() => {
         const canvas = canvasRef.current;
