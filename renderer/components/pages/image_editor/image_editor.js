@@ -167,7 +167,6 @@ export default function imageEditor({ page, store }) {
             context.getImageData(0, 0, canvas.width, canvas.height),
             properties,
           ]);
-          console.log(history);
         } else if (
           currentMousePoint.top !== -1
           && currentMousePoint.left !== -1
