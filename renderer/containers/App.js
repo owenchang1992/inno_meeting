@@ -14,7 +14,6 @@ const reactStore = (() => {
 
   const addStore = ({ name, content }) => {
     store[name] = content;
-    console.log(store);
   };
 
   const getStore = (name) => store[name];

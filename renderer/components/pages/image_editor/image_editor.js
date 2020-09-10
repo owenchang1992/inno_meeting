@@ -39,7 +39,7 @@ export default function imageEditor({ page, store }) {
   const [currentMousePoint, setCurrentMousePoint] = useState({ left: -1, top: -1 });
   const [mouseUpPoint, setMouseUpPoint] = useState({ left: -1, top: -1 });
   const dpi = window.devicePixelRatio;
-  console.log('image page');
+  // console.log('image page');
 
   useEffect(() => {
     const onMouseDown = (e) => {
@@ -98,9 +98,33 @@ export default function imageEditor({ page, store }) {
         console.log('loading image error');
         setContent(<div>Loading Media Error</div>);
       });
-    // TODO: rethink of the history to setup canvas without drawImage
-    drawImage(page.props.imagePath);
-    // console.log(history);
+
+    if (history.length > 0) {
+      const lastWidth = history[history.length - 1].snapshot.width;
+      const lastHeight = history[history.length - 1].snapshot.height;
+      setContent(
+        <canvas
+          ref={canvasRef}
+          width={lastWidth}
+          height={lastHeight}
+          style={
+            lastWidth < lastHeight + 50
+              ? { ...baseStyle, height: '100%' }
+              : { ...baseStyle, width: '100%' }
+          }
+          onMouseDown={(e) => onMouseDown(e)}
+          onMouseUp={(e) => onMouseUp(e)}
+        />,
+      );
+
+      setTimeout(() => {
+        const canvas = canvasRef.current;
+        const context = canvas.getContext('2d');
+        context.putImageData(history[history.length - 1].snapshot, 0, 0);
+      }, 0);
+    } else {
+      drawImage(page.props.imagePath);
+    }
   }, []);
 
   useEffect(
