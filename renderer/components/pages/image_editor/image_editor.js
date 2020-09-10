@@ -12,6 +12,15 @@ const baseStyle = {
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
 };
 
+const containerStyle = {
+  width: '100%',
+  height: 'calc(100% - 25px)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '5px',
+};
+
 const historyReducer = function (state, [type, payload, properties]) {
   switch (type) {
     case 'draw-image':
@@ -40,6 +49,7 @@ export default function imageEditor({ page, store }) {
   const [mouseUpPoint, setMouseUpPoint] = useState({ left: -1, top: -1 });
   const dpi = window.devicePixelRatio;
   // console.log('image page');
+  const getLastRecord = () => (history[history.length - 1]);
 
   useEffect(() => {
     const onMouseDown = (e) => {
@@ -100,8 +110,8 @@ export default function imageEditor({ page, store }) {
       });
 
     if (history.length > 0) {
-      const lastWidth = history[history.length - 1].snapshot.width;
-      const lastHeight = history[history.length - 1].snapshot.height;
+      const lastWidth = getLastRecord().snapshot.width;
+      const lastHeight = getLastRecord().snapshot.height;
       setContent(
         <canvas
           ref={canvasRef}
@@ -120,7 +130,7 @@ export default function imageEditor({ page, store }) {
       setTimeout(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
-        context.putImageData(history[history.length - 1].snapshot, 0, 0);
+        context.putImageData(getLastRecord().snapshot, 0, 0);
       }, 0);
     } else {
       drawImage(page.props.imagePath);
@@ -128,7 +138,7 @@ export default function imageEditor({ page, store }) {
   }, []);
 
   useEffect(
-    // Backup history after history update
+    // Backup history after history updated
     () => store.addStore({
       name: page.routingPath,
       content: history,
@@ -147,7 +157,7 @@ export default function imageEditor({ page, store }) {
 
       // Refresh to last snapshot
       const returnToLastRecord = () => {
-        context.putImageData(history[history.length - 1].snapshot, 0, 0);
+        context.putImageData(getLastRecord().snapshot, 0, 0);
       };
 
       const checkPoint = (point) => (point.left !== -1 && point.top !== -1);
@@ -178,14 +188,7 @@ export default function imageEditor({ page, store }) {
   return (
     <div
       id="canvas-container"
-      style={{
-        width: '100%',
-        height: 'calc(100% - 25px)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '5px',
-      }}
+      style={containerStyle}
     >
       { content }
     </div>
