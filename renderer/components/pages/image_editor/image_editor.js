@@ -128,6 +128,7 @@ export default function imageEditor({ page, store }) {
   }, []);
 
   useEffect(
+    // Backup history after history update
     () => store.addStore({
       name: page.routingPath,
       content: history,
@@ -144,6 +145,28 @@ export default function imageEditor({ page, store }) {
         scaleY: canvas.height / context.canvas.offsetHeight,
       });
 
+      const drawTagRectangle = () => {
+        // Refresh to last snapshot
+        context.putImageData(history[history.length - 1].snapshot, 0, 0);
+
+        // Draw Rectangle
+        const properties = {
+          left: mouseDownPoint.left * scale().scaleX,
+          top: mouseDownPoint.top * scale().scaleY,
+          width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
+          height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
+          color: 'red',
+        };
+        drawRectangle(properties, context);
+
+        // Record
+        dispatch([
+          'draw-rectangle',
+          context.getImageData(0, 0, canvas.width, canvas.height),
+          properties,
+        ]);
+      };
+
       if (
         mouseDownPoint.left !== -1
         && mouseDownPoint.top !== -1
@@ -153,37 +176,26 @@ export default function imageEditor({ page, store }) {
           mouseUpPoint.top !== -1
           && mouseUpPoint.left !== -1
         ) {
-          context.putImageData(history[history.length - 1].snapshot, 0, 0);
-          const properties = {
-            left: mouseDownPoint.left * scale().scaleX,
-            top: mouseDownPoint.top * scale().scaleY,
-            width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
-            height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
-            color: 'red',
-          };
-          drawRectangle(properties, context);
-          dispatch([
-            'draw-rectangle',
-            context.getImageData(0, 0, canvas.width, canvas.height),
-            properties,
-          ]);
+          drawTagRectangle();
         } else if (
           currentMousePoint.top !== -1
           && currentMousePoint.left !== -1
         ) {
+          // Refresh to last snapshot
           context.putImageData(history[history.length - 1].snapshot, 0, 0);
-          drawRectangle({
+          const position = {
             left: mouseDownPoint.left * scale().scaleX,
             top: mouseDownPoint.top * scale().scaleY,
             width: (currentMousePoint.left - mouseDownPoint.left) * scale().scaleX,
             height: (currentMousePoint.top - mouseDownPoint.top) * scale().scaleY,
+          };
+
+          drawRectangle({
+            ...position,
             color: 'rgba(179, 179, 179, 1)',
           }, context);
           fillRectangle({
-            left: mouseDownPoint.left * scale().scaleX,
-            top: mouseDownPoint.top * scale().scaleY,
-            width: (currentMousePoint.left - mouseDownPoint.left) * scale().scaleX,
-            height: (currentMousePoint.top - mouseDownPoint.top) * scale().scaleY,
+            ...position,
             color: 'rgba(179, 179, 179, 0.3)',
           }, context);
         }
