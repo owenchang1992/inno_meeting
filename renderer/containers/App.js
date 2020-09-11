@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import '../assets/css/photon.css';
+import path from 'path';
 
 import pageReducer from '../reducers/page_reducer';
 import { addNewPage, closePage } from '../reducers/page_actions';
@@ -42,13 +43,22 @@ const App = () => {
     reactStore.removeStore(removedPage.routingPath);
   };
 
+  const checkPage = (midiaPath) => (
+    pages.findIndex((page) => (
+      page.routingPath === path.resolve(
+        window.api.getHomeDir(),
+        midiaPath,
+      )
+    ))
+  );
+
   return (
     <Router>
       <div className="window">
         <Header />
         <div className="window-content">
           <div className="pane-group">
-            <SideBar addPage={addPage} />
+            <SideBar addPage={addPage} checkPage={checkPage} />
             <Main pages={pages} closePage={onClosePage} store={reactStore} />
           </div>
         </div>

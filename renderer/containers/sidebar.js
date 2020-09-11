@@ -18,15 +18,22 @@ const createNewPage = (mediaPath) => {
   });
 };
 
-const sideBar = ({ addPage }) => {
+const sideBar = ({ addPage, checkPage }) => {
   const [searchContents, setSearchContents] = useState('');
   const history = useHistory();
 
   const keyUpHandler = (e) => {
     if (e.keyCode === 13) {
-      const newPage = createNewPage(searchContents);
-      addPage(newPage);
-      history.push(newPage.routingPath);
+      if (checkPage(searchContents) === -1) {
+        const newPage = createNewPage(searchContents);
+        addPage(newPage);
+        history.push(newPage.routingPath);
+      } else {
+        history.push(path.resolve(
+          window.api.getHomeDir(),
+          searchContents,
+        ));
+      }
     }
   };
 
