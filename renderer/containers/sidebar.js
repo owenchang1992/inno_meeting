@@ -19,7 +19,7 @@ const createNewPage = (mediaPath) => {
 };
 
 const sideBar = ({ addPage, checkPage }) => {
-  const [searchContents, setSearchContents] = useState('');
+  const [searchContents, setSearchContents] = useState('dev/icon.png');
   const [workingPath] = useState(window.api.getHomeDir());
   const history = useHistory();
 
