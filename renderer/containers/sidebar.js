@@ -20,12 +20,13 @@ const createNewPage = (mediaPath) => {
 
 const sideBar = ({ addPage, checkPage }) => {
   const [searchContents, setSearchContents] = useState('');
+  const [workingPath] = useState(window.api.getHomeDir());
   const history = useHistory();
 
   const keyUpHandler = (e) => {
     if (e.keyCode === 13) {
       const mediaPath = path.resolve(
-        window.api.getHomeDir(),
+        workingPath,
         searchContents,
       );
 
@@ -41,6 +42,15 @@ const sideBar = ({ addPage, checkPage }) => {
   return (
     <div className="pane-sm sidebar">
       <nav className="nav-group">
+        <h5 className="nav-group-title">Working Path</h5>
+        <span
+          role="button"
+          onKeyDown={() => { console.log('key down'); }}
+          tabIndex={0}
+          className="nav-group-item"
+        >
+          {workingPath}
+        </span>
         <h5 className="nav-group-title">Search Media</h5>
         <div className="list-group-header">
           <input
@@ -52,17 +62,6 @@ const sideBar = ({ addPage, checkPage }) => {
             placeholder="path"
           />
         </div>
-        <h5 className="nav-group-title">Working Path</h5>
-        {/* <span
-          role="button"
-          onClick={handleClick}
-          onKeyDown={() => { console.log('key down'); }}
-          tabIndex={0}
-          className="nav-group-item"
-        >
-          <span className="icon icon-doc-text-inv" />
-          Add
-        </span> */}
       </nav>
     </div>
   );
