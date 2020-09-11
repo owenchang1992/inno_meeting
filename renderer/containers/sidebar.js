@@ -11,9 +11,9 @@ const createNewPage = (mediaPath) => {
   return ({
     name: getName(mediaPath),
     type: 'image_editor',
-    routingPath: path.resolve(window.api.getHomeDir(), mediaPath),
+    routingPath: mediaPath,
     props: {
-      imagePath: path.resolve(window.api.getHomeDir(), mediaPath),
+      imagePath: mediaPath,
     },
   });
 };
@@ -24,15 +24,16 @@ const sideBar = ({ addPage, checkPage }) => {
 
   const keyUpHandler = (e) => {
     if (e.keyCode === 13) {
-      if (checkPage(searchContents) === -1) {
-        const newPage = createNewPage(searchContents);
-        addPage(newPage);
-        history.push(newPage.routingPath);
-      } else {
-        history.push(path.resolve(
-          window.api.getHomeDir(),
-          searchContents,
-        ));
+      const mediaPath = path.resolve(
+        window.api.getHomeDir(),
+        searchContents,
+      );
+
+      if (checkPage(mediaPath) === -1) {
+        addPage(createNewPage(mediaPath));
+        history.push(mediaPath);
+      } else if (mediaPath !== history.location.pathname) {
+        history.push(mediaPath);
       }
     }
   };

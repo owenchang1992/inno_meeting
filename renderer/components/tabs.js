@@ -10,7 +10,7 @@ export default function tabs({ pages, closePage }) {
       if (page.routingPath === history.location.pathname) {
         history.goBack();
       }
-    } else {
+    } else if (history.location.pathname !== page.routingPath) {
       history.push(page.routingPath);
     }
   };
