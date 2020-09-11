@@ -44,6 +44,7 @@ const initialPoint = { left: -1, top: -1 };
 
 export default function imageEditor({ page, store }) {
   const canvasRef = useRef(null);
+  const [image, setImage] = useState(null);
   const [history, dispatch] = useReducer(historyReducer, store.getStore(page.routingPath) || []);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
@@ -103,31 +104,18 @@ export default function imageEditor({ page, store }) {
           getLastRecord().snapshot.height,
         ),
       );
-
-      setTimeout(() => {
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
-        context.putImageData(getLastRecord().snapshot, 0, 0);
-      }, 0);
     };
 
     const drawImage = () => {
       loadImage(page.props.imagePath)
         .then((img) => {
-          const width = img.naturalWidth * dpi;
-          const height = img.naturalHeight * dpi;
-          setContent(createCanvas(width, height));
-
-          const canvas = canvasRef.current;
-          const context = canvas.getContext('2d');
-          context.drawImage(img, 0, 0, width, height);
-
-          // Record initail snapshot
-          dispatch([
-            'draw-image',
-            context.getImageData(0, 0, width, height),
-            { path: page.props.imagePath },
-          ]);
+          setImage(img);
+          setContent(
+            createCanvas(
+              img.naturalWidth * dpi,
+              img.naturalHeight * dpi,
+            ),
+          );
         })
         .catch(() => {
           console.log('loading image error');
@@ -138,6 +126,27 @@ export default function imageEditor({ page, store }) {
     if (history.length > 0) drawSnapshot();
     else drawImage();
   }, []);
+
+  useEffect(() => {
+    if (content.type === 'canvas') {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d');
+
+      if (history.length > 0) {
+        context.putImageData(getLastRecord().snapshot, 0, 0);
+      } else {
+        const width = image.naturalWidth * dpi;
+        const height = image.naturalHeight * dpi;
+        context.drawImage(image, 0, 0, width, height);
+
+        dispatch([
+          'draw-image',
+          context.getImageData(0, 0, width, height),
+          { path: page.props.imagePath },
+        ]);
+      }
+    }
+  }, [content, image]);
 
   useEffect(
     // Backup history after history updated
