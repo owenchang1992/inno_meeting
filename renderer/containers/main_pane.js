@@ -8,14 +8,18 @@ const main = ({ closePage, pages, store }) => {
   console.log('new page', pages);
   return (
     <div className="pane">
-      <Tabs pages={pages} closePage={closePage} />
       <>
         <Route path="/" exact component={() => <h1>Home Page asb</h1>} />
         {
           pages.map((page) => (
             <Route
               path={page.routingPath}
-              component={() => LoadPage(page, store)}
+              component={() => (
+                <>
+                  <Tabs pages={pages} closePage={closePage} />
+                  {LoadPage(page, store)}
+                </>
+              )}
             />
           ))
         }

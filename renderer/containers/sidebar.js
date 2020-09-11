@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const createNewPage = (path) => {
   const getName = (splitedPath) => {
@@ -18,10 +19,13 @@ const createNewPage = (path) => {
 
 const sideBar = ({ addPage }) => {
   const [searchContents, setSearchContents] = useState('');
+  const history = useHistory();
 
   const keyUpHandler = (e) => {
     if (e.keyCode === 13) {
-      addPage(createNewPage(searchContents));
+      const newPage = createNewPage(searchContents);
+      addPage(newPage);
+      history.push(newPage.routingPath);
     }
   };
 
