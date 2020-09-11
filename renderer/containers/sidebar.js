@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import path from 'path';
 
-const createNewPage = (path) => {
+const createNewPage = (mediaPath) => {
   const getName = (splitedPath) => {
     const splitedName = splitedPath.split('/');
     return splitedName[splitedName.length - 1];
   };
 
   return ({
-    name: getName(path),
+    name: getName(mediaPath),
     type: 'image_editor',
-    routingPath: `/${getName(path)}`,
+    routingPath: path.resolve(window.api.getHomeDir(), mediaPath),
     props: {
-      imagePath: path,
+      imagePath: path.resolve(window.api.getHomeDir(), mediaPath),
     },
   });
 };

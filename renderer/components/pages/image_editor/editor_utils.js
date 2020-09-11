@@ -11,7 +11,7 @@ export function loadImage(src) {
     // window.api.send('toMain', 'HI');
 
     img.src = URL.format({
-      pathname: path.resolve(window.api.getHomeDir(), src),
+      pathname: path.resolve(src),
       protocol: 'file:',
       slashes: true,
     });
