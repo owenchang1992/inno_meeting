@@ -54,6 +54,7 @@ export default function imageEditor({ page, store }) {
   // console.log('image page');
   const getLastRecord = () => (history[history.length - 1]);
 
+  // Initial content
   useEffect(() => {
     const onMouseDown = (e) => {
       setMouseUpPoint(initialPoint);
@@ -127,6 +128,7 @@ export default function imageEditor({ page, store }) {
     else drawImage();
   }, []);
 
+  // Draw canvas after initialization
   useEffect(() => {
     if (content.type === 'canvas') {
       const canvas = canvasRef.current;
@@ -148,14 +150,15 @@ export default function imageEditor({ page, store }) {
     }
   }, [content, image]);
 
+  // Cache history after history updated
   useEffect(
-    // Backup history after history updated
     () => store.addStore({
       name: page.routingPath,
       content: history,
     }), [history],
   );
 
+  // handle mouse events
   useEffect(() => {
     if (content.type === 'canvas') {
       const canvas = canvasRef.current;
