@@ -13,7 +13,7 @@ import ControlPanel from './control_panel';
 const baseStyle = {
   borderRadius: '4px',
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
-  marginLeft: '10px',
+  marginRight: '10px',
 };
 
 const containerStyle = {
@@ -90,7 +90,6 @@ export default function imageEditor({ page, store, closePage }) {
 
     const createCanvas = (width, height) => (
       <>
-        <ControlPanel />
         <canvas
           ref={canvasRef}
           width={width}
@@ -103,6 +102,7 @@ export default function imageEditor({ page, store, closePage }) {
           onMouseDown={(e) => onMouseDown(e)}
           onMouseUp={(e) => onMouseUp(e)}
         />
+        <ControlPanel />
       </>
     );
 
