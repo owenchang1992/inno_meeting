@@ -18,9 +18,15 @@ const reactStore = (() => {
 
   const getStore = (name) => store[name];
 
+  const removeStore = (name) => {
+    delete store[name];
+    console.log(store);
+  };
+
   return {
     addStore,
     getStore,
+    removeStore,
   };
 })();
 
@@ -33,6 +39,7 @@ const App = () => {
 
   const onClosePage = (removedPage) => {
     dispatch(closePage(removedPage));
+    reactStore.removeStore(removedPage.routingPath);
   };
 
   return (
