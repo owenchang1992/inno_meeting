@@ -4,6 +4,7 @@ import React, {
   useState,
   useReducer,
 } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { loadImage, drawTagRectangle, drawPreviewingRectangle } from './editor_utils';
 
@@ -42,8 +43,9 @@ const historyReducer = function (state, [type, payload, properties]) {
 
 const initialPoint = { left: -1, top: -1 };
 
-export default function imageEditor({ page, store }) {
+export default function imageEditor({ page, store, closePage }) {
   const canvasRef = useRef(null);
+  const routeHistory = useHistory();
   const [image, setImage] = useState(null);
   const [history, dispatch] = useReducer(historyReducer, store.getStore(page.routingPath) || []);
   const [content, setContent] = useState(<div>loading</div>);
@@ -121,6 +123,10 @@ export default function imageEditor({ page, store }) {
         .catch(() => {
           console.log('loading image error');
           setContent(<div>Loading Media Error</div>);
+          setTimeout(() => {
+            routeHistory.goBack();
+            closePage(page);
+          }, 1000);
         });
     };
 

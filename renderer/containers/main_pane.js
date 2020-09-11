@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import LoadPage from '../components/page_list';
+import loadPage from '../components/page_list';
 import Tabs from '../components/tabs';
 
 const main = ({ closePage, pages, store }) => {
@@ -17,7 +17,7 @@ const main = ({ closePage, pages, store }) => {
               component={() => (
                 <>
                   <Tabs pages={pages} closePage={closePage} />
-                  {LoadPage(page, store)}
+                  {loadPage(page.type, { page, store, closePage })}
                 </>
               )}
             />
