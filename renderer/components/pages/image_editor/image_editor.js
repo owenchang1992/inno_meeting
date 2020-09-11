@@ -8,9 +8,12 @@ import { useHistory } from 'react-router-dom';
 
 import { loadImage, drawTagRectangle, drawPreviewingRectangle } from './editor_utils';
 
+import ControlPanel from './control_panel';
+
 const baseStyle = {
   borderRadius: '4px',
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
+  marginLeft: '10px',
 };
 
 const containerStyle = {
@@ -86,18 +89,21 @@ export default function imageEditor({ page, store, closePage }) {
     };
 
     const createCanvas = (width, height) => (
-      <canvas
-        ref={canvasRef}
-        width={width}
-        height={height}
-        style={
-          width < height + 50
-            ? { ...baseStyle, height: '100%' }
-            : { ...baseStyle, width: '100%' }
-        }
-        onMouseDown={(e) => onMouseDown(e)}
-        onMouseUp={(e) => onMouseUp(e)}
-      />
+      <>
+        <ControlPanel />
+        <canvas
+          ref={canvasRef}
+          width={width}
+          height={height}
+          style={
+            width < height + 50
+              ? { ...baseStyle, height: '100%' }
+              : { ...baseStyle, width: '100%' }
+          }
+          onMouseDown={(e) => onMouseDown(e)}
+          onMouseUp={(e) => onMouseUp(e)}
+        />
+      </>
     );
 
     const drawSnapshot = () => {
@@ -136,7 +142,7 @@ export default function imageEditor({ page, store, closePage }) {
 
   // Draw canvas after initialization
   useEffect(() => {
-    if (content.type === 'canvas') {
+    if (canvasRef.current) {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
 
@@ -166,7 +172,7 @@ export default function imageEditor({ page, store, closePage }) {
 
   // handle mouse events
   useEffect(() => {
-    if (content.type === 'canvas') {
+    if (canvasRef.current) {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
 
