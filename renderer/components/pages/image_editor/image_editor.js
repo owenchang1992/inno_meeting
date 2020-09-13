@@ -102,7 +102,7 @@ export default function imageEditor({ page, store, closePage }) {
           onMouseDown={(e) => onMouseDown(e)}
           onMouseUp={(e) => onMouseUp(e)}
         />
-        <ControlPanel />
+        <ControlPanel page={page} />
       </>
     );
 
