@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import loadPage from '../components/page_list';
+import PageLoader from '../components/page_loader';
 import Tabs from '../components/tabs';
 
 const main = ({ closePage, pages, store }) => {
@@ -9,15 +9,19 @@ const main = ({ closePage, pages, store }) => {
   return (
     <div className="pane">
       <>
-        <Route path="/" exact component={() => <h1>Home Page asb</h1>} />
+        <Route path="/" exact component={() => <h1>Home Page fsb</h1>} />
         {
           pages.map((page) => (
             <Route
               path={page.routingPath}
-              component={() => (
+              render={(props) => (
                 <>
-                  <Tabs pages={pages} closePage={closePage} />
-                  {loadPage(page.type, { page, store, closePage })}
+                  <Tabs {...props} pages={pages} closePage={closePage} />
+                  <PageLoader
+                    {...props}
+                    type={page.type}
+                    properties={{ page, store, closePage }}
+                  />
                 </>
               )}
             />
