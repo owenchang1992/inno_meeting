@@ -8,12 +8,12 @@ import { useHistory } from 'react-router-dom';
 
 import { loadImage, drawTagRectangle, drawPreviewingRectangle } from './editor_utils';
 
-import ControlPanel from './control_panel';
+import Labels from './labels';
 
 const baseStyle = {
   borderRadius: '4px',
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
-  marginRight: '10px',
+  marginRight: '5px',
 };
 
 const containerStyle = {
@@ -21,7 +21,7 @@ const containerStyle = {
   height: 'calc(100% - 25px)',
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center',
+  // alignItems: 'center',
   padding: '5px',
 };
 
@@ -102,7 +102,6 @@ export default function imageEditor({ page, store, closePage }) {
           onMouseDown={(e) => onMouseDown(e)}
           onMouseUp={(e) => onMouseUp(e)}
         />
-        <ControlPanel page={page} />
       </>
     );
 
@@ -217,6 +216,7 @@ export default function imageEditor({ page, store, closePage }) {
       style={containerStyle}
     >
       { content }
+      <Labels history={history} />
     </div>
   );
 }
