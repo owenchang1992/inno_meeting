@@ -8,7 +8,7 @@ export default ({ history }) => {
       <h5 className="nav-group-title">Events</h5>
       <div className="list-group-item" style={{ padding: '5px 10px', border: '1px solid #ddd', borderRadius: '3px' }}>
         <span className="icon icon-record" style={{ color: '#fdbc40', marginRight: '5px' }} />
-        <strong>{history.length <= 2 ? 'fdf' : history[2].action}</strong>
+        <strong>{history.length <= 1 ? 'fdf' : history[1].action}</strong>
         <br />
         Lorem ipsum dolor sit amet.
       </div>
