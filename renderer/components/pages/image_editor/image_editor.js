@@ -8,7 +8,8 @@ import { useHistory } from 'react-router-dom';
 
 import { loadImage, drawTagRectangle, drawPreviewingRectangle } from './editor_utils';
 
-import Labels from './labels';
+import Labels from './tags';
+import Record from './records';
 
 const baseStyle = {
   borderRadius: '4px',
@@ -224,7 +225,10 @@ export default function imageEditor({ page, store, closePage }) {
       style={containerStyle}
     >
       { content }
-      <Labels history={history} />
+      <div>
+        <Labels />
+        <Record history={history} />
+      </div>
     </div>
   );
 }
