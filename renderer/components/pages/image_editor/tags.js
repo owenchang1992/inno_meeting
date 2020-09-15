@@ -2,13 +2,23 @@ import React, { useState, useEffect } from 'react';
 
 const tagList = [
   {
-    name: 'default',
-    color: 'gray',
+    name: 'Red',
+    color: '#fc605b',
     description: '',
   },
   {
-    name: 'tag1',
-    color: 'red',
+    name: 'Orange',
+    color: '#fdbc40',
+    description: '',
+  },
+  {
+    name: 'Green',
+    color: '#34c84a',
+    description: '',
+  },
+  {
+    name: 'Blue',
+    color: '#57acf5',
     description: '',
   },
 ];
