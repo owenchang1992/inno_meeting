@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const tagList = [
+  {
+    name: 'default',
+    color: 'gray',
+    description: '',
+  },
   {
     name: 'tag1',
     color: 'red',
@@ -9,13 +14,16 @@ const tagList = [
 ];
 
 export default ({ setCurrentTag, currentTag }) => {
-  console.log('Labels');
   const [tagDown, setTagDown] = useState(null);
+  const [tags] = useState(tagList);
 
   const setTag = (key) => {
-    console.log('setTag');
     setCurrentTag(tagList.find((tag) => (tag.name === key.name)));
   };
+
+  useEffect(() => {
+    setCurrentTag(tags[0]);
+  }, []);
 
   return (
     <div>
@@ -32,7 +40,7 @@ export default ({ setCurrentTag, currentTag }) => {
         />
       </h5>
       {
-        tagList.map((tag) => (
+        tags.map((tag) => (
           <div
             key={tag.name}
             role="button"
