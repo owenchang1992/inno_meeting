@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default () => {
+const tagList = [
+  {
+    name: 'tag1',
+    color: 'red',
+    description: '',
+  },
+];
+
+export default ({ setCurrentTag }) => {
   console.log('Labels');
+  const [tagDown, setTagDown] = useState(null);
+
+  const setTag = (key) => {
+    console.log('setTag');
+    setCurrentTag(tagList.find((tag) => (tag.name === key.name)));
+  };
 
   return (
     <div>
@@ -17,20 +31,28 @@ export default () => {
           }}
         />
       </h5>
-      <div
-        // className="list-group-item"
-        style={{
-          padding: '5px 10px',
-          // border: '1px solid gray',
-          borderRadius: '15px',
-          marginTop: '5px',
-        }}
-      >
-        <span className="icon icon-record" style={{ color: '#fc605b', marginRight: '5px' }} />
-        <strong>Tag1</strong>
-        {/* <br />
-        Lorem ipsum dolor sit amet. */}
-      </div>
+      {
+        tagList.map((tag) => (
+          <div
+            key={tag.name}
+            role="button"
+            style={{
+              padding: '5px 10px',
+              // borderRadius: '15px',
+              marginTop: '5px',
+              backgroundColor: tagDown === tag.name ? '#dcdfe1' : null,
+            }}
+            onClick={() => setTag(tag)}
+            onMouseDown={() => setTagDown(tag.name)}
+            onMouseUp={() => setTagDown(null)}
+            onKeyDown={() => (null)}
+            tabIndex={0}
+          >
+            <span className="icon icon-record" style={{ color: tag.color, marginRight: '5px' }} />
+            <strong>{tag.name}</strong>
+          </div>
+        ))
+      }
     </div>
   );
 };

@@ -49,15 +49,14 @@ const initialPoint = { left: -1, top: -1 };
 
 const defaultTag = {
   name: 'test',
-  color: 'red',
-  subTags: [],
+  color: '#fdbc40',
   description: '',
 };
 
 export default function imageEditor({ page, store, closePage }) {
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
-  const [currentTag] = useState(defaultTag);
+  const [currentTag, setCurrentTag] = useState(defaultTag);
   const [image, setImage] = useState(null);
   const [history, dispatch] = useReducer(historyReducer, store.getStore(page.routingPath) || []);
   const [content, setContent] = useState(<div>loading</div>);
@@ -226,7 +225,7 @@ export default function imageEditor({ page, store, closePage }) {
     >
       { content }
       <div>
-        <Labels />
+        <Labels setCurrentTag={setCurrentTag} />
         <Record history={history} />
       </div>
     </div>
