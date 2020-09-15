@@ -225,7 +225,7 @@ export default function imageEditor({ page, store, closePage }) {
     >
       { content }
       <div>
-        <Labels setCurrentTag={setCurrentTag} />
+        <Labels setCurrentTag={setCurrentTag} currentTag={currentTag} />
         <Record history={history} />
       </div>
     </div>

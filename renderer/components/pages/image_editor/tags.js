@@ -8,7 +8,7 @@ const tagList = [
   },
 ];
 
-export default ({ setCurrentTag }) => {
+export default ({ setCurrentTag, currentTag }) => {
   console.log('Labels');
   const [tagDown, setTagDown] = useState(null);
 
@@ -37,10 +37,10 @@ export default ({ setCurrentTag }) => {
             key={tag.name}
             role="button"
             style={{
-              padding: '5px 10px',
-              // borderRadius: '15px',
+              padding: '3px 10px',
+              borderRadius: '5px',
               marginTop: '5px',
-              backgroundColor: tagDown === tag.name ? '#dcdfe1' : null,
+              backgroundColor: tagDown === tag.name ? '#ddd' : null,
             }}
             onClick={() => setTag(tag)}
             onMouseDown={() => setTagDown(tag.name)}
@@ -48,7 +48,10 @@ export default ({ setCurrentTag }) => {
             onKeyDown={() => (null)}
             tabIndex={0}
           >
-            <span className="icon icon-record" style={{ color: tag.color, marginRight: '5px' }} />
+            <span
+              className={`icon ${currentTag.name !== tag.name ? 'icon-record' : 'icon-play'}`}
+              style={{ color: tag.color, marginRight: '5px' }}
+            />
             <strong>{tag.name}</strong>
           </div>
         ))
