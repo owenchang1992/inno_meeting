@@ -5,7 +5,18 @@ export default ({ history }) => {
 
   return (
     <div>
-      <h5 className="nav-group-title">Tags</h5>
+      <h5 className="nav-group-title">
+        Tags
+        <span
+          className="icon icon-plus"
+          style={{
+            padding: '0px 4px',
+            border: '1px solid #ddd',
+            borderRadius: '3px',
+            marginLeft: '5px',
+          }}
+        />
+      </h5>
       <div
         // className="list-group-item"
         style={{
