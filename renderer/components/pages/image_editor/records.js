@@ -15,7 +15,7 @@ export default ({ history }) => (
           }}
         >
           <span className="icon icon-record" style={{ color: '#fdbc40', marginRight: '5px' }} />
-          <strong>{value.action}</strong>
+          <strong>{value.properties.tag.name}</strong>
           {/* <br />
           Lorem ipsum dolor sit amet. */}
         </div>

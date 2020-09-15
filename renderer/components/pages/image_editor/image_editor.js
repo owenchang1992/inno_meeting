@@ -163,7 +163,10 @@ export default function imageEditor({ page, store, closePage }) {
         dispatch([
           'draw-image',
           context.getImageData(0, 0, width, height),
-          { path: page.props.imagePath },
+          {
+            tag: currentTag,
+            path: page.props.imagePath,
+          },
         ]);
       }
     }
@@ -204,7 +207,8 @@ export default function imageEditor({ page, store, closePage }) {
             width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
             height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
             color: currentTag.color,
-          }, context, canvas.width, canvas.height, dispatch);
+            tag: currentTag,
+          }, context, canvas.width, canvas.height, dispatch, currentTag);
         } else if (checkPoint(currentMousePoint)) {
           returnToLastRecord();
           drawPreviewingRectangle({
