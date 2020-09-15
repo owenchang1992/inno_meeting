@@ -46,9 +46,17 @@ const historyReducer = function (state, [type, payload, properties]) {
 
 const initialPoint = { left: -1, top: -1 };
 
+const defaultTag = {
+  name: 'test',
+  color: 'red',
+  subTags: [],
+  description: '',
+};
+
 export default function imageEditor({ page, store, closePage }) {
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
+  const [currentTag] = useState(defaultTag);
   const [image, setImage] = useState(null);
   const [history, dispatch] = useReducer(historyReducer, store.getStore(page.routingPath) || []);
   const [content, setContent] = useState(<div>loading</div>);
@@ -195,7 +203,7 @@ export default function imageEditor({ page, store, closePage }) {
             top: mouseDownPoint.top * scale().scaleY,
             width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
             height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
-            color: 'red',
+            color: currentTag.color,
           }, context, canvas.width, canvas.height, dispatch);
         } else if (checkPoint(currentMousePoint)) {
           returnToLastRecord();
