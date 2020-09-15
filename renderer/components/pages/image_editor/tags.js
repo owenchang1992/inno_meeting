@@ -16,6 +16,7 @@ const tagList = [
 export default ({ setCurrentTag, currentTag }) => {
   const [tagDown, setTagDown] = useState(null);
   const [tags] = useState(tagList);
+  const [newTagState, setNewTagState] = useState(null);
 
   const setTag = (key) => {
     setCurrentTag(tagList.find((tag) => (tag.name === key.name)));
@@ -33,10 +34,15 @@ export default ({ setCurrentTag, currentTag }) => {
           className="icon icon-plus"
           style={{
             padding: '0px 4px',
-            border: '1px solid #ddd',
+            border: `1px solid ${newTagState !== 'hover' ? '#ddd' : 'gray'}`,
             borderRadius: '3px',
             marginLeft: '5px',
+            color: newTagState !== 'hover' ? '#ddd' : 'gray',
           }}
+          onMouseOver={() => setNewTagState('hover')}
+          onFocus={() => setNewTagState(null)}
+          onMouseOut={() => setNewTagState(null)}
+          onBlur={() => {}}
         />
       </h5>
       {
