@@ -26,7 +26,7 @@ const containerStyle = {
   padding: '5px',
 };
 
-const historyReducer = function (state, [type, payload, properties]) {
+const historyReducer = (state, [type, payload, properties]) => {
   switch (type) {
     case 'draw-image':
       return [...state, {

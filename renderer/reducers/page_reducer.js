@@ -10,7 +10,7 @@ const removePageFromState = (pages, removedPage) => {
   return [...pages];
 };
 
-export default function (state, action) {
+export default (state, action) => {
   switch (action.type) {
     case ADD_PAGE:
       return [...state, action.payload];
@@ -19,4 +19,4 @@ export default function (state, action) {
     default:
       return state;
   }
-}
+};
