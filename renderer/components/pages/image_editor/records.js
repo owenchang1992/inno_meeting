@@ -46,6 +46,15 @@ export default ({ history, drawRecord }) => {
             return `${round(left)}${round(top)}${round(width)}${round(height)}${color}`;
           };
 
+          const getContent = () => {
+            const {
+              left, top, width, height,
+            } = value.properties;
+            const { round } = Math;
+
+            return `(${round(left)}, ${round(top)}, ${round(width)}, ${round(height)})`;
+          };
+
           return value.action === 'draw-image'
             ? null
             : (
@@ -66,7 +75,7 @@ export default ({ history, drawRecord }) => {
                 <span className="icon icon-record" style={{ color: tag.color, marginRight: '5px' }} />
                 <strong>{tag.name}</strong>
                 <br />
-                {value.action}
+                { getContent() }
               </div>
             );
         })
