@@ -13,7 +13,7 @@ export default ({ history, drawRecord }) => {
       <h5
         className="nav-group-title"
       >
-        ROA
+        ROAs
         <span
           className="icon icon-arrows-ccw"
           role="button"
@@ -37,12 +37,22 @@ export default ({ history, drawRecord }) => {
       {
         history.map((value) => {
           const { tag } = value.properties;
+          const getKey = () => {
+            const {
+              left, top, width, height, color,
+            } = value.properties;
+            const { round } = Math;
+
+            return `${round(left)}${round(top)}${round(width)}${round(height)}${color}`;
+          };
+
           return value.action === 'draw-image'
             ? null
             : (
               <div
                 className="list-group-item"
                 role="button"
+                key={getKey()}
                 style={{
                   padding: '5px 10px',
                   border: '1px solid #ddd',
