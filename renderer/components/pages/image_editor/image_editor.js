@@ -52,16 +52,10 @@ const historyReducer = (state, [type, payload, properties]) => {
 
 const initialPoint = { left: -1, top: -1 };
 
-const defaultTag = {
-  name: 'test',
-  color: '#fdbc40',
-  description: '',
-};
-
 export default function imageEditor({ page, store, closePage }) {
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
-  const [currentTag, setCurrentTag] = useState(defaultTag);
+  const [currentTag, setCurrentTag] = useState({});
   const [image, setImage] = useState(null);
   const [history, dispatch] = useReducer(historyReducer, store.getStore(page.routingPath) || []);
   const [content, setContent] = useState(<div>loading</div>);
@@ -69,7 +63,6 @@ export default function imageEditor({ page, store, closePage }) {
   const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
-  // console.log('image page');
   const getLastRecord = () => (history[history.length - 1]);
 
   // Initial content
