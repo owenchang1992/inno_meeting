@@ -65,6 +65,12 @@ export default function imageEditor({ page, store, closePage }) {
   const dpi = window.devicePixelRatio;
   const getLastRecord = () => (history[history.length - 1]);
 
+  const drawRecord = (record) => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    drawInstructions(context, history[0].snapshot, record);
+  };
+
   // Initial content
   useEffect(() => {
     const onMouseDown = (e) => {
@@ -235,7 +241,7 @@ export default function imageEditor({ page, store, closePage }) {
         content.type === 'canvas' ? (
           <div style={{ height: '100%' }}>
             <Labels setCurrentTag={setCurrentTag} currentTag={currentTag} />
-            <Record history={history} />
+            <Record history={history} drawRecord={drawRecord} />
           </div>
         ) : null
       }
