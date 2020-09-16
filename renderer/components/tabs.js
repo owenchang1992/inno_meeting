@@ -25,7 +25,7 @@ export default function tabs({ pages, closePage }) {
             className={`tab-item ${getTab(page)}`}
             role="button"
             onClick={(e) => handleClick(e, page)}
-            onKeyDown={() => { console.log('key down'); }}
+            onKeyDown={() => {}}
             tabIndex={0}
           >
             <span className="icon icon-cancel icon-close-tab" />

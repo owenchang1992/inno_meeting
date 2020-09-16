@@ -20,7 +20,6 @@ const reactStore = (() => {
 
   const removeStore = (name) => {
     delete store[name];
-    console.log(store);
   };
 
   return {

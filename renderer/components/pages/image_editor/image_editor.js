@@ -132,7 +132,6 @@ export default function imageEditor({ page, store, closePage }) {
           );
         })
         .catch(() => {
-          console.log('loading image error');
           setContent(<div>Loading Media Error</div>);
           setTimeout(() => {
             routeHistory.goBack();
@@ -147,7 +146,6 @@ export default function imageEditor({ page, store, closePage }) {
 
   // Draw canvas after initialization
   useEffect(() => {
-    console.log(content.type);
     if (canvasRef.current) {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');

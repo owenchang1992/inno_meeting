@@ -43,7 +43,7 @@ function createWindow () {
   // win.webContents.openDevTools()
 
   ipcMain.on('toMain', (e, arg) => {
-    console.log('apb', arg)
+    
   })
 }
 
