@@ -198,17 +198,23 @@ export default function imageEditor({ page, store, closePage }) {
 
       const checkPoint = (point) => (point.left !== -1 && point.top !== -1);
 
+      const isArea = (point1, point2) => (
+        point1.left !== point2.left && point1.top !== point2.top
+      );
+
       if (checkPoint(mouseDownPoint) && content !== null) {
         if (checkPoint(mouseUpPoint)) {
           returnToLastRecord();
-          drawTagRectangle({
-            left: mouseDownPoint.left * scale().scaleX,
-            top: mouseDownPoint.top * scale().scaleY,
-            width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
-            height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
-            color: currentTag.color,
-            tag: currentTag,
-          }, context, canvas.width, canvas.height, dispatch);
+          if (isArea(mouseDownPoint, mouseUpPoint)) {
+            drawTagRectangle({
+              left: mouseDownPoint.left * scale().scaleX,
+              top: mouseDownPoint.top * scale().scaleY,
+              width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
+              height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
+              color: currentTag.color,
+              tag: currentTag,
+            }, context, canvas.width, canvas.height, dispatch);
+          }
         } else if (checkPoint(currentMousePoint)) {
           returnToLastRecord();
           drawPreviewingRectangle({
