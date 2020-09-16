@@ -22,7 +22,7 @@ const containerStyle = {
   height: 'calc(100% - 25px)',
   display: 'flex',
   justifyContent: 'center',
-  // alignItems: 'center',
+  alignItems: 'center',
   padding: '5px',
 };
 
@@ -97,20 +97,18 @@ export default function imageEditor({ page, store, closePage }) {
     };
 
     const createCanvas = (width, height) => (
-      <>
-        <canvas
-          ref={canvasRef}
-          width={width}
-          height={height}
-          style={
-            width < height + 50
-              ? { ...baseStyle, height: '100%' }
-              : { ...baseStyle, width: '100%' }
-          }
-          onMouseDown={(e) => onMouseDown(e)}
-          onMouseUp={(e) => onMouseUp(e)}
-        />
-      </>
+      <canvas
+        ref={canvasRef}
+        width={width}
+        height={height}
+        style={
+          width < height + 50
+            ? { ...baseStyle, height: '100%' }
+            : { ...baseStyle, width: '100%' }
+        }
+        onMouseDown={(e) => onMouseDown(e)}
+        onMouseUp={(e) => onMouseUp(e)}
+      />
     );
 
     const drawSnapshot = () => {
@@ -149,6 +147,7 @@ export default function imageEditor({ page, store, closePage }) {
 
   // Draw canvas after initialization
   useEffect(() => {
+    console.log(content.type);
     if (canvasRef.current) {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
@@ -234,10 +233,14 @@ export default function imageEditor({ page, store, closePage }) {
       style={containerStyle}
     >
       { content }
-      <div>
-        <Labels setCurrentTag={setCurrentTag} currentTag={currentTag} />
-        <Record history={history} />
-      </div>
+      {
+        content.type === 'canvas' ? (
+          <div style={{ height: '100%' }}>
+            <Labels setCurrentTag={setCurrentTag} currentTag={currentTag} />
+            <Record history={history} />
+          </div>
+        ) : null
+      }
     </div>
   );
 }
