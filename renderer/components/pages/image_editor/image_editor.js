@@ -208,7 +208,7 @@ export default function imageEditor({ page, store, closePage }) {
             height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
             color: currentTag.color,
             tag: currentTag,
-          }, context, canvas.width, canvas.height, dispatch, currentTag);
+          }, context, canvas.width, canvas.height, dispatch);
         } else if (checkPoint(currentMousePoint)) {
           returnToLastRecord();
           drawPreviewingRectangle({
