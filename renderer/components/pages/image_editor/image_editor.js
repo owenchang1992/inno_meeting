@@ -6,7 +6,12 @@ import React, {
 } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { loadImage, drawTagRectangle, drawPreviewingRectangle } from './editor_utils';
+import {
+  loadImage,
+  drawTagRectangle,
+  drawPreviewingRectangle,
+  drawInstructions,
+} from './editor_utils';
 
 import Labels from './tags';
 import Record from './records';
@@ -151,7 +156,7 @@ export default function imageEditor({ page, store, closePage }) {
       const context = canvas.getContext('2d');
 
       if (history.length > 0) {
-        context.putImageData(getLastRecord().snapshot, 0, 0);
+        drawInstructions(context, history[0].snapshot, history);
       } else {
         const width = image.naturalWidth * dpi;
         const height = image.naturalHeight * dpi;
@@ -193,8 +198,10 @@ export default function imageEditor({ page, store, closePage }) {
         context.putImageData(getLastRecord().snapshot, 0, 0);
       };
 
+      // Check the point isn't in initial state
       const checkPoint = (point) => (point.left !== -1 && point.top !== -1);
 
+      // Check the scope in point1 and point2 isn't a line or a point
       const isArea = (point1, point2) => (
         point1.left !== point2.left && point1.top !== point2.top
       );

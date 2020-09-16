@@ -66,3 +66,14 @@ export const drawTagRectangle = (properties, context, width, height, dispatch) =
     properties,
   ]);
 };
+
+export const drawInstructions = (ctx, imgData, history) => {
+  console.log(history);
+  ctx.putImageData(imgData, 0, 0);
+  history.map((record) => {
+    if (record.action === 'draw-rectangle') {
+      drawRectangle(record.properties, ctx);
+    }
+    return true;
+  });
+};
