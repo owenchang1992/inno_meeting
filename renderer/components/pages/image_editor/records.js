@@ -15,7 +15,7 @@ export default ({ history, drawRecord }) => {
       >
         ROA
         <span
-          className="icon icon-ccw"
+          className="icon icon-arrows-ccw"
           role="button"
           aria-label="Mute volume"
           style={{
