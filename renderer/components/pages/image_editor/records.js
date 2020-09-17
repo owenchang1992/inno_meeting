@@ -54,7 +54,7 @@ export default ({
                 key={key}
                 style={{
                   padding: '5px 10px',
-                  border: `1px solid ${findRecordIndex(value, showRecords) === -1 ? '#ddd' : '#333333'}`,
+                  border: `1px solid ${findRecordIndex(value, showRecords) === -1 ? '#ddd' : '#777'}`,
                   borderRadius: '3px',
                   marginTop: '5px',
                 }}
