@@ -192,12 +192,15 @@ export default function imageEditor({ page, store, closePage }) {
   }, [content, image]);
 
   // Cache history after history updated
-  useEffect(
-    () => store.addStore({
+  useEffect(() => {
+    store.addStore({
       name: page.routingPath,
       content: history,
-    }), [history],
-  );
+    });
+    const newRecords = [...history];
+    newRecords.splice(0, 1);
+    setShowRecords(newRecords);
+  }, [history]);
 
   // handle mouse events
   useEffect(() => {
