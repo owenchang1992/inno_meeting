@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
 
 export default ({ history, drawRecord }) => {
-  console.log(history);
+  // console.log(history);
   const [showRecords, setShowRecords] = useState([]);
 
+  const findRecordIndex = (value) => showRecords.findIndex(
+    (record) => (record.properties.key === value.properties.key),
+  );
+
   const toggleRecords = (value) => {
-    setShowRecords([...showRecords, value]);
+    const index = findRecordIndex(value);
+    if (index === -1) {
+      setShowRecords([...showRecords, value]);
+    } else {
+      showRecords.splice(index, 1);
+      setShowRecords([...showRecords]);
+    }
   };
 
   useEffect(() => {
-    if (showRecords.length !== 0) {
+    if (history.length !== 0) {
       drawRecord(showRecords);
     }
   }, [showRecords]);
@@ -42,15 +52,7 @@ export default ({ history, drawRecord }) => {
       </h5>
       {
         history.map((value) => {
-          const { tag } = value.properties;
-          const getKey = () => {
-            const {
-              left, top, width, height, color,
-            } = value.properties;
-            const { round } = Math;
-
-            return `${round(left)}${round(top)}${round(width)}${round(height)}${color}`;
-          };
+          const { tag, key } = value.properties;
 
           const getContent = () => {
             const {
@@ -67,10 +69,10 @@ export default ({ history, drawRecord }) => {
               <div
                 className="list-group-item"
                 role="button"
-                key={getKey()}
+                key={key}
                 style={{
                   padding: '5px 10px',
-                  border: '1px solid #ddd',
+                  border: `1px solid ${findRecordIndex(value) === -1 ? '#ddd' : '#333333'}`,
                   borderRadius: '3px',
                   marginTop: '5px',
                 }}
