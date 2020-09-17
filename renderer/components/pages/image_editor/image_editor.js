@@ -107,7 +107,7 @@ export default function imageEditor({ page, store, closePage }) {
         style={
           width < height + 50
             ? { ...baseStyle, height: '100%' }
-            : { ...baseStyle, width: '100%' }
+            : { ...baseStyle, width: 'calc(100% - 10em)' }
         }
         onMouseDown={(e) => onMouseDown(e)}
         onMouseUp={(e) => onMouseUp(e)}
@@ -234,7 +234,7 @@ export default function imageEditor({ page, store, closePage }) {
       { content }
       {
         content.type === 'canvas' ? (
-          <div style={{ height: '100%' }}>
+          <div style={{ height: '100%', width: '10em' }}>
             <Labels setCurrentTag={setCurrentTag} currentTag={currentTag} />
             <Record history={history} drawRecord={drawRecord} />
           </div>
