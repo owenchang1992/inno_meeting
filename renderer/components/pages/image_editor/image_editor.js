@@ -164,6 +164,7 @@ export default function imageEditor({ page, store, closePage }) {
           'draw-image',
           context.getImageData(0, 0, width, height),
           {
+            key: 'init',
             tag: currentTag,
             path: page.props.imagePath,
           },
