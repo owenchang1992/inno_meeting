@@ -1,28 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-export default ({ history, drawRecord }) => {
-  // console.log(history);
-  const [showRecords, setShowRecords] = useState([]);
-
+export default ({
+  history,
+  drawRecord,
+  showRecords,
+  toggleRecords,
+}) => {
   const findRecordIndex = (value) => showRecords.findIndex(
     (record) => (record.properties.key === value.properties.key),
   );
-
-  const toggleRecords = (value) => {
-    const index = findRecordIndex(value);
-    if (index === -1) {
-      setShowRecords([...showRecords, value]);
-    } else {
-      showRecords.splice(index, 1);
-      setShowRecords([...showRecords]);
-    }
-  };
-
-  useEffect(() => {
-    if (history.length !== 0) {
-      drawRecord(showRecords);
-    }
-  }, [showRecords]);
 
   return (
     <>

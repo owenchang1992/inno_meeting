@@ -59,6 +59,7 @@ export default function imageEditor({ page, store, closePage }) {
   const [history, dispatch] = useReducer(historyReducer, store.getStore(page.routingPath) || []);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
+  const [showRecords, setShowRecords] = useState([]);
   const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
@@ -69,6 +70,26 @@ export default function imageEditor({ page, store, closePage }) {
     const context = canvas.getContext('2d');
     drawInstructions(context, history[0].snapshot, record);
   };
+
+  const findRecordIndex = (value) => showRecords.findIndex(
+    (record) => (record.properties.key === value.properties.key),
+  );
+
+  const toggleRecords = (value) => {
+    const index = findRecordIndex(value);
+    if (index === -1) {
+      setShowRecords([...showRecords, value]);
+    } else {
+      showRecords.splice(index, 1);
+      setShowRecords([...showRecords]);
+    }
+  };
+
+  useEffect(() => {
+    if (history.length !== 0) {
+      drawRecord(showRecords);
+    }
+  }, [showRecords]);
 
   // Initial content
   useEffect(() => {
@@ -237,7 +258,12 @@ export default function imageEditor({ page, store, closePage }) {
         content.type === 'canvas' ? (
           <div style={{ height: '100%', width: '11em' }}>
             <Labels setCurrentTag={setCurrentTag} currentTag={currentTag} />
-            <Record history={history} drawRecord={drawRecord} />
+            <Record
+              history={history}
+              drawRecord={drawRecord}
+              toggleRecords={toggleRecords}
+              showRecords={showRecords}
+            />
           </div>
         ) : null
       }
