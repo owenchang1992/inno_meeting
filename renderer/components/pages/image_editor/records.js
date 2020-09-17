@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default ({ history, drawRecord }) => {
   console.log(history);
-  // const [showRecord, setShowRecord] = useState([]);
+  const [showRecords, setShowRecords] = useState([]);
 
-  // useEffect(() => {
-  //   drawRecord(showRecord);
-  // }, [showRecord]);
+  const toggleRecords = (value) => {
+    setShowRecords([...showRecords, value]);
+  };
+
+  useEffect(() => {
+    if (showRecords.length !== 0) {
+      drawRecord(showRecords);
+    }
+  }, [showRecords]);
 
   return (
     <>
@@ -69,7 +75,7 @@ export default ({ history, drawRecord }) => {
                   marginTop: '5px',
                 }}
                 tabIndex={0}
-                onClick={() => { drawRecord([value]); }}
+                onClick={() => { toggleRecords(value); }}
                 onKeyDown={() => (null)}
               >
                 <span className="icon icon-record" style={{ color: tag.color, marginRight: '5px' }} />
