@@ -55,20 +55,18 @@ export const drawPreviewingRectangle = (position, context) => {
   }, context);
 };
 
-export const drawTagRectangle = (properties, context, width, height, dispatch) => {
+export const drawTagRectangle = (properties, context, dispatch) => {
   // Draw Rectangle
   drawRectangle(properties, context);
 
   // Record
   dispatch([
     'draw-rectangle',
-    context.getImageData(0, 0, width, height),
     properties,
   ]);
 };
 
 export const drawInstructions = (ctx, imgData, history) => {
-  console.log(history);
   ctx.putImageData(imgData, 0, 0);
   history.map((record) => {
     if (record.action === 'draw-rectangle') {

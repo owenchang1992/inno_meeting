@@ -42,8 +42,7 @@ const historyReducer = (state, [type, payload, properties]) => {
     case 'draw-rectangle':
       return [...state, {
         action: type,
-        snapshot: payload,
-        properties,
+        properties: payload,
       }];
     default:
       return state;
@@ -63,7 +62,7 @@ export default function imageEditor({ page, store, closePage }) {
   const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
-  const getLastRecord = () => (history[history.length - 1]);
+  const getRecordImage = () => (history[0]);
 
   const drawRecord = (record) => {
     const canvas = canvasRef.current;
@@ -118,8 +117,8 @@ export default function imageEditor({ page, store, closePage }) {
     const drawSnapshot = () => {
       setContent(
         createCanvas(
-          getLastRecord().snapshot.width,
-          getLastRecord().snapshot.height,
+          getRecordImage().snapshot.width,
+          getRecordImage().snapshot.height,
         ),
       );
     };
@@ -192,11 +191,6 @@ export default function imageEditor({ page, store, closePage }) {
         scaleY: canvas.height / context.canvas.offsetHeight,
       });
 
-      // Refresh to last snapshot
-      const returnToLastRecord = () => {
-        context.putImageData(getLastRecord().snapshot, 0, 0);
-      };
-
       // Check the point isn't in initial state
       const checkPoint = (point) => (point.left !== -1 && point.top !== -1);
 
@@ -207,7 +201,7 @@ export default function imageEditor({ page, store, closePage }) {
 
       if (checkPoint(mouseDownPoint) && content !== null) {
         if (checkPoint(mouseUpPoint)) {
-          returnToLastRecord();
+          drawRecord(history);
           if (isArea(mouseDownPoint, mouseUpPoint)) {
             drawTagRectangle({
               left: mouseDownPoint.left * scale().scaleX,
@@ -216,10 +210,11 @@ export default function imageEditor({ page, store, closePage }) {
               height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
               color: currentTag.color,
               tag: currentTag,
-            }, context, canvas.width, canvas.height, dispatch);
+            }, context, dispatch);
           }
         } else if (checkPoint(currentMousePoint)) {
-          returnToLastRecord();
+          // console.log(history);
+          drawRecord(history);
           drawPreviewingRectangle({
             left: mouseDownPoint.left * scale().scaleX,
             top: mouseDownPoint.top * scale().scaleY,
