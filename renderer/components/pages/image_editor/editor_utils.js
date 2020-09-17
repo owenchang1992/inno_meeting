@@ -87,3 +87,7 @@ export const drawInstructions = (ctx, imgData, history) => {
     return true;
   });
 };
+
+export const findRecordIndex = (value, records) => records.findIndex(
+  (record) => (record.properties.key === value.properties.key),
+);

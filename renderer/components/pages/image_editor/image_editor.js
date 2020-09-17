@@ -11,6 +11,7 @@ import {
   drawTagRectangle,
   drawPreviewingRectangle,
   drawInstructions,
+  findRecordIndex,
 } from './editor_utils';
 
 import Labels from './tags';
@@ -71,12 +72,8 @@ export default function imageEditor({ page, store, closePage }) {
     drawInstructions(context, history[0].snapshot, record);
   };
 
-  const findRecordIndex = (value) => showRecords.findIndex(
-    (record) => (record.properties.key === value.properties.key),
-  );
-
   const toggleRecords = (value) => {
-    const index = findRecordIndex(value);
+    const index = findRecordIndex(value, showRecords);
     if (index === -1) {
       setShowRecords([...showRecords, value]);
     } else {

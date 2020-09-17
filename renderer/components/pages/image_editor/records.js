@@ -1,4 +1,5 @@
 import React from 'react';
+import { findRecordIndex } from './editor_utils';
 
 export default ({
   history,
@@ -6,10 +7,7 @@ export default ({
   showRecords,
   toggleRecords,
 }) => {
-  const findRecordIndex = (value) => showRecords.findIndex(
-    (record) => (record.properties.key === value.properties.key),
-  );
-
+  console.log('record history');
   return (
     <>
       <h5 className="nav-group-title">
@@ -56,7 +54,7 @@ export default ({
                 key={key}
                 style={{
                   padding: '5px 10px',
-                  border: `1px solid ${findRecordIndex(value) === -1 ? '#ddd' : '#333333'}`,
+                  border: `1px solid ${findRecordIndex(value, showRecords) === -1 ? '#ddd' : '#333333'}`,
                   borderRadius: '3px',
                   marginTop: '5px',
                 }}
