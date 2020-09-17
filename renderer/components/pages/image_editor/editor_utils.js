@@ -59,10 +59,22 @@ export const drawTagRectangle = (properties, context, dispatch) => {
   // Draw Rectangle
   drawRectangle(properties, context);
 
+  const generateKey = () => {
+    const {
+      left, top, width, height, color,
+    } = properties;
+    const { round } = Math;
+
+    return `${round(left)}${round(top)}${round(width)}${round(height)}${color}`;
+  };
+
   // Record
   dispatch([
     'draw-rectangle',
-    properties,
+    {
+      ...properties,
+      key: generateKey(properties),
+    },
   ]);
 };
 
