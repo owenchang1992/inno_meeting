@@ -26,9 +26,7 @@ export default ({ history, drawRecord }) => {
 
   return (
     <>
-      <h5
-        className="nav-group-title"
-      >
+      <h5 className="nav-group-title">
         ROAs
         <span
           className="icon icon-arrows-ccw"
