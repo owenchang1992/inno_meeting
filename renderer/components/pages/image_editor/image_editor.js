@@ -82,6 +82,12 @@ export default function imageEditor({ page, store, closePage }) {
     }
   };
 
+  const drawAllRecords = () => {
+    const newRecords = [...history];
+    newRecords.splice(0, 1);
+    setShowRecords(newRecords);
+  };
+
   useEffect(() => {
     if (history.length !== 0) {
       drawRecord(showRecords);
@@ -197,9 +203,7 @@ export default function imageEditor({ page, store, closePage }) {
       name: page.routingPath,
       content: history,
     });
-    const newRecords = [...history];
-    newRecords.splice(0, 1);
-    setShowRecords(newRecords);
+    drawAllRecords();
   }, [history]);
 
   // handle mouse events
@@ -263,6 +267,7 @@ export default function imageEditor({ page, store, closePage }) {
               drawRecord={drawRecord}
               toggleRecords={toggleRecords}
               showRecords={showRecords}
+              drawAllRecords={drawAllRecords}
             />
           </div>
         ) : null

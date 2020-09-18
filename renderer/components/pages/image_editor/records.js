@@ -3,9 +3,9 @@ import { findRecordIndex } from './editor_utils';
 
 export default ({
   history,
-  drawRecord,
   showRecords,
   toggleRecords,
+  drawAllRecords,
 }) => {
   console.log('record history');
   return (
@@ -28,7 +28,45 @@ export default ({
           // onMouseOut={() => setNewTagState(null)}
           // onBlur={() => {}}
           tabIndex={0}
-          onClick={() => { drawRecord(history); }}
+          onClick={() => { drawAllRecords(); }}
+          onKeyDown={() => (null)}
+        />
+        <span
+          className="icon icon-eye"
+          role="button"
+          aria-label="Mute volume"
+          style={{
+            padding: '0px 4px',
+            // border: `1px solid ${newTagState !== 'hover' ? '#ddd' : 'gray'}`,
+            borderRadius: '3px',
+            marginLeft: '5px',
+            // color: newTagState !== 'hover' ? '#ddd' : 'gray',
+          }}
+          // onMouseOver={() => setNewTagState('hover')}
+          // onFocus={() => setNewTagState(null)}
+          // onMouseOut={() => setNewTagState(null)}
+          // onBlur={() => {}}
+          tabIndex={0}
+          onClick={() => { }}
+          onKeyDown={() => (null)}
+        />
+        <span
+          className="icon icon-trash"
+          role="button"
+          aria-label="Mute volume"
+          style={{
+            padding: '0px 4px',
+            // border: `1px solid ${newTagState !== 'hover' ? '#ddd' : 'gray'}`,
+            borderRadius: '3px',
+            marginLeft: '5px',
+            // color: newTagState !== 'hover' ? '#ddd' : 'gray',
+          }}
+          // onMouseOver={() => setNewTagState('hover')}
+          // onFocus={() => setNewTagState(null)}
+          // onMouseOut={() => setNewTagState(null)}
+          // onBlur={() => {}}
+          tabIndex={0}
+          onClick={() => { }}
           onKeyDown={() => (null)}
         />
       </h5>
@@ -53,7 +91,8 @@ export default ({
                 role="button"
                 key={key}
                 style={{
-                  padding: '5px 10px',
+                  position: 'relative',
+                  padding: '5px 0px 5px 10px',
                   border: `1px solid ${findRecordIndex(value, showRecords) === -1 ? '#ddd' : '#777'}`,
                   borderRadius: '3px',
                   marginTop: '5px',
