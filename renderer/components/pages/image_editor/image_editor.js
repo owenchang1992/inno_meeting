@@ -60,7 +60,7 @@ export default function imageEditor({ page, store, closePage }) {
   const [history, dispatch] = useReducer(historyReducer, store.getStore(page.routingPath) || []);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
-  const [showRecords, setShowRecords] = useState([]);
+  const [selectedRecords, setShowRecords] = useState([]);
   const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
@@ -73,12 +73,12 @@ export default function imageEditor({ page, store, closePage }) {
   };
 
   const toggleRecords = (value) => {
-    const index = findRecordIndex(value, showRecords);
+    const index = findRecordIndex(value, selectedRecords);
     if (index === -1) {
-      setShowRecords([...showRecords, value]);
+      setShowRecords([...selectedRecords, value]);
     } else {
-      showRecords.splice(index, 1);
-      setShowRecords([...showRecords]);
+      selectedRecords.splice(index, 1);
+      setShowRecords([...selectedRecords]);
     }
   };
 
@@ -90,9 +90,9 @@ export default function imageEditor({ page, store, closePage }) {
 
   useEffect(() => {
     if (history.length !== 0) {
-      drawRecord(showRecords);
+      drawRecord(selectedRecords);
     }
-  }, [showRecords]);
+  }, [selectedRecords]);
 
   // Initial content
   useEffect(() => {
@@ -266,7 +266,7 @@ export default function imageEditor({ page, store, closePage }) {
               history={history}
               drawRecord={drawRecord}
               toggleRecords={toggleRecords}
-              showRecords={showRecords}
+              selectedRecords={selectedRecords}
               drawAllRecords={drawAllRecords}
             />
           </div>

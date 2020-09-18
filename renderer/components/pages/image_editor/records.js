@@ -3,7 +3,7 @@ import { findRecordIndex } from './editor_utils';
 
 export default ({
   history,
-  showRecords,
+  selectedRecords,
   toggleRecords,
   drawAllRecords,
 }) => {
@@ -93,7 +93,7 @@ export default ({
                 style={{
                   position: 'relative',
                   padding: '5px 0px 5px 10px',
-                  border: `1px solid ${findRecordIndex(value, showRecords) === -1 ? '#ddd' : '#777'}`,
+                  border: `1px solid ${findRecordIndex(value, selectedRecords) === -1 ? '#ddd' : '#777'}`,
                   borderRadius: '3px',
                   marginTop: '5px',
                 }}
