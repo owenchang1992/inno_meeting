@@ -266,8 +266,6 @@ export default function imageEditor({ page, store, closePage }) {
               history={history}
               toggleRecords={toggleRecords}
               selectedRecords={selectedRecords}
-              drawAllRecords={drawAllRecords}
-              setSelectedRecords={setSelectedRecords}
             />
           </div>
         ) : null
