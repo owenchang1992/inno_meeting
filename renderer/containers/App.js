@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import '../assets/css/photon.css';
 
@@ -22,10 +22,13 @@ const reactStore = (() => {
     delete store[name];
   };
 
+  const getAll = () => store;
+
   return {
     addStore,
     getStore,
     removeStore,
+    getAll,
   };
 })();
 
@@ -46,6 +49,17 @@ const App = () => {
       page.routingPath === midiaPath
     ))
   );
+
+  useEffect(() => {
+    window.api.receive('fromMain', () => {
+      // console.log(JSON.stringify(reactStore.getAll()));
+      window.api.send('toMain', reactStore.getAll());
+    });
+
+    return () => {
+      window.api.removeListener('fromMain');
+    };
+  }, []);
 
   return (
     <Router>

@@ -37,13 +37,21 @@ function createWindow () {
 	});
 
   // and load the index.html of the app.
-	win.loadURL(indexURL)
+  win.loadURL(indexURL)
+  
+  win.on('close', (e) => {
+    if (win) {
+      e.preventDefault();
+      win.webContents.send('fromMain', 'close_window');
+      console.log('close window 1')
+    }
+});
 
   // Open the DevTools.
   // win.webContents.openDevTools()
 
   ipcMain.on('toMain', (e, arg) => {
-    
+    console.log(arg)
   })
 }
 

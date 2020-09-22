@@ -23,6 +23,12 @@ contextBridge.exposeInMainWorld(
                 ipcRenderer.on(channel, (event, ...args) => func(...args));
             }
         },
+        removeListener: (channel) => {
+            console.log(channel, 'remove');
+            ipcRenderer.removeListener(channel, () => {
+                console.log(channel, 'remove');
+            });
+        },
         getHomeDir: nodeTools.getHomeDir
     }
 );
