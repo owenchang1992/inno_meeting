@@ -34,14 +34,8 @@ const containerStyle = {
   padding: '5px',
 };
 
-const historyReducer = (state, [type, payload, properties]) => {
+const historyReducer = (state, [type, payload]) => {
   switch (type) {
-    case 'draw-image':
-      return [...state, {
-        action: type,
-        snapshot: payload,
-        properties,
-      }];
     case 'draw-rectangle':
       return [...state, {
         action: type,
@@ -86,14 +80,12 @@ export default function imageEditor({ page, store, closePage }) {
   );
 
   const drawAllRecords = () => {
-    const newRecords = [...history];
-    newRecords.splice(0, 1);
-    setSelectedRecords(newRecords);
+    setSelectedRecords([...history]);
   };
 
   useEffect(() => {
     if (history.length !== 0) {
-      // drawRecord(selectedRecords);
+      drawRecord(selectedRecords);
     }
   }, [selectedRecords]);
 
@@ -141,17 +133,7 @@ export default function imageEditor({ page, store, closePage }) {
       />
     );
 
-    const drawSnapshot = () => {
-      // setContent(
-      //   createCanvas(
-      //     getRecordImage().snapshot.width,
-      //     getRecordImage().snapshot.height,
-      //   ),
-      // );
-    };
-
     const drawImage = () => {
-      console.log(page.props.imagePath);
       loadImage(page.props.imagePath)
         .then((img) => {
           setContent(
@@ -178,8 +160,7 @@ export default function imageEditor({ page, store, closePage }) {
         });
     };
 
-    if (history.length > 0) drawSnapshot();
-    else drawImage();
+    drawImage();
   }, []);
 
   // Cache history after history updated

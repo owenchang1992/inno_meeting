@@ -6,7 +6,7 @@ export default ({
   selectedRecords,
   toggleRecords,
 }) => {
-  console.log('record history');
+  console.log('record history', history);
   return (
     <>
       <h5 className="nav-group-title">
@@ -25,30 +25,28 @@ export default ({
             return `(${round(left)}, ${round(top)}, ${round(width)}, ${round(height)})`;
           };
 
-          return value.action === 'draw-image'
-            ? null
-            : (
-              <div
-                className="list-group-item"
-                role="button"
-                key={key}
-                style={{
-                  position: 'relative',
-                  padding: '5px 0px 5px 10px',
-                  border: `1px solid ${findRecordIndex(value, selectedRecords) === -1 ? '#ddd' : '#777'}`,
-                  borderRadius: '3px',
-                  marginTop: '5px',
-                }}
-                tabIndex={0}
-                onClick={() => { toggleRecords(value); }}
-                onKeyDown={() => (null)}
-              >
-                <span className="icon icon-record" style={{ color: tag.color, marginRight: '5px' }} />
-                <strong>{tag.name}</strong>
-                <br />
-                { getContent() }
-              </div>
-            );
+          return (
+            <div
+              className="list-group-item"
+              role="button"
+              key={key}
+              style={{
+                position: 'relative',
+                padding: '5px 0px 5px 10px',
+                border: `1px solid ${findRecordIndex(value, selectedRecords) === -1 ? '#ddd' : '#777'}`,
+                borderRadius: '3px',
+                marginTop: '5px',
+              }}
+              tabIndex={0}
+              onClick={() => { toggleRecords(value); }}
+              onKeyDown={() => (null)}
+            >
+              <span className="icon icon-record" style={{ color: tag.color, marginRight: '5px' }} />
+              <strong>{tag.name}</strong>
+              <br />
+              { getContent() }
+            </div>
+          );
         })
       }
     </>
