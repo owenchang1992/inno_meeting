@@ -12,7 +12,7 @@ import {
   loadImage,
   drawTagRectangle,
   drawPreviewingRectangle,
-  // drawInstructions,
+  drawInstructions,
   findRecordIndex,
 } from './editor_utils';
 
@@ -57,6 +57,7 @@ const initialPoint = { left: -1, top: -1 };
 export default function imageEditor({ page, store, closePage }) {
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
+  const [snapshot, setSnapshot] = useState(null);
   const [currentTag, setCurrentTag] = useState({});
   const [history, dispatch] = useReducer(historyReducer, store.getStore(page.routingPath) || []);
   const [content, setContent] = useState(<div>loading</div>);
@@ -66,12 +67,10 @@ export default function imageEditor({ page, store, closePage }) {
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
 
-  // const getRecordImage = () => (history[0]);
-
-  const drawRecord = () => {
-  //   const canvas = canvasRef.current;
-  //   const context = canvas.getContext('2d');
-  //   drawInstructions(context, history[0].snapshot, record);
+  const drawRecord = (record) => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    drawInstructions(context, snapshot, record);
   };
 
   const toggleRecords = useCallback(
@@ -152,6 +151,7 @@ export default function imageEditor({ page, store, closePage }) {
     };
 
     const drawImage = () => {
+      console.log(page.props.imagePath);
       loadImage(page.props.imagePath)
         .then((img) => {
           setContent(
@@ -166,9 +166,11 @@ export default function imageEditor({ page, store, closePage }) {
           const width = img.naturalWidth * dpi;
           const height = img.naturalHeight * dpi;
           context.drawImage(img, 0, 0, width, height);
+          setSnapshot(context.getImageData(0, 0, width, height));
         })
-        .catch(() => {
+        .catch((err) => {
           setContent(<div>Loading Media Error</div>);
+          console.log(err);
           setTimeout(() => {
             routeHistory.goBack();
             closePage(page);
