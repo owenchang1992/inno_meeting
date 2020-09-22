@@ -230,10 +230,10 @@ export default function imageEditor({ page, store, closePage }) {
           drawRecord(history);
           if (isArea(mouseDownPoint, mouseUpPoint)) {
             drawTagRectangle({
-              left: mouseDownPoint.left * scale().scaleX,
-              top: mouseDownPoint.top * scale().scaleY,
-              width: (mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX,
-              height: (mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY,
+              left: Math.round(mouseDownPoint.left * scale().scaleX),
+              top: Math.round(mouseDownPoint.top * scale().scaleY),
+              width: Math.round((mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX),
+              height: Math.round((mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY),
               color: currentTag.color,
               tag: currentTag,
             }, context, dispatch);
