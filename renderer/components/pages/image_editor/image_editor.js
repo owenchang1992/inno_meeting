@@ -80,11 +80,13 @@ export default function imageEditor({ page, store, closePage }) {
   );
 
   const drawAllRecords = () => {
+    console.log('drawAllRecords');
     setSelectedRecords([...history]);
   };
 
   useEffect(() => {
-    if (history.length !== 0) {
+    console.log('selectedRecords');
+    if (history.length !== 0 && content.type === 'canvas') {
       drawRecord(selectedRecords);
     }
   }, [selectedRecords]);
@@ -149,6 +151,7 @@ export default function imageEditor({ page, store, closePage }) {
           const height = img.naturalHeight * dpi;
           context.drawImage(img, 0, 0, width, height);
           setSnapshot(context.getImageData(0, 0, width, height));
+          if (history.length !== 0) drawAllRecords();
         })
         .catch((err) => {
           setContent(<div>Loading Media Error</div>);
