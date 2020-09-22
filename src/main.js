@@ -43,9 +43,9 @@ function createWindow () {
     if (win) {
       e.preventDefault();
       win.webContents.send('fromMain', 'close_window');
-      console.log('close window 1')
+      console.log('close window 1');
     }
-});
+  });
 
   // Open the DevTools.
   // win.webContents.openDevTools()

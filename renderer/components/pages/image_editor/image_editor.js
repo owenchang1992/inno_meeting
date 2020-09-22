@@ -80,7 +80,6 @@ export default function imageEditor({ page, store, closePage }) {
   );
 
   const drawAllRecords = () => {
-    console.log('drawAllRecords');
     setSelectedRecords([...history]);
   };
 
