@@ -3,7 +3,9 @@ import React, {
   useRef,
   useState,
   useReducer,
+  useCallback,
 } from 'react';
+
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -64,6 +66,7 @@ export default function imageEditor({ page, store, closePage }) {
   const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
+
   const getRecordImage = () => (history[0]);
 
   const drawRecord = (record) => {
@@ -72,15 +75,17 @@ export default function imageEditor({ page, store, closePage }) {
     drawInstructions(context, history[0].snapshot, record);
   };
 
-  const toggleRecords = (value) => {
-    const index = findRecordIndex(value, selectedRecords);
-    if (index === -1) {
-      setSelectedRecords([...selectedRecords, value]);
-    } else {
-      selectedRecords.splice(index, 1);
-      setSelectedRecords([...selectedRecords]);
-    }
-  };
+  const toggleRecords = useCallback(
+    (value) => {
+      const index = findRecordIndex(value, selectedRecords);
+      if (index === -1) {
+        setSelectedRecords([...selectedRecords, value]);
+      } else {
+        selectedRecords.splice(index, 1);
+        setSelectedRecords([...selectedRecords]);
+      }
+    },
+  );
 
   const drawAllRecords = () => {
     const newRecords = [...history];
@@ -259,7 +264,7 @@ export default function imageEditor({ page, store, closePage }) {
     >
       { content }
       {
-        content.type === 'canvas' ? (
+        useCallback(content.type === 'canvas' ? (
           <div style={{ height: '100%', width: '11em' }}>
             <Labels setCurrentTag={setCurrentTag} currentTag={currentTag} />
             <Record
@@ -268,7 +273,7 @@ export default function imageEditor({ page, store, closePage }) {
               selectedRecords={selectedRecords}
             />
           </div>
-        ) : null
+        ) : null, [history, currentTag, selectedRecords, content])
       }
     </div>
   );
