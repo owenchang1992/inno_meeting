@@ -12,7 +12,7 @@ import {
   loadImage,
   drawTagRectangle,
   drawPreviewingRectangle,
-  drawInstructions,
+  // drawInstructions,
   findRecordIndex,
 } from './editor_utils';
 
@@ -58,7 +58,6 @@ export default function imageEditor({ page, store, closePage }) {
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [currentTag, setCurrentTag] = useState({});
-  const [image, setImage] = useState(null);
   const [history, dispatch] = useReducer(historyReducer, store.getStore(page.routingPath) || []);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
@@ -67,12 +66,12 @@ export default function imageEditor({ page, store, closePage }) {
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
 
-  const getRecordImage = () => (history[0]);
+  // const getRecordImage = () => (history[0]);
 
-  const drawRecord = (record) => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-    drawInstructions(context, history[0].snapshot, record);
+  const drawRecord = () => {
+  //   const canvas = canvasRef.current;
+  //   const context = canvas.getContext('2d');
+  //   drawInstructions(context, history[0].snapshot, record);
   };
 
   const toggleRecords = useCallback(
@@ -95,7 +94,7 @@ export default function imageEditor({ page, store, closePage }) {
 
   useEffect(() => {
     if (history.length !== 0) {
-      drawRecord(selectedRecords);
+      // drawRecord(selectedRecords);
     }
   }, [selectedRecords]);
 
@@ -144,24 +143,29 @@ export default function imageEditor({ page, store, closePage }) {
     );
 
     const drawSnapshot = () => {
-      setContent(
-        createCanvas(
-          getRecordImage().snapshot.width,
-          getRecordImage().snapshot.height,
-        ),
-      );
+      // setContent(
+      //   createCanvas(
+      //     getRecordImage().snapshot.width,
+      //     getRecordImage().snapshot.height,
+      //   ),
+      // );
     };
 
     const drawImage = () => {
       loadImage(page.props.imagePath)
         .then((img) => {
-          setImage(img);
           setContent(
             createCanvas(
               img.naturalWidth * dpi,
               img.naturalHeight * dpi,
             ),
           );
+
+          const canvas = canvasRef.current;
+          const context = canvas.getContext('2d');
+          const width = img.naturalWidth * dpi;
+          const height = img.naturalHeight * dpi;
+          context.drawImage(img, 0, 0, width, height);
         })
         .catch(() => {
           setContent(<div>Loading Media Error</div>);
@@ -175,32 +179,6 @@ export default function imageEditor({ page, store, closePage }) {
     if (history.length > 0) drawSnapshot();
     else drawImage();
   }, []);
-
-  // Draw canvas after initialization
-  useEffect(() => {
-    if (canvasRef.current) {
-      const canvas = canvasRef.current;
-      const context = canvas.getContext('2d');
-
-      if (history.length > 0) {
-        drawInstructions(context, history[0].snapshot, history);
-      } else {
-        const width = image.naturalWidth * dpi;
-        const height = image.naturalHeight * dpi;
-        context.drawImage(image, 0, 0, width, height);
-
-        dispatch([
-          'draw-image',
-          context.getImageData(0, 0, width, height),
-          {
-            key: 'init',
-            tag: currentTag,
-            path: page.props.imagePath,
-          },
-        ]);
-      }
-    }
-  }, [content, image]);
 
   // Cache history after history updated
   useEffect(() => {
