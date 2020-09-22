@@ -52,13 +52,11 @@ const App = () => {
 
   useEffect(() => {
     window.api.receive('fromMain', () => {
-      // console.log(JSON.stringify(reactStore.getAll()));
-      window.api.send('toMain', reactStore.getAll());
+      console.log(JSON.stringify(reactStore.getAll()));
+      window.api.send('toMain', JSON.stringify(reactStore.getAll()));
     });
 
-    return () => {
-      window.api.removeListener('fromMain');
-    };
+    return () => window.api.removeListener('fromMain');
   }, []);
 
   return (
