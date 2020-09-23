@@ -16,14 +16,13 @@ if (isDev) {
     // Note that the path to electron may vary according to the main file
     electron: path.join(__dirname, '../', './node_modules/electron')
   });
-  console.log('fdfdf');
 }
 
 function createWindow () {
   const { width, height } = screen.getPrimaryDisplay().rotation;
     // Path to root directory.
-  console.log('createWindow', __dirname);
-  const basePath = isDev ?  path.resolve(__dirname, '../build') : app.getAppPath();
+  console.log('createWindow', app.getAppPath());
+  const basePath = isDev ?  path.resolve(__dirname, '../') : app.getAppPath();
   
   // Create the browser window.
   const win = new BrowserWindow({
@@ -33,27 +32,19 @@ function createWindow () {
       nodeIntegration: false,
       contextIsolation: true, // protect against prototype pollution
       enableRemoteModule: false, // turn off remote
-      preload: path.join(basePath, 'preload.js')
+      preload: path.resolve(basePath, './build/preload.js')
     },
 	})
 
 	// URL for index.html which will be our entry point.
 	const indexURL = URL.format({
-		pathname: path.join(basePath ,'index.html'),
+		pathname: path.resolve(basePath ,'./build/index.html'),
 		protocol: 'file:',
 		slashes: true
 	});
 
   // and load the index.html of the app.
   win.loadURL(indexURL)
-  
-  win.on('close', (e) => {
-    if (win) {
-      e.preventDefault();
-      win.webContents.send('fromMain', 'close_window');
-      // console.log('close window 1');
-    }
-  });
 
   // Open the DevTools.
   // win.webContents.openDevTools()
