@@ -9,7 +9,7 @@ const isDev = require('electron-is-dev')
  * - Enable automatic reloads
  */
 if (isDev) {
-	require('electron-reload')(path.join(__dirname, '../build'));
+	require('electron-reload')(path.resolve(__dirname));
 }
 
 function createWindow () {
