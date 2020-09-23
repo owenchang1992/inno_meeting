@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import App from './containers/app';
+import Wrapper from './containers/wrapper';
 
-ReactDom.render(<App />, document.getElementById('root'));
+ReactDom.render(<Wrapper />, document.getElementById('root'));
