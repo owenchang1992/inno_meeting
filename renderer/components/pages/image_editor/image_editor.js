@@ -53,7 +53,12 @@ export default function imageEditor({ page, store, closePage }) {
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
   const [currentTag, setCurrentTag] = useState({});
-  const [history, dispatch] = useReducer(historyReducer, store.getStore(page.routingPath) || []);
+  const [history, dispatch] = useReducer(
+    historyReducer,
+    store.getStore(page.routingPath)
+      ? store.getStore(page.routingPath).actions
+      : [],
+  );
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
   const [selectedRecords, setSelectedRecords] = useState([]);
@@ -82,13 +87,6 @@ export default function imageEditor({ page, store, closePage }) {
   const drawAllRecords = () => {
     setSelectedRecords([...history]);
   };
-
-  useEffect(() => {
-    console.log('selectedRecords');
-    if (history.length !== 0 && content.type === 'canvas') {
-      drawRecord(selectedRecords);
-    }
-  }, [selectedRecords]);
 
   // Initial content
   useEffect(() => {
@@ -163,13 +161,24 @@ export default function imageEditor({ page, store, closePage }) {
     };
 
     drawImage();
+    store.createStore({
+      name: page.routingPath,
+      type: page.type,
+    });
   }, []);
+
+  useEffect(() => {
+    console.log('selectedRecords');
+    if (content.type === 'canvas' && history.length !== 0) {
+      drawRecord(selectedRecords);
+    }
+  }, [selectedRecords]);
 
   // Cache history after history updated
   useEffect(() => {
     store.addStore({
       name: page.routingPath,
-      content: history,
+      contents: history,
     });
     drawAllRecords();
   }, [history]);
