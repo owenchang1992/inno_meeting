@@ -1,3 +1,7 @@
 module.exports = (props) => {
-	console.log(props);
+  switch(props.name) {
+    case 'local_db':
+      require('../models/nedb')[props.type](props.contents);
+      break;
+  }
 };
