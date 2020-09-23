@@ -4,18 +4,26 @@ const path = require('path');
 const URL = require('url');
 const isDev = require('electron-is-dev');
 
+const main_controller = require('./controllers/main_controller');
+
 /**
  * When in development mode:
  * - Enable automatic reloads
  */
 if (isDev) {
-	require('electron-reload')(path.resolve(__dirname));
+  console.log(path.join(__dirname, '../', './node_modules/@electron'));
+	require('electron-reload')(path.join(__dirname, '../'), {
+    // Note that the path to electron may vary according to the main file
+    electron: path.join(__dirname, '../', './node_modules/electron')
+  });
+  console.log('fdfdf');
 }
 
 function createWindow () {
   const { width, height } = screen.getPrimaryDisplay().rotation;
-  	// Path to root directory.
-  const basePath = isDev ?  path.resolve( __dirname, '../') : app.getAppPath();
+    // Path to root directory.
+  console.log('createWindow', __dirname);
+  const basePath = isDev ?  path.resolve(__dirname, '../build') : app.getAppPath();
   
   // Create the browser window.
   const win = new BrowserWindow({
@@ -25,13 +33,13 @@ function createWindow () {
       nodeIntegration: false,
       contextIsolation: true, // protect against prototype pollution
       enableRemoteModule: false, // turn off remote
-      preload: path.resolve(basePath, './build/preload.js')
+      preload: path.join(basePath, 'preload.js')
     },
 	})
 
 	// URL for index.html which will be our entry point.
 	const indexURL = URL.format({
-		pathname: path.resolve(basePath ,'./build/index.html'),
+		pathname: path.join(basePath ,'index.html'),
 		protocol: 'file:',
 		slashes: true
 	});
@@ -43,7 +51,7 @@ function createWindow () {
     if (win) {
       e.preventDefault();
       win.webContents.send('fromMain', 'close_window');
-      console.log('close window 1');
+      // console.log('close window 1');
     }
   });
 
@@ -51,7 +59,8 @@ function createWindow () {
   // win.webContents.openDevTools()
 
   ipcMain.on('toMain', (e, arg) => {
-    console.log(arg)
+    main_controller(arg)
+    // console.log(arg);
   })
 }
 
