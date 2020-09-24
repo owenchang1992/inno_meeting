@@ -1,5 +1,5 @@
 {
-  "name": "media_viewer",
+  "name": "media_tagger",
   "version": "0.1.0",
   "description": "",
   "main": "./build/main.js",
