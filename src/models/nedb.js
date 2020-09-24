@@ -9,9 +9,10 @@ const db = new Datastore({
 })
 
 module.exports = (() => {
-  const post = (props) => {
+  const post = (props, callback) => {
     db.insert(JSON.parse(props), (err, newDoc) => {
       console.log(newDoc);
+      callback(newDoc);
     })
   }
 

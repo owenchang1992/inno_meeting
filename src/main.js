@@ -50,7 +50,7 @@ function createWindow () {
   // win.webContents.openDevTools()
 
   ipcMain.on('toMain', (e, arg) => {
-    main_controller(arg)
+    main_controller(win, arg)
     // console.log(arg);
   })
 }

@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import '../assets/css/photon.css';
 
@@ -66,19 +66,20 @@ const App = () => {
     ))
   );
 
-  // useEffect(() => {
-  //   window.api.receive('fromMain', () => {
-  //     console.log(JSON.stringify(reactStore.getAll()));
-  //     window.api.send('toMain', {
-  //       name: 'db',
-  //       type: 'post',
-  //       position: 'local',
-  //       contents: JSON.stringify(reactStore.getAll()),
-  //     });
-  //   });
+  useEffect(() => {
+    window.api.receive('fromMain', (resp) => {
+      console.log('from main', resp);
+      // console.log(JSON.stringify(reactStore.getAll()));
+      // window.api.send('toMain', {
+      //   name: 'db',
+      //   type: 'post',
+      //   position: 'local',
+      //   contents: JSON.stringify(reactStore.getAll()),
+      // });
+    });
 
-  //   return () => window.api.removeListener('fromMain');
-  // }, []);
+    return () => window.api.removeListener('fromMain');
+  }, []);
 
   return (
     <Router>
