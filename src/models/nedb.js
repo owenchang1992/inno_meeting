@@ -8,9 +8,9 @@ const db = new Datastore({
 })
 
 module.exports = (() => {
-  const post = (props) => {
+  const insert = (props) => {
     return new Promise((resolve, reject) => {
-      db.insert(JSON.parse(props), (err, newDoc) => {
+      db.insert(props, (err, newDoc) => {
         if (err) reject(err);
         resolve(newDoc);
       })
@@ -26,7 +26,7 @@ module.exports = (() => {
   }
 
   return {
-    post,
+    insert,
     findOne,
   }
 })()

@@ -52,10 +52,9 @@ const App = () => {
     dispatch(closePage(removedPage));
     window.api.send('toMain', {
       name: 'local_db',
-      type: 'post',
-      contents: JSON.stringify(
-        reactStore.getStore(removedPage.routingPath),
-      ),
+      type: 'insert',
+      // contents: { path: removedPage.routingPath },
+      contents: reactStore.getStore(removedPage.routingPath),
     });
     reactStore.removeStore(removedPage.routingPath);
   };
