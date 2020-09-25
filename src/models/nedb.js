@@ -9,10 +9,14 @@ const db = new Datastore({
 })
 
 module.exports = (() => {
-  const post = (props, callback) => {
-    db.insert(JSON.parse(props), (err, newDoc) => {
-      console.log(newDoc);
-      callback(newDoc);
+  const post = (props) => {
+    return new Promise((resolve, reject) => {
+      db.insert(JSON.parse(props), (err, newDoc) => {
+        if (err) reject(err);
+        resolve(newDoc);
+      })
+    })
+  }
     })
   }
 

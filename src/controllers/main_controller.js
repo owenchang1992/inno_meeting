@@ -6,7 +6,9 @@ module.exports = (win, props) => {
 
   switch(props.name) {
     case 'local_db':
-      require('../models/nedb')[props.type](props.contents, sendResponse);
+      require('../models/nedb')[props.type](props.contents)
+        .then((resp) => sendResponse(resp))
+        .catch((err) => { console.log(err) })
       break;
   }
 };
