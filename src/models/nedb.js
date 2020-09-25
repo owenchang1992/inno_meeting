@@ -1,4 +1,3 @@
-const os = require('os');
 const Datastore = require('nedb');
 const path = require('path');
 const { app } = require('electron');
@@ -17,10 +16,17 @@ module.exports = (() => {
       })
     })
   }
+  const findOne = (query) => {
+    return new Promise((resolve, reject) => {
+      db.findOne(query, (err, doc) => {
+        if(err) reject(err);
+        resolve(doc);
+      })
     })
   }
 
   return {
     post,
+    findOne,
   }
 })()
