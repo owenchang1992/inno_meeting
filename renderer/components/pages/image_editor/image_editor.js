@@ -41,6 +41,8 @@ const historyReducer = (state, [type, payload]) => {
         action: type,
         properties: payload,
       }];
+    case 'get-record-from-db':
+      return payload;
     default:
       return state;
   }
@@ -132,35 +134,52 @@ export default function imageEditor({ page, store, closePage }) {
       />
     );
 
-    const drawImage = () => {
-      loadImage(page.props.imagePath)
-        .then((img) => {
-          setContent(
-            createCanvas(
-              img.naturalWidth * dpi,
-              img.naturalHeight * dpi,
-            ),
-          );
+    const drawImage = () => loadImage(page.props.imagePath)
+      .then((img) => {
+        setContent(
+          createCanvas(
+            img.naturalWidth * dpi,
+            img.naturalHeight * dpi,
+          ),
+        );
 
-          const canvas = canvasRef.current;
-          const context = canvas.getContext('2d');
-          const width = img.naturalWidth * dpi;
-          const height = img.naturalHeight * dpi;
-          context.drawImage(img, 0, 0, width, height);
-          setSnapshot(context.getImageData(0, 0, width, height));
-          if (history.length !== 0) drawAllRecords();
-        })
-        .catch((err) => {
-          setContent(<div>Loading Media Error</div>);
-          console.log(err);
-          setTimeout(() => {
-            routeHistory.goBack();
-            closePage(page);
-          }, 1000);
+        const canvas = canvasRef.current;
+        const context = canvas.getContext('2d');
+        const width = img.naturalWidth * dpi;
+        const height = img.naturalHeight * dpi;
+        context.drawImage(img, 0, 0, width, height);
+        setSnapshot(context.getImageData(0, 0, width, height));
+        if (history.length !== 0) drawAllRecords();
+      })
+      .catch((err) => {
+        setContent(<div>Loading Media Error</div>);
+        console.log(err);
+        setTimeout(() => {
+          routeHistory.goBack();
+          closePage(page);
+        }, 1000);
+      });
+
+    const getDbRecords = () => {
+      if (history.length === 0) {
+        window.api.send('toMain', {
+          name: 'local_db',
+          type: 'findOne',
+          contents: { path: page.routingPath },
         });
+
+        window.api.receive('fromMain', (resp) => {
+          console.log('from main', resp.actions);
+          dispatch(['get-record-from-db', resp.actions]);
+          window.api.removeListener('fromMain');
+        });
+      }
     };
 
-    drawImage();
+    drawImage()
+      .then(() => getDbRecords())
+      .catch(() => console.log('initial failed'));
+
     store.createStore({
       name: page.routingPath,
       type: page.type,
@@ -168,8 +187,8 @@ export default function imageEditor({ page, store, closePage }) {
   }, []);
 
   useEffect(() => {
-    console.log('selectedRecords');
     if (content.type === 'canvas' && history.length !== 0) {
+      console.log('selectedRecords');
       drawRecord(selectedRecords);
     }
   }, [selectedRecords]);

@@ -18,7 +18,6 @@ module.exports = (() => {
   }
 
   const update = (query) => {
-    console.log('update');
     return new Promise((resolve, reject) => {
       db.update({path: query.path}, query, {}, (err, numReplace) => {
         if (err) reject(err);
