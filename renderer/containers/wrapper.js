@@ -52,7 +52,7 @@ const App = () => {
     dispatch(closePage(removedPage));
     window.api.send('toMain', {
       name: 'local_db',
-      type: 'insert',
+      type: 'update',
       // contents: { path: removedPage.routingPath },
       contents: reactStore.getStore(removedPage.routingPath),
     });

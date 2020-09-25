@@ -16,6 +16,21 @@ module.exports = (() => {
       })
     })
   }
+
+  const update = (query) => {
+    console.log('update');
+    return new Promise((resolve, reject) => {
+      db.update({path: query.path}, query, {}, (err, numReplace) => {
+        if (err) reject(err);
+        resolve(numReplace);
+      })
+    })
+      .then((resp) => {
+        if (resp === 0) return insert(query);
+        return resp;
+      })
+  }
+
   const findOne = (query) => {
     return new Promise((resolve, reject) => {
       db.findOne(query, (err, doc) => {
@@ -28,5 +43,6 @@ module.exports = (() => {
   return {
     insert,
     findOne,
+    update,
   }
 })()
