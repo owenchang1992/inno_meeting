@@ -50,7 +50,7 @@ const App = () => {
 
   const onClosePage = (removedPage) => {
     dispatch(closePage(removedPage));
-    window.api.send('toMain', {
+    window.api.send('toCurrentPage', {
       name: 'local_db',
       type: 'update',
       contents: reactStore.getStore(removedPage.routingPath),
