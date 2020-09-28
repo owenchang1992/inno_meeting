@@ -11,23 +11,22 @@ contextBridge.exposeInMainWorld(
     "api", {
         send: (channel, data) => {
             // whitelist channels
-            let validChannels = ["toMain"];
+            let validChannels = ["toMain", "toCurrentPage"];
             if (validChannels.includes(channel)) {
                 ipcRenderer.send(channel, data);
             }
         },
         receive: (channel, func) => {
-            let validChannels = ["fromMain"];
+            let validChannels = ["fromMain", "fromCurrentPage"];
             if (validChannels.includes(channel)) {
-                // Deliberately strip event as it includes `sender` 
-                ipcRenderer.on(channel, (event, ...args) => func(...args));
+                // Deliberately strip event as it includes `sender`
+                ipcRenderer.on(channel, func);
             }
         },
-        removeListener: (channel) => {
-            console.log(channel, 'remove');
-            ipcRenderer.removeListener(channel, () => {
-                console.log(channel, 'remove');
-            });
+        removeListener: (channel, func) => {
+            console.log(channel, ipcRenderer.rawListeners(channel));
+            ipcRenderer.removeAllListeners(channel, func);
+            console.log('Hi', channel, ipcRenderer.rawListeners(channel));
         },
         getHomeDir: nodeTools.getHomeDir
     }

@@ -160,18 +160,20 @@ export default function imageEditor({ page, store, closePage }) {
         }, 1000);
       });
 
+    const getRecord = (e, resp) => {
+      console.log('fromCurrentPage', resp.actions);
+      dispatch(['get-record-from-db', resp.actions]);
+    };
+
     const getDbRecords = () => {
       if (history.length === 0) {
-        window.api.send('toMain', {
+        window.api.send('toCurrentPage', {
           name: 'local_db',
           type: 'findOne',
           contents: { path: page.routingPath },
         });
 
-        window.api.receive('fromMain', (resp) => {
-          console.log('from main', resp.actions);
-          dispatch(['get-record-from-db', resp.actions]);
-        });
+        window.api.receive('fromCurrentPage', getRecord);
       }
     };
 
@@ -183,6 +185,8 @@ export default function imageEditor({ page, store, closePage }) {
       name: page.routingPath,
       type: page.type,
     });
+
+    return () => window.api.removeListener('fromCurrentPage', getRecord);
   }, []);
 
   useEffect(() => {
