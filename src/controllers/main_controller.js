@@ -1,7 +1,7 @@
 module.exports = ({win, props}) => {
   const sendResponse = (msg) => {
     console.log('msg', msg);
-    win.webContents.send('fromMain', msg)
+    win.webContents.send('fromCurrentPage', msg)
   }
 
   switch(props.name) {
@@ -13,8 +13,8 @@ module.exports = ({win, props}) => {
     // case 'app':
     //   if ( props.type === 'close') {
     //     console.log('app close')
-    //     win = null;
-    //     app.quit();
+    //     // win = null;
+    //     // app.quit();
     //   }
     //   break;
   }
