@@ -57,6 +57,11 @@ function createWindow () {
   // win.webContents.openDevTools()
 
   ipcMain.on('toMain', (e, props) => {
+    // main_controller({win, app, props})
+    // console.log(props);
+  })
+
+  ipcMain.on('toCurrentPage', (e, props) => {
     main_controller({win, app, props})
     console.log(props);
   })
