@@ -161,8 +161,10 @@ export default function imageEditor({ page, store, closePage }) {
       });
 
     const getRecord = (e, resp) => {
-      console.log('fromCurrentPage', resp.actions);
-      dispatch(['get-record-from-db', resp.actions]);
+      if (resp.type === 'findOne') {
+        console.log('fromCurrentPage', resp.contents.actions);
+        dispatch(['get-record-from-db', resp.contents.actions]);
+      }
     };
 
     const getDbRecords = () => {
@@ -198,10 +200,12 @@ export default function imageEditor({ page, store, closePage }) {
 
   // Cache history after history updated
   useEffect(() => {
-    store.addStore({
-      name: page.routingPath,
-      contents: history,
-    });
+    if (history.length !== 0) {
+      store.addStore({
+        name: page.routingPath,
+        contents: history,
+      });
+    }
     drawAllRecords();
   }, [history]);
 

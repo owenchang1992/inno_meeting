@@ -14,6 +14,11 @@ const reactStore = (() => {
 
   const addStore = ({ name, contents }) => {
     store[name].actions = contents;
+    window.api.send('toCurrentPage', {
+      name: 'local_db',
+      type: 'update',
+      contents: store[name],
+    });
   };
 
   const getStore = (name) => store[name];
@@ -50,11 +55,6 @@ const App = () => {
 
   const onClosePage = (removedPage) => {
     dispatch(closePage(removedPage));
-    window.api.send('toCurrentPage', {
-      name: 'local_db',
-      type: 'update',
-      contents: reactStore.getStore(removedPage.routingPath),
-    });
     reactStore.removeStore(removedPage.routingPath);
   };
 
