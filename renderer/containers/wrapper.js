@@ -53,7 +53,6 @@ const App = () => {
     window.api.send('toMain', {
       name: 'local_db',
       type: 'update',
-      // contents: { path: removedPage.routingPath },
       contents: reactStore.getStore(removedPage.routingPath),
     });
     reactStore.removeStore(removedPage.routingPath);
@@ -64,6 +63,14 @@ const App = () => {
       page.routingPath === midiaPath
     ))
   );
+
+  // useEffect(() => {
+  //   window.api.receive('fromMain', (resp) => {
+  //     if (resp === 'app-close') {
+  //       console.log(resp);
+  //     }
+  //   });
+  // }, []);
 
   return (
     <Router>

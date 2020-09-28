@@ -171,7 +171,6 @@ export default function imageEditor({ page, store, closePage }) {
         window.api.receive('fromMain', (resp) => {
           console.log('from main', resp.actions);
           dispatch(['get-record-from-db', resp.actions]);
-          window.api.removeListener('fromMain');
         });
       }
     };
