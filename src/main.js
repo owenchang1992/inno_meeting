@@ -47,7 +47,7 @@ function createWindow () {
 
   win.on('close', (e) => {
     if (win) {
-      e.preventDefault();
+      // e.preventDefault();
       win.webContents.send('fromMain', 'app-close');
     }
   })
