@@ -6,7 +6,7 @@ export default ({
   selectedRecords,
   toggleRecords,
 }) => {
-  console.log('record history', history);
+  console.log('record history');
   return (
     <>
       <h5 className="nav-group-title">
