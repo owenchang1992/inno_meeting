@@ -21,7 +21,6 @@ if (isDev) {
 function createWindow () {
   const { width, height } = screen.getPrimaryDisplay().rotation;
     // Path to root directory.
-  console.log('createWindow', app.getAppPath());
   const basePath = isDev ?  path.resolve(__dirname, '../') : app.getAppPath();
   
   // Create the browser window.
