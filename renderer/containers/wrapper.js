@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import '../assets/css/photon.css';
 
@@ -64,13 +64,13 @@ const App = () => {
     ))
   );
 
-  // useEffect(() => {
-  //   window.api.receive('fromMain', (resp) => {
-  //     if (resp === 'app-close') {
-  //       console.log(resp);
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    window.api.receive('fromMain', (e, resp) => {
+      if (resp === 'app-close') {
+        window.api.send('toMain', 'close');
+      }
+    });
+  }, []);
 
   return (
     <Router>

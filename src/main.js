@@ -24,7 +24,7 @@ function createWindow () {
   const basePath = isDev ?  path.resolve(__dirname, '../') : app.getAppPath();
   
   // Create the browser window.
-  const win = new BrowserWindow({
+  let win = new BrowserWindow({
     width: width,
     height: height,
     webPreferences: {
@@ -45,8 +45,7 @@ function createWindow () {
   // and load the index.html of the app.
   win.loadURL(indexURL)
 
-  win.once('close', (e) => {
-    console.log('close');
+  win.on('close', (e) => {
     if (win) {
       e.preventDefault();
       win.webContents.send('fromMain', 'app-close');
@@ -57,8 +56,11 @@ function createWindow () {
   // win.webContents.openDevTools()
 
   ipcMain.on('toMain', (e, props) => {
-    // main_controller({win, app, props})
-    // console.log(props);
+    console.log('Hi', props);
+    // if (props === 'close') {
+    //   win = null;
+    //   app.quit();
+    // }
   })
 
   ipcMain.on('toCurrentPage', (e, props) => {
