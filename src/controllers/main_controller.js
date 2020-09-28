@@ -1,4 +1,4 @@
-module.exports = (win, props) => {
+module.exports = ({win, props}) => {
   const sendResponse = (msg) => {
     console.log('msg', msg);
     win.webContents.send('fromMain', msg)
@@ -10,5 +10,12 @@ module.exports = (win, props) => {
         .then((resp) => sendResponse(resp))
         .catch((err) => { console.log(err) })
       break;
+    // case 'app':
+    //   if ( props.type === 'close') {
+    //     console.log('app close')
+    //     win = null;
+    //     app.quit();
+    //   }
+    //   break;
   }
 };
