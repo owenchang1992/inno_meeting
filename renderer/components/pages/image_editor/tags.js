@@ -28,6 +28,7 @@ export default ({ setCurrentTag, currentTag }) => {
   const [tags] = useState(tagList);
   const [currentInput, setCurrentInput] = useState('');
   const [focusedTag, setFocusedTag] = useState('');
+  const [labelGroupName] = useState('Default Labels');
   // const [newTagState, setNewTagState] = useState(null);
 
   const setTag = (e, key) => {
@@ -42,7 +43,7 @@ export default ({ setCurrentTag, currentTag }) => {
   return (
     <div>
       <h5 className="nav-group-title">
-        Labels
+        {labelGroupName}
         {/* <span
           className="icon icon-plus"
           style={{
