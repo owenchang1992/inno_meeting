@@ -10,7 +10,7 @@ export default ({
   return (
     <>
       <h5 className="nav-group-title">
-        ROAs
+        Tags
       </h5>
       {
         history.map((value) => {
