@@ -1,23 +1,14 @@
-const Datastore = require('nedb');
-const path = require('path');
-const { app } = require('electron');
-
-const db = new Datastore({
-  filename: path.join(app.getPath('appData'), 'media_tagger/db', 'media.db'),
-  autoload: true,
-})
-
 module.exports = (() => {
-  const insert = ({contents}) => {
+  const insert = (db, props) => {
     return new Promise((resolve, reject) => {
-      db.insert(contents, (err, newDoc) => {
+      db.insert(props.contents, (err, newDoc) => {
         if (err) reject(err);
         resolve(newDoc);
       })
     })
   }
 
-  const update = (props) => {
+  const update = (db, props) => {
     return new Promise((resolve, reject) => {
       db.update({path: props.contents.path}, props.contents, {}, (err, numReplace) => {
         if (err) reject(err);
@@ -25,12 +16,12 @@ module.exports = (() => {
       })
     })
       .then((resp) => {
-        if (resp === 0) return insert(props);
+        if (resp === 0) return insert(db, props);
         return resp;
       })
   }
 
-  const findOne = (props) => {
+  const findOne = (db, props) => {
     return new Promise((resolve, reject) => {
       db.findOne(props.contents, (err, doc) => {
         if(err) reject(err);

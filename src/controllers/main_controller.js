@@ -1,3 +1,12 @@
+const Datastore = require('nedb');
+const path = require('path');
+const { app } = require('electron');
+
+const db = new Datastore({
+  filename: path.join(app.getPath('appData'), 'media_tagger/db', 'media.db'),
+  autoload: true,
+})
+
 module.exports = ({win, props}) => {
   const sendResponse = (msg) => {
     console.log('msg', msg);
@@ -6,7 +15,7 @@ module.exports = ({win, props}) => {
 
   switch(props.name) {
     case 'local_db':
-      require('../models/nedb')[props.type](props)
+      require('../models/nedb')[props.type](db, props)
         .then((resp) => sendResponse({
           ...props,
           contents: resp
