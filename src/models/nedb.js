@@ -8,31 +8,31 @@ const db = new Datastore({
 })
 
 module.exports = (() => {
-  const insert = (props) => {
+  const insert = ({contents}) => {
     return new Promise((resolve, reject) => {
-      db.insert(props, (err, newDoc) => {
+      db.insert(contents, (err, newDoc) => {
         if (err) reject(err);
         resolve(newDoc);
       })
     })
   }
 
-  const update = (query) => {
+  const update = (props) => {
     return new Promise((resolve, reject) => {
-      db.update({path: query.path}, query, {}, (err, numReplace) => {
+      db.update({path: props.contents.path}, props.contents, {}, (err, numReplace) => {
         if (err) reject(err);
         resolve(numReplace);
       })
     })
       .then((resp) => {
-        if (resp === 0) return insert(query);
+        if (resp === 0) return insert(props);
         return resp;
       })
   }
 
-  const findOne = (query) => {
+  const findOne = (props) => {
     return new Promise((resolve, reject) => {
-      db.findOne(query, (err, doc) => {
+      db.findOne(props.contents, (err, doc) => {
         if(err) reject(err);
         resolve(doc);
       })
