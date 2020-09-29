@@ -26,9 +26,12 @@ const tagList = [
 export default ({ setCurrentTag, currentTag }) => {
   const [tagDown, setTagDown] = useState(null);
   const [tags] = useState(tagList);
-  const [newTagState, setNewTagState] = useState(null);
+  const [currentInput, setCurrentInput] = useState('');
+  const [focusedTag, setFocusedTag] = useState('');
+  // const [newTagState, setNewTagState] = useState(null);
 
-  const setTag = (key) => {
+  const setTag = (e, key) => {
+    console.log(e.keyCode);
     setCurrentTag(tagList.find((tag) => (tag.name === key.name)));
   };
 
@@ -40,7 +43,7 @@ export default ({ setCurrentTag, currentTag }) => {
     <div>
       <h5 className="nav-group-title">
         Tags
-        <span
+        {/* <span
           className="icon icon-plus"
           style={{
             padding: '0px 4px',
@@ -53,7 +56,7 @@ export default ({ setCurrentTag, currentTag }) => {
           onFocus={() => setNewTagState(null)}
           onMouseOut={() => setNewTagState(null)}
           onBlur={() => {}}
-        />
+        /> */}
       </h5>
       {
         tags.map((tag) => (
@@ -61,22 +64,43 @@ export default ({ setCurrentTag, currentTag }) => {
             key={tag.name}
             role="button"
             style={{
+              display: 'flex',
               padding: '3px 10px',
               borderRadius: '5px',
               marginTop: '5px',
               backgroundColor: tagDown === tag.name ? '#ddd' : null,
+              alignItems: 'center',
             }}
-            onClick={() => setTag(tag)}
-            onMouseDown={() => setTagDown(tag.name)}
+            onClick={(e) => setTag(e, tag)}
+            onMouseDown={(e) => {
+              console.log(e.button);
+              setCurrentInput(tag.name);
+              if (e.button === 2) setFocusedTag(tag.name);
+              else setFocusedTag('');
+              setTagDown(tag.name);
+            }}
             onMouseUp={() => setTagDown(null)}
-            onKeyDown={() => (null)}
+            onKeyDown={(e) => console.log(e.keyCode)}
             tabIndex={0}
           >
             <span
               className={`icon ${currentTag.name !== tag.name ? 'icon-record' : 'icon-play'}`}
               style={{ color: tag.color, marginRight: '5px' }}
             />
-            <strong>{tag.name}</strong>
+            {
+              focusedTag === tag.name
+                ? (
+                  <input
+                    className="form-control"
+                    value={currentInput}
+                    onChange={(e) => setCurrentInput(e.target.value)}
+                    type="text"
+                    onKeyUp={() => console.log('key Up')}
+                    placeholder={tag.name}
+                  />
+                )
+                : <strong>{tag.name}</strong>
+            }
           </div>
         ))
       }
