@@ -16,6 +16,7 @@ const reactStore = (() => {
     store[name].actions = contents;
     window.api.send('toCurrentPage', {
       name: 'local_db',
+      collection: 'images',
       type: 'update',
       contents: store[name],
     });

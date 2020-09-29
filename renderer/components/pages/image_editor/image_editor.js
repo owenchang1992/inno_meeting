@@ -171,6 +171,7 @@ export default function imageEditor({ page, store, closePage }) {
       if (history.length === 0) {
         window.api.send('toCurrentPage', {
           name: 'local_db',
+          collection: 'images',
           type: 'findOne',
           contents: { path: page.routingPath },
         });

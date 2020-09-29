@@ -8,8 +8,6 @@ export function loadImage(src) {
       reject(new Error('loading image time out'));
     }, 1000);
 
-    // window.api.send('toMain', 'HI');
-
     img.src = URL.format({
       pathname: path.resolve(src),
       protocol: 'file:',
