@@ -42,7 +42,7 @@ export default ({ setCurrentTag, currentTag }) => {
   return (
     <div>
       <h5 className="nav-group-title">
-        Tags
+        Labels
         {/* <span
           className="icon icon-plus"
           style={{
@@ -76,7 +76,7 @@ export default ({ setCurrentTag, currentTag }) => {
               console.log(e.button);
               setCurrentInput(tag.name);
               if (e.button === 2) setFocusedTag(tag.name);
-              else setFocusedTag('');
+              else if (focusedTag !== tag.name) setFocusedTag(null);
               setTagDown(tag.name);
             }}
             onMouseUp={() => setTagDown(null)}
