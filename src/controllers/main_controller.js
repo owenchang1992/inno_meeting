@@ -2,10 +2,6 @@ const Datastore = require('nedb');
 const path = require('path');
 const { app } = require('electron');
 
-const db = new Datastore({
-  filename: path.join(app.getPath('appData'), 'media_tagger/db', 'media.db'),
-  autoload: true,
-})
 
 module.exports = ({win, props}) => {
   const sendResponse = (msg) => {
@@ -13,9 +9,16 @@ module.exports = ({win, props}) => {
     win.webContents.send('fromCurrentPage', msg)
   }
 
+  const getCollection = (collectionName) => {
+    return new Datastore({
+      filename: path.join(app.getPath('appData'), 'media_tagger/db', `${collectionName}.db`),
+      autoload: true,
+    })
+  }
+
   switch(props.name) {
     case 'local_db':
-      require('../models/nedb')[props.type](db, props)
+      require('../models/nedb')[props.type](getCollection(props.collection), props)
         .then((resp) => sendResponse({
           ...props,
           contents: resp
