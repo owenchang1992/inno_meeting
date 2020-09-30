@@ -43,12 +43,11 @@ export default ({ setCurrentTag, currentTag }) => {
         type: 'update',
         contents: {
           name: currentInput,
-          description: '',
         },
       });
     };
 
-    const updateTags = () => {
+    const updateLabelList = () => {
       const index = labelList.findIndex((tag) => (tag.name === label.name));
       labelList.splice(index, 1, {
         ...label,
@@ -62,7 +61,7 @@ export default ({ setCurrentTag, currentTag }) => {
       saveToDB();
       if (focusedLabel !== null && currentInput.length !== 0) {
         setCurrentTag({ ...label, name: currentInput });
-        updateTags();
+        updateLabelList();
       }
       setFocusedLabel(null);
     }
