@@ -25,16 +25,17 @@ const tagList = [
 
 export default ({ setCurrentTag, currentTag }) => {
   const [tagDown, setTagDown] = useState(null);
-  const [tags] = useState(tagList);
+  const [tags, setTags] = useState(tagList);
   const [currentInput, setCurrentInput] = useState('');
   const [focusedTag, setFocusedTag] = useState(null);
 
-  const setTag = (e, key) => {
-    console.log(e.keyCode);
-    setCurrentTag(tagList.find((tag) => (tag.name === key.name)));
+  const setTag = (label) => {
+    if (focusedTag === null) {
+      setCurrentTag(tags.find((tag) => (tag.name === label.name)));
+    }
   };
 
-  const saveLabel = (e) => {
+  const saveLabel = (e, label) => {
     if (e.keyCode === 13) {
       console.log('send');
       window.api.send('toCurrentPage', {
@@ -47,6 +48,18 @@ export default ({ setCurrentTag, currentTag }) => {
           description: '',
         },
       });
+      if (focusedTag !== null && currentInput.length !== 0) {
+        setCurrentTag({
+          ...label,
+          name: currentInput,
+        });
+        const index = tags.findIndex((tag) => (tag.name === label.name));
+        tags.splice(index, 1, {
+          ...label,
+          name: currentInput,
+        });
+        setTags([...tags]);
+      }
       setFocusedTag(null);
     }
   };
@@ -87,7 +100,7 @@ export default ({ setCurrentTag, currentTag }) => {
               backgroundColor: tagDown === tag.name ? '#ddd' : null,
               alignItems: 'center',
             }}
-            onClick={(e) => setTag(e, tag)}
+            onClick={() => setTag(tag)}
             onMouseDown={(e) => {
               console.log(e.button);
               setCurrentInput(tag.name);
@@ -96,7 +109,7 @@ export default ({ setCurrentTag, currentTag }) => {
               setTagDown(tag.name);
             }}
             onMouseUp={() => setTagDown(null)}
-            onKeyDown={(e) => console.log(e.keyCode)}
+            onKeyDown={(e) => saveLabel(e, tag)}
             tabIndex={0}
           >
             <span
@@ -111,7 +124,6 @@ export default ({ setCurrentTag, currentTag }) => {
                     value={currentInput}
                     onChange={(e) => setCurrentInput(e.target.value)}
                     type="text"
-                    onKeyDown={(e) => saveLabel(e)}
                     placeholder={tag.name}
                   />
                 )
