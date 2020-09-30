@@ -27,13 +27,28 @@ export default ({ setCurrentTag, currentTag }) => {
   const [tagDown, setTagDown] = useState(null);
   const [tags] = useState(tagList);
   const [currentInput, setCurrentInput] = useState('');
-  const [focusedTag, setFocusedTag] = useState('');
-  const [labelGroupName] = useState('Default Labels');
-  // const [newTagState, setNewTagState] = useState(null);
+  const [focusedTag, setFocusedTag] = useState(null);
 
   const setTag = (e, key) => {
     console.log(e.keyCode);
     setCurrentTag(tagList.find((tag) => (tag.name === key.name)));
+  };
+
+  const saveLabel = (e) => {
+    if (e.keyCode === 13) {
+      console.log('send');
+      window.api.send('toCurrentPage', {
+        name: 'local_db',
+        collection: 'labels',
+        type: 'update',
+        contents: {
+          name: currentInput,
+          medias: [],
+          description: '',
+        },
+      });
+      setFocusedTag(null);
+    }
   };
 
   useEffect(() => {
@@ -43,7 +58,7 @@ export default ({ setCurrentTag, currentTag }) => {
   return (
     <div>
       <h5 className="nav-group-title">
-        {labelGroupName}
+        Labels
         {/* <span
           className="icon icon-plus"
           style={{
@@ -96,7 +111,7 @@ export default ({ setCurrentTag, currentTag }) => {
                     value={currentInput}
                     onChange={(e) => setCurrentInput(e.target.value)}
                     type="text"
-                    onKeyUp={() => console.log('key Up')}
+                    onKeyDown={(e) => saveLabel(e)}
                     placeholder={tag.name}
                   />
                 )
