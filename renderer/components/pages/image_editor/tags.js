@@ -24,7 +24,7 @@ const labelList = [
 ];
 
 export default ({ setCurrentTag, currentTag }) => {
-  const [tagDown, setTagDown] = useState(null);
+  const [labelDown, setLabelDown] = useState(null);
   const [tags, setTags] = useState(labelList); // get project labels
   const [currentInput, setCurrentInput] = useState('');
   const [focusedTag, setFocusedTag] = useState(null);
@@ -73,7 +73,7 @@ export default ({ setCurrentTag, currentTag }) => {
     setCurrentInput(tag.name);
     if (e.button === 2) setFocusedTag(tag.name);
     else if (focusedTag !== tag.name) setFocusedTag(null);
-    setTagDown(tag.name);
+    setLabelDown(tag.name);
   };
 
   useEffect(() => {
@@ -95,12 +95,12 @@ export default ({ setCurrentTag, currentTag }) => {
               padding: '3px 10px',
               borderRadius: '5px',
               marginTop: '5px',
-              backgroundColor: tagDown === tag.name ? '#ddd' : null,
+              backgroundColor: labelDown === tag.name ? '#ddd' : null,
               alignItems: 'center',
             }}
             onClick={() => setTag(tag)}
             onMouseDown={(e) => onMouseDown(e, tag)}
-            onMouseUp={() => setTagDown(null)}
+            onMouseUp={() => setLabelDown(null)}
             onKeyDown={(e) => saveLabel(e, tag)}
             tabIndex={0}
           >
