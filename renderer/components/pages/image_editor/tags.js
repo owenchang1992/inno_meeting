@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const tagList = [
+const labelList = [
   {
     name: 'Red',
     color: '#fc605b',
@@ -25,7 +25,7 @@ const tagList = [
 
 export default ({ setCurrentTag, currentTag }) => {
   const [tagDown, setTagDown] = useState(null);
-  const [tags, setTags] = useState(tagList);
+  const [tags, setTags] = useState(labelList);
   const [currentInput, setCurrentInput] = useState('');
   const [focusedTag, setFocusedTag] = useState(null);
 
@@ -72,20 +72,6 @@ export default ({ setCurrentTag, currentTag }) => {
     <div>
       <h5 className="nav-group-title">
         Labels
-        {/* <span
-          className="icon icon-plus"
-          style={{
-            padding: '0px 4px',
-            border: `1px solid ${newTagState !== 'hover' ? '#ddd' : 'gray'}`,
-            borderRadius: '3px',
-            marginLeft: '5px',
-            color: newTagState !== 'hover' ? '#ddd' : 'gray',
-          }}
-          onMouseOver={() => setNewTagState('hover')}
-          onFocus={() => setNewTagState(null)}
-          onMouseOut={() => setNewTagState(null)}
-          onBlur={() => {}}
-        /> */}
       </h5>
       {
         tags.map((tag) => (
