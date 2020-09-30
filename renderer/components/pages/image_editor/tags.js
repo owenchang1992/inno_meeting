@@ -27,10 +27,10 @@ export default ({ setCurrentTag, currentTag }) => {
   const [labelDown, setLabelDown] = useState(null);
   const [labelList, setLabelList] = useState(testLabel); // get project labels
   const [currentInput, setCurrentInput] = useState('');
-  const [focusedTag, setFocusedTag] = useState(null);
+  const [focusedLabel, setFocusedLabel] = useState(null);
 
   const setTag = (label) => {
-    if (focusedTag === null) {
+    if (focusedLabel === null) {
       setCurrentTag(labelList.find((tag) => (tag.name === label.name)));
     }
   };
@@ -60,19 +60,19 @@ export default ({ setCurrentTag, currentTag }) => {
     if (e.keyCode === 13) {
       console.log('send');
       saveToDB();
-      if (focusedTag !== null && currentInput.length !== 0) {
+      if (focusedLabel !== null && currentInput.length !== 0) {
         setCurrentTag({ ...label, name: currentInput });
         updateTags();
       }
-      setFocusedTag(null);
+      setFocusedLabel(null);
     }
   };
 
   const onMouseDown = (e, tag) => {
     console.log(e.button);
     setCurrentInput(tag.name);
-    if (e.button === 2) setFocusedTag(tag.name);
-    else if (focusedTag !== tag.name) setFocusedTag(null);
+    if (e.button === 2) setFocusedLabel(tag.name);
+    else if (focusedLabel !== tag.name) setFocusedLabel(null);
     setLabelDown(tag.name);
   };
 
@@ -109,7 +109,7 @@ export default ({ setCurrentTag, currentTag }) => {
               style={{ color: tag.color, marginRight: '5px' }}
             />
             {
-              focusedTag === tag.name
+              focusedLabel === tag.name
                 ? (
                   <input
                     className="form-control"
