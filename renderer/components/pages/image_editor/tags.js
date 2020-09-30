@@ -36,29 +36,34 @@ export default ({ setCurrentTag, currentTag }) => {
   };
 
   const saveLabel = (e, label) => {
-    if (e.keyCode === 13) {
-      console.log('send');
+    const saveToDB = () => {
       window.api.send('toCurrentPage', {
         name: 'local_db',
         collection: 'labels',
         type: 'update',
         contents: {
           name: currentInput,
-          medias: [],
+          media: '',
           description: '',
         },
       });
+    };
+
+    const updateTags = () => {
+      const index = tags.findIndex((tag) => (tag.name === label.name));
+      tags.splice(index, 1, {
+        ...label,
+        name: currentInput,
+      });
+      setTags([...tags]);
+    };
+
+    if (e.keyCode === 13) {
+      console.log('send');
+      saveToDB();
       if (focusedTag !== null && currentInput.length !== 0) {
-        setCurrentTag({
-          ...label,
-          name: currentInput,
-        });
-        const index = tags.findIndex((tag) => (tag.name === label.name));
-        tags.splice(index, 1, {
-          ...label,
-          name: currentInput,
-        });
-        setTags([...tags]);
+        setCurrentTag({ ...label, name: currentInput });
+        updateTags();
       }
       setFocusedTag(null);
     }
