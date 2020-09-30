@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const labelList = [
+const testLabel = [
   {
     name: 'Red',
     color: '#fc605b',
@@ -25,13 +25,13 @@ const labelList = [
 
 export default ({ setCurrentTag, currentTag }) => {
   const [labelDown, setLabelDown] = useState(null);
-  const [tags, setTags] = useState(labelList); // get project labels
+  const [labelList, setTags] = useState(testLabel); // get project labels
   const [currentInput, setCurrentInput] = useState('');
   const [focusedTag, setFocusedTag] = useState(null);
 
   const setTag = (label) => {
     if (focusedTag === null) {
-      setCurrentTag(tags.find((tag) => (tag.name === label.name)));
+      setCurrentTag(labelList.find((tag) => (tag.name === label.name)));
     }
   };
 
@@ -49,12 +49,12 @@ export default ({ setCurrentTag, currentTag }) => {
     };
 
     const updateTags = () => {
-      const index = tags.findIndex((tag) => (tag.name === label.name));
-      tags.splice(index, 1, {
+      const index = labelList.findIndex((tag) => (tag.name === label.name));
+      labelList.splice(index, 1, {
         ...label,
         name: currentInput,
       });
-      setTags([...tags]);
+      setTags([...labelList]);
     };
 
     if (e.keyCode === 13) {
@@ -77,7 +77,7 @@ export default ({ setCurrentTag, currentTag }) => {
   };
 
   useEffect(() => {
-    setCurrentTag(tags[0]);
+    setCurrentTag(labelList[0]);
   }, []);
 
   return (
@@ -86,7 +86,7 @@ export default ({ setCurrentTag, currentTag }) => {
         Labels
       </h5>
       {
-        tags.map((tag) => (
+        labelList.map((tag) => (
           <div
             key={tag.name}
             role="button"
