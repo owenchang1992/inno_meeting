@@ -25,7 +25,7 @@ const labelList = [
 
 export default ({ setCurrentTag, currentTag }) => {
   const [tagDown, setTagDown] = useState(null);
-  const [tags, setTags] = useState(labelList);
+  const [tags, setTags] = useState(labelList); // get project labels
   const [currentInput, setCurrentInput] = useState('');
   const [focusedTag, setFocusedTag] = useState(null);
 
