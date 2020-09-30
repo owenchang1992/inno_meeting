@@ -43,7 +43,6 @@ export default ({ setCurrentTag, currentTag }) => {
         type: 'update',
         contents: {
           name: currentInput,
-          media: '',
           description: '',
         },
       });
@@ -69,6 +68,14 @@ export default ({ setCurrentTag, currentTag }) => {
     }
   };
 
+  const onMouseDown = (e, tag) => {
+    console.log(e.button);
+    setCurrentInput(tag.name);
+    if (e.button === 2) setFocusedTag(tag.name);
+    else if (focusedTag !== tag.name) setFocusedTag(null);
+    setTagDown(tag.name);
+  };
+
   useEffect(() => {
     setCurrentTag(tags[0]);
   }, []);
@@ -92,13 +99,7 @@ export default ({ setCurrentTag, currentTag }) => {
               alignItems: 'center',
             }}
             onClick={() => setTag(tag)}
-            onMouseDown={(e) => {
-              console.log(e.button);
-              setCurrentInput(tag.name);
-              if (e.button === 2) setFocusedTag(tag.name);
-              else if (focusedTag !== tag.name) setFocusedTag(null);
-              setTagDown(tag.name);
-            }}
+            onMouseDown={(e) => onMouseDown(e, tag)}
             onMouseUp={() => setTagDown(null)}
             onKeyDown={(e) => saveLabel(e, tag)}
             tabIndex={0}
