@@ -25,7 +25,7 @@ const testLabel = [
 
 export default ({ setCurrentTag, currentTag }) => {
   const [labelDown, setLabelDown] = useState(null);
-  const [labelList, setTags] = useState(testLabel); // get project labels
+  const [labelList, setLabelList] = useState(testLabel); // get project labels
   const [currentInput, setCurrentInput] = useState('');
   const [focusedTag, setFocusedTag] = useState(null);
 
@@ -54,7 +54,7 @@ export default ({ setCurrentTag, currentTag }) => {
         ...label,
         name: currentInput,
       });
-      setTags([...labelList]);
+      setLabelList([...labelList]);
     };
 
     if (e.keyCode === 13) {
