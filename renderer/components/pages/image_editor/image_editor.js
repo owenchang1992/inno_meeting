@@ -239,7 +239,7 @@ export default function imageEditor({ page, store, closePage }) {
               width: Math.round((mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX),
               height: Math.round((mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY),
               color: currentLabel.color,
-              tag: currentLabel,
+              label: currentLabel,
             }, context, dispatch);
           }
         } else if (checkPoint(currentMousePoint)) {

@@ -6,7 +6,7 @@ export default ({
   selectedRecords,
   toggleRecords,
 }) => {
-  setTimeout(() => {});
+  setTimeout(() => console.log(history));
   return (
     <>
       <h5 className="nav-group-title">
@@ -14,7 +14,7 @@ export default ({
       </h5>
       {
         history.map((value) => {
-          const { tag, key } = value.properties;
+          const { label, key } = value.properties;
 
           const getContent = () => {
             const {
@@ -41,8 +41,8 @@ export default ({
               onClick={() => { toggleRecords(value); }}
               onKeyDown={() => (null)}
             >
-              <span className="icon icon-record" style={{ color: tag.color, marginRight: '5px' }} />
-              <strong>{tag.name}</strong>
+              <span className="icon icon-record" style={{ color: label.color, marginRight: '5px' }} />
+              <strong>{label.name}</strong>
               <br />
               { getContent() }
             </div>
