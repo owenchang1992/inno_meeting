@@ -2,18 +2,18 @@ import React from 'react';
 import { findRecordIndex } from './editor_utils';
 
 export default ({
-  history,
+  tagList,
   selectedRecords,
   toggleRecords,
 }) => {
-  setTimeout(() => console.log(history));
+  setTimeout(() => console.log(tagList));
   return (
     <>
       <h5 className="nav-group-title">
         Tags
       </h5>
       {
-        history.map((value) => {
+        tagList.map((value) => {
           const { label, key } = value.properties;
 
           const getContent = () => {

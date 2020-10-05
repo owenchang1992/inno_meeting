@@ -55,7 +55,7 @@ export default function imageEditor({ page, store, closePage }) {
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
   const [currentLabel, setCurrentLabel] = useState({});
-  const [history, dispatch] = useReducer(
+  const [tagList, dispatch] = useReducer(
     historyReducer,
     store.getStore(page.routingPath)
       ? store.getStore(page.routingPath).actions
@@ -87,7 +87,7 @@ export default function imageEditor({ page, store, closePage }) {
   );
 
   const drawAllRecords = () => {
-    setSelectedRecords([...history]);
+    setSelectedRecords([...tagList]);
   };
 
   // Initial content
@@ -149,7 +149,7 @@ export default function imageEditor({ page, store, closePage }) {
         const height = img.naturalHeight * dpi;
         context.drawImage(img, 0, 0, width, height);
         setSnapshot(context.getImageData(0, 0, width, height));
-        if (history.length !== 0) drawAllRecords();
+        if (tagList.length !== 0) drawAllRecords();
       })
       .catch((err) => {
         setContent(<div>Loading Media Error</div>);
@@ -168,7 +168,7 @@ export default function imageEditor({ page, store, closePage }) {
     };
 
     const getDbRecords = () => {
-      if (history.length === 0) {
+      if (tagList.length === 0) {
         window.api.send('toCurrentPage', {
           name: 'local_db',
           collection: 'images',
@@ -193,22 +193,22 @@ export default function imageEditor({ page, store, closePage }) {
   }, []);
 
   useEffect(() => {
-    if (content.type === 'canvas' && history.length !== 0) {
+    if (content.type === 'canvas' && tagList.length !== 0) {
       console.log('selectedRecords');
       drawRecord(selectedRecords);
     }
   }, [selectedRecords]);
 
-  // Cache history after history updated
+  // Cache tagList after tagList updated
   useEffect(() => {
-    if (history.length !== 0) {
+    if (tagList.length !== 0) {
       store.addStore({
         name: page.routingPath,
-        contents: history,
+        contents: tagList,
       });
     }
     drawAllRecords();
-  }, [history]);
+  }, [tagList]);
 
   // handle mouse events
   useEffect(() => {
@@ -231,7 +231,7 @@ export default function imageEditor({ page, store, closePage }) {
 
       if (checkPoint(mouseDownPoint) && content !== null) {
         if (checkPoint(mouseUpPoint)) {
-          drawRecord(history);
+          drawRecord(tagList);
           if (isArea(mouseDownPoint, mouseUpPoint)) {
             drawTagRectangle({
               left: Math.round(mouseDownPoint.left * scale().scaleX),
@@ -243,8 +243,8 @@ export default function imageEditor({ page, store, closePage }) {
             }, context, dispatch);
           }
         } else if (checkPoint(currentMousePoint)) {
-          // console.log(history);
-          drawRecord(history);
+          // console.log(tagList);
+          drawRecord(tagList);
           drawPreviewingRectangle({
             left: mouseDownPoint.left * scale().scaleX,
             top: mouseDownPoint.top * scale().scaleY,
@@ -267,12 +267,12 @@ export default function imageEditor({ page, store, closePage }) {
           <div style={{ height: '100%', width: '11em' }}>
             <Labels setCurrentLabel={setCurrentLabel} currentLabel={currentLabel} />
             <Record
-              history={history}
+              tagList={tagList}
               toggleRecords={toggleRecords}
               selectedRecords={selectedRecords}
             />
           </div>
-        ) : null, [history, currentLabel, selectedRecords, content])
+        ) : null, [tagList, currentLabel, selectedRecords, content])
       }
     </div>
   );
