@@ -23,7 +23,7 @@ const testLabel = [
   },
 ];
 
-export default ({ setCurrentTag, currentTag }) => {
+export default ({ setCurrentLabel, currentTag }) => {
   const [labelDown, setLabelDown] = useState(null);
   const [labelList, setLabelList] = useState(testLabel); // get project labels
   const [currentInput, setCurrentInput] = useState('');
@@ -31,7 +31,7 @@ export default ({ setCurrentTag, currentTag }) => {
 
   const updateCurrentLabel = (label) => {
     if (focusedLabel === null) {
-      setCurrentTag(labelList.find((tag) => (tag.name === label.name)));
+      setCurrentLabel(labelList.find((tag) => (tag.name === label.name)));
     }
   };
 
@@ -60,7 +60,7 @@ export default ({ setCurrentTag, currentTag }) => {
       console.log('send');
       saveLabelToDB();
       if (focusedLabel !== null && currentInput.length !== 0) {
-        setCurrentTag({ ...label, name: currentInput });
+        setCurrentLabel({ ...label, name: currentInput });
         updateLabelList();
       }
       setFocusedLabel(null);
@@ -75,7 +75,7 @@ export default ({ setCurrentTag, currentTag }) => {
   };
 
   useEffect(() => {
-    setCurrentTag(labelList[0]);
+    setCurrentLabel(labelList[0]);
   }, []);
 
   return (

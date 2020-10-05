@@ -54,7 +54,7 @@ export default function imageEditor({ page, store, closePage }) {
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
-  const [currentTag, setCurrentTag] = useState({});
+  const [currentTag, setCurrentLabel] = useState({});
   const [history, dispatch] = useReducer(
     historyReducer,
     store.getStore(page.routingPath)
@@ -265,7 +265,7 @@ export default function imageEditor({ page, store, closePage }) {
       {
         useCallback(content.type === 'canvas' ? (
           <div style={{ height: '100%', width: '11em' }}>
-            <Labels setCurrentTag={setCurrentTag} currentTag={currentTag} />
+            <Labels setCurrentLabel={setCurrentLabel} currentTag={currentTag} />
             <Record
               history={history}
               toggleRecords={toggleRecords}
