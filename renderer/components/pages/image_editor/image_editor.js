@@ -162,7 +162,7 @@ export default function imageEditor({ page, store, closePage }) {
         }, 1000);
       });
 
-    const getRecord = (e, resp) => {
+    const getTagList = (e, resp) => {
       if (resp.type === 'findOne') {
         console.log('fromCurrentPage', resp.contents.actions);
         dispatch([GET_TAGS_FROM_DB, resp.contents.actions]);
@@ -178,7 +178,7 @@ export default function imageEditor({ page, store, closePage }) {
           contents: { path: page.routingPath },
         });
 
-        window.api.receive('fromCurrentPage', getRecord);
+        window.api.receive('fromCurrentPage', getTagList);
       }
     };
 
@@ -191,7 +191,7 @@ export default function imageEditor({ page, store, closePage }) {
       type: page.type,
     });
 
-    return () => window.api.removeListener('fromCurrentPage', getRecord);
+    return () => window.api.removeListener('fromCurrentPage', getTagList);
   }, []);
 
   useEffect(() => {
