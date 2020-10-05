@@ -65,7 +65,7 @@ export default function imageEditor({ page, store, closePage }) {
   );
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
-  const [selectedRecords, setSelectedRecords] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
@@ -78,18 +78,18 @@ export default function imageEditor({ page, store, closePage }) {
 
   const toggleRecords = useCallback(
     (value) => {
-      const index = findTagIndex(value, selectedRecords);
+      const index = findTagIndex(value, selectedTags);
       if (index === -1) {
-        setSelectedRecords([...selectedRecords, value]);
+        setSelectedTags([...selectedTags, value]);
       } else {
-        selectedRecords.splice(index, 1);
-        setSelectedRecords([...selectedRecords]);
+        selectedTags.splice(index, 1);
+        setSelectedTags([...selectedTags]);
       }
     },
   );
 
   const drawAllRecords = () => {
-    setSelectedRecords([...tagList]);
+    setSelectedTags([...tagList]);
   };
 
   // Initial content
@@ -196,10 +196,10 @@ export default function imageEditor({ page, store, closePage }) {
 
   useEffect(() => {
     if (content.type === 'canvas' && tagList.length !== 0) {
-      console.log('selectedRecords');
-      drawTags(selectedRecords);
+      console.log('selectedTags');
+      drawTags(selectedTags);
     }
-  }, [selectedRecords]);
+  }, [selectedTags]);
 
   // Cache tagList after tagList updated
   useEffect(() => {
@@ -271,10 +271,10 @@ export default function imageEditor({ page, store, closePage }) {
             <TagList
               tagList={tagList}
               toggleRecords={toggleRecords}
-              selectedRecords={selectedRecords}
+              selectedTags={selectedTags}
             />
           </div>
-        ) : null, [tagList, currentLabel, selectedRecords, content])
+        ) : null, [tagList, currentLabel, selectedTags, content])
       }
     </div>
   );

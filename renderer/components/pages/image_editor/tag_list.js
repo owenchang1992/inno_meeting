@@ -3,7 +3,7 @@ import { findTagIndex } from './editor_utils';
 
 export default ({
   tagList,
-  selectedRecords,
+  selectedTags,
   toggleRecords,
 }) => {
   setTimeout(() => console.log(tagList));
@@ -33,7 +33,7 @@ export default ({
               style={{
                 position: 'relative',
                 padding: '5px 0px 5px 10px',
-                border: `1px solid ${findTagIndex(value, selectedRecords) === -1 ? '#ddd' : '#777'}`,
+                border: `1px solid ${findTagIndex(value, selectedTags) === -1 ? '#ddd' : '#777'}`,
                 borderRadius: '3px',
                 marginTop: '5px',
               }}
