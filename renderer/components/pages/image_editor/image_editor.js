@@ -76,7 +76,7 @@ export default function imageEditor({ page, store, closePage }) {
     drawInstructions(context, snapshot, tag);
   };
 
-  const toggleRecords = useCallback(
+  const toggleTags = useCallback(
     (value) => {
       const index = findTagIndex(value, selectedTags);
       if (index === -1) {
@@ -270,7 +270,7 @@ export default function imageEditor({ page, store, closePage }) {
             <Labels setCurrentLabel={setCurrentLabel} currentLabel={currentLabel} />
             <TagList
               tagList={tagList}
-              toggleRecords={toggleRecords}
+              toggleTags={toggleTags}
               selectedTags={selectedTags}
             />
           </div>

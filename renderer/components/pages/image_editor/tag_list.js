@@ -4,7 +4,7 @@ import { findTagIndex } from './editor_utils';
 export default ({
   tagList,
   selectedTags,
-  toggleRecords,
+  toggleTags,
 }) => {
   setTimeout(() => console.log(tagList));
   return (
@@ -38,7 +38,7 @@ export default ({
                 marginTop: '5px',
               }}
               tabIndex={0}
-              onClick={() => { toggleRecords(value); }}
+              onClick={() => { toggleTags(value); }}
               onKeyDown={() => (null)}
             >
               <span className="icon icon-record" style={{ color: label.color, marginRight: '5px' }} />
