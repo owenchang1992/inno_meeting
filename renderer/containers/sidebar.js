@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import path from 'path';
+import { MEDIA_TAGGER } from '../constants';
 
 const createNewPage = (mediaPath) => {
   const getName = (splitedPath) => {
@@ -10,7 +11,7 @@ const createNewPage = (mediaPath) => {
 
   return ({
     name: getName(mediaPath),
-    type: 'image_editor',
+    type: MEDIA_TAGGER,
     routingPath: mediaPath,
     props: {
       imagePath: mediaPath,
