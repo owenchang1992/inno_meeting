@@ -29,13 +29,13 @@ export default ({ setCurrentLabel, currentLabel }) => {
   const [currentInput, setCurrentInput] = useState('');
   const [focusedLabel, setFocusedLabel] = useState(null);
 
-  const updateCurrentLabel = (label) => {
+  const updateCurrentLabel = (selectedLabel) => {
     if (focusedLabel === null) {
-      setCurrentLabel(labelList.find((tag) => (tag.name === label.name)));
+      setCurrentLabel(labelList.find((label) => (label.name === selectedLabel.name)));
     }
   };
 
-  const saveLabel = (e, label) => {
+  const saveLabel = (e, selectedLabel) => {
     const saveLabelToDB = () => {
       window.api.send('toCurrentPage', {
         name: 'local_db',
@@ -48,19 +48,18 @@ export default ({ setCurrentLabel, currentLabel }) => {
     };
 
     const updateLabelList = () => {
-      const index = labelList.findIndex((tag) => (tag.name === label.name));
+      const index = labelList.findIndex((label) => (label.name === selectedLabel.name));
       labelList.splice(index, 1, {
-        ...label,
+        ...selectedLabel,
         name: currentInput,
       });
       setLabelList([...labelList]);
     };
 
     if (e.keyCode === 13) {
-      console.log('send');
       saveLabelToDB();
       if (focusedLabel !== null && currentInput.length !== 0) {
-        setCurrentLabel({ ...label, name: currentInput });
+        setCurrentLabel({ ...selectedLabel, name: currentInput });
         updateLabelList();
       }
       setFocusedLabel(null);
