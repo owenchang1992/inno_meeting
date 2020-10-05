@@ -88,6 +88,6 @@ export const drawInstructions = (ctx, imgData, history) => {
   });
 };
 
-export const findRecordIndex = (value, records) => records.findIndex(
-  (record) => (record.properties.key === value.properties.key),
+export const findTagIndex = (tag, tagList) => tagList.findIndex(
+  (list) => (list.properties.key === tag.properties.key),
 );

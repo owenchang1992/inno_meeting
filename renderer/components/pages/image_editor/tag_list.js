@@ -1,5 +1,5 @@
 import React from 'react';
-import { findRecordIndex } from './editor_utils';
+import { findTagIndex } from './editor_utils';
 
 export default ({
   tagList,
@@ -33,7 +33,7 @@ export default ({
               style={{
                 position: 'relative',
                 padding: '5px 0px 5px 10px',
-                border: `1px solid ${findRecordIndex(value, selectedRecords) === -1 ? '#ddd' : '#777'}`,
+                border: `1px solid ${findTagIndex(value, selectedRecords) === -1 ? '#ddd' : '#777'}`,
                 borderRadius: '3px',
                 marginTop: '5px',
               }}

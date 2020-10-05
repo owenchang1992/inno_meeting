@@ -15,7 +15,7 @@ import {
   drawTagRectangle,
   drawPreviewingRectangle,
   drawInstructions,
-  findRecordIndex,
+  findTagIndex,
 } from './editor_utils';
 
 import Labels from './labels';
@@ -78,7 +78,7 @@ export default function imageEditor({ page, store, closePage }) {
 
   const toggleRecords = useCallback(
     (value) => {
-      const index = findRecordIndex(value, selectedRecords);
+      const index = findTagIndex(value, selectedRecords);
       if (index === -1) {
         setSelectedRecords([...selectedRecords, value]);
       } else {
