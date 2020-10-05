@@ -17,7 +17,7 @@ import {
 } from './editor_utils';
 
 import Labels from './labels';
-import Record from './tag_list';
+import TagList from './tag_list';
 
 const baseStyle = {
   borderRadius: '4px',
@@ -266,7 +266,7 @@ export default function imageEditor({ page, store, closePage }) {
         useCallback(content.type === 'canvas' ? (
           <div style={{ height: '100%', width: '11em' }}>
             <Labels setCurrentLabel={setCurrentLabel} currentLabel={currentLabel} />
-            <Record
+            <TagList
               tagList={tagList}
               toggleRecords={toggleRecords}
               selectedRecords={selectedRecords}
