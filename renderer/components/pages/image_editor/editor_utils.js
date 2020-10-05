@@ -1,3 +1,5 @@
+import { DRAW_RECTANGLE } from './constant';
+
 const URL = require('url');
 const path = require('path');
 
@@ -68,7 +70,7 @@ export const drawTagRectangle = (properties, context, dispatch) => {
 
   // Record
   dispatch([
-    'draw-rectangle',
+    DRAW_RECTANGLE,
     {
       ...properties,
       key: generateKey(properties),
@@ -79,7 +81,7 @@ export const drawTagRectangle = (properties, context, dispatch) => {
 export const drawInstructions = (ctx, imgData, history) => {
   ctx.putImageData(imgData, 0, 0);
   history.map((record) => {
-    if (record.action === 'draw-rectangle') {
+    if (record.action === DRAW_RECTANGLE) {
       drawRectangle(record.properties, ctx);
     }
     return true;

@@ -8,6 +8,8 @@ import React, {
 
 import { useHistory } from 'react-router-dom';
 
+import { DRAW_RECTANGLE, GET_TAGS_FROM_DB } from './constant';
+
 import {
   loadImage,
   drawTagRectangle,
@@ -36,12 +38,12 @@ const containerStyle = {
 
 const tagListReducer = (state, [type, payload]) => {
   switch (type) {
-    case 'draw-rectangle':
+    case DRAW_RECTANGLE:
       return [...state, {
         action: type,
         properties: payload,
       }];
-    case 'get-record-from-db':
+    case GET_TAGS_FROM_DB:
       return payload;
     default:
       return state;
@@ -163,7 +165,7 @@ export default function imageEditor({ page, store, closePage }) {
     const getRecord = (e, resp) => {
       if (resp.type === 'findOne') {
         console.log('fromCurrentPage', resp.contents.actions);
-        dispatch(['get-record-from-db', resp.contents.actions]);
+        dispatch([GET_TAGS_FROM_DB, resp.contents.actions]);
       }
     };
 
