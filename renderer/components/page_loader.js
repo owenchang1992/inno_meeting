@@ -1,11 +1,11 @@
 import React from 'react';
-import ImageEditor from './pages/image_editor/image_editor';
+import ImageTagger from './pages/image_editor/image_tagger';
 
 const PageLoader = ({ properties }) => {
   switch (properties.page.type) {
     case 'image_editor':
       // TODO: Check properties
-      return <ImageEditor {...properties} />;
+      return <ImageTagger {...properties} />;
     default:
       return null;
   }

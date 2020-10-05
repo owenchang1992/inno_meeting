@@ -52,7 +52,7 @@ const tagListReducer = (state, [type, payload]) => {
 
 const initialPoint = { left: -1, top: -1 };
 
-export default function imageEditor({ page, store, closePage }) {
+export default function imageTagger({ page, store, closePage }) {
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
