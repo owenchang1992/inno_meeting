@@ -1,5 +1,5 @@
 import React from 'react';
-import { findTagIndex } from './editor_utils';
+import { findTagIndex } from './utils';
 
 export default ({
   tagList,

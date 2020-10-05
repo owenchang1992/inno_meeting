@@ -16,7 +16,7 @@ import {
   drawPreviewingRectangle,
   drawInstructions,
   findTagIndex,
-} from './editor_utils';
+} from './utils';
 
 import Labels from './labels';
 import TagList from './tag_list';

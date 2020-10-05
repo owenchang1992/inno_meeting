@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import path from 'path';
 import { MEDIA_TAGGER } from '../constants';
 
+// temp
 const createNewPage = (mediaPath) => {
   const getName = (splitedPath) => {
     const splitedName = splitedPath.split('/');
