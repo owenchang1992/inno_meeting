@@ -34,7 +34,7 @@ const containerStyle = {
   padding: '5px',
 };
 
-const historyReducer = (state, [type, payload]) => {
+const tagListReducer = (state, [type, payload]) => {
   switch (type) {
     case 'draw-rectangle':
       return [...state, {
@@ -56,7 +56,7 @@ export default function imageEditor({ page, store, closePage }) {
   const [snapshot, setSnapshot] = useState(null);
   const [currentLabel, setCurrentLabel] = useState({});
   const [tagList, dispatch] = useReducer(
-    historyReducer,
+    tagListReducer,
     store.getStore(page.routingPath)
       ? store.getStore(page.routingPath).actions
       : [],
