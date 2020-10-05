@@ -66,11 +66,11 @@ export default ({ setCurrentLabel, currentLabel }) => {
     }
   };
 
-  const onMouseDown = (e, tag) => {
-    setCurrentInput(tag.name);
-    if (e.button === 2) setFocusedLabel(tag.name);
-    else if (focusedLabel !== tag.name) setFocusedLabel(null);
-    setLabelDown(tag.name);
+  const onMouseDown = (e, selectedLabel) => {
+    setCurrentInput(selectedLabel.name);
+    if (e.button === 2) setFocusedLabel(selectedLabel.name);
+    else if (focusedLabel !== selectedLabel.name) setFocusedLabel(null);
+    setLabelDown(selectedLabel.name);
   };
 
   useEffect(() => {
