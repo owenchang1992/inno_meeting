@@ -83,40 +83,40 @@ export default ({ setCurrentLabel, currentLabel }) => {
         Labels
       </h5>
       {
-        labelList.map((tag) => (
+        labelList.map((label) => (
           <div
-            key={tag.name}
+            key={label.name}
             role="button"
             style={{
               display: 'flex',
               padding: '3px 10px',
               borderRadius: '5px',
               marginTop: '5px',
-              backgroundColor: labelDown === tag.name ? '#ddd' : null,
+              backgroundColor: labelDown === label.name ? '#ddd' : null,
               alignItems: 'center',
             }}
-            onClick={() => updateCurrentLabel(tag)}
-            onMouseDown={(e) => onMouseDown(e, tag)}
+            onClick={() => updateCurrentLabel(label)}
+            onMouseDown={(e) => onMouseDown(e, label)}
             onMouseUp={() => setLabelDown(null)}
-            onKeyDown={(e) => saveLabel(e, tag)}
+            onKeyDown={(e) => saveLabel(e, label)}
             tabIndex={0}
           >
             <span
-              className={`icon ${currentLabel.name !== tag.name ? 'icon-record' : 'icon-play'}`}
-              style={{ color: tag.color, marginRight: '5px' }}
+              className={`icon ${currentLabel.name !== label.name ? 'icon-record' : 'icon-play'}`}
+              style={{ color: label.color, marginRight: '5px' }}
             />
             {
-              focusedLabel === tag.name
+              focusedLabel === label.name
                 ? (
                   <input
                     className="form-control"
                     value={currentInput}
                     onChange={(e) => setCurrentInput(e.target.value)}
                     type="text"
-                    placeholder={tag.name}
+                    placeholder={label.name}
                   />
                 )
-                : <strong>{tag.name}</strong>
+                : <strong>{label.name}</strong>
             }
           </div>
         ))
