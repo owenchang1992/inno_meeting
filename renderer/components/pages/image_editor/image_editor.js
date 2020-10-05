@@ -17,7 +17,7 @@ import {
 } from './editor_utils';
 
 import Labels from './labels';
-import Record from './records';
+import Record from './tag_list';
 
 const baseStyle = {
   borderRadius: '4px',
