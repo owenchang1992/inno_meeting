@@ -23,7 +23,7 @@ const testLabel = [
   },
 ];
 
-export default ({ setCurrentLabel, currentTag }) => {
+export default ({ setCurrentLabel, currentLabel }) => {
   const [labelDown, setLabelDown] = useState(null);
   const [labelList, setLabelList] = useState(testLabel); // get project labels
   const [currentInput, setCurrentInput] = useState('');
@@ -103,7 +103,7 @@ export default ({ setCurrentLabel, currentTag }) => {
             tabIndex={0}
           >
             <span
-              className={`icon ${currentTag.name !== tag.name ? 'icon-record' : 'icon-play'}`}
+              className={`icon ${currentLabel.name !== tag.name ? 'icon-record' : 'icon-play'}`}
               style={{ color: tag.color, marginRight: '5px' }}
             />
             {

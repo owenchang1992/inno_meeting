@@ -54,7 +54,7 @@ export default function imageEditor({ page, store, closePage }) {
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
-  const [currentTag, setCurrentLabel] = useState({});
+  const [currentLabel, setCurrentLabel] = useState({});
   const [history, dispatch] = useReducer(
     historyReducer,
     store.getStore(page.routingPath)
@@ -238,8 +238,8 @@ export default function imageEditor({ page, store, closePage }) {
               top: Math.round(mouseDownPoint.top * scale().scaleY),
               width: Math.round((mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX),
               height: Math.round((mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY),
-              color: currentTag.color,
-              tag: currentTag,
+              color: currentLabel.color,
+              tag: currentLabel,
             }, context, dispatch);
           }
         } else if (checkPoint(currentMousePoint)) {
@@ -265,14 +265,14 @@ export default function imageEditor({ page, store, closePage }) {
       {
         useCallback(content.type === 'canvas' ? (
           <div style={{ height: '100%', width: '11em' }}>
-            <Labels setCurrentLabel={setCurrentLabel} currentTag={currentTag} />
+            <Labels setCurrentLabel={setCurrentLabel} currentLabel={currentLabel} />
             <Record
               history={history}
               toggleRecords={toggleRecords}
               selectedRecords={selectedRecords}
             />
           </div>
-        ) : null, [history, currentTag, selectedRecords, content])
+        ) : null, [history, currentLabel, selectedRecords, content])
       }
     </div>
   );
