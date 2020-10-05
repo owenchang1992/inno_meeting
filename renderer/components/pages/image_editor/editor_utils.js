@@ -68,7 +68,7 @@ export const drawTagRectangle = (properties, context, dispatch) => {
     return `${round(left)}${round(top)}${round(width)}${round(height)}${color}`;
   };
 
-  // Record
+  // tag
   dispatch([
     DRAW_RECTANGLE,
     {
@@ -80,9 +80,9 @@ export const drawTagRectangle = (properties, context, dispatch) => {
 
 export const drawInstructions = (ctx, imgData, history) => {
   ctx.putImageData(imgData, 0, 0);
-  history.map((record) => {
-    if (record.action === DRAW_RECTANGLE) {
-      drawRectangle(record.properties, ctx);
+  history.map((tag) => {
+    if (tag.action === DRAW_RECTANGLE) {
+      drawRectangle(tag.properties, ctx);
     }
     return true;
   });
