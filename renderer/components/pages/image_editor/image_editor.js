@@ -169,7 +169,7 @@ export default function imageEditor({ page, store, closePage }) {
       }
     };
 
-    const getDbRecords = () => {
+    const getDbTagList = () => {
       if (tagList.length === 0) {
         window.api.send('toCurrentPage', {
           name: 'local_db',
@@ -183,7 +183,7 @@ export default function imageEditor({ page, store, closePage }) {
     };
 
     drawImage()
-      .then(() => getDbRecords())
+      .then(() => getDbTagList())
       .catch(() => console.log('initial failed'));
 
     store.createStore({
