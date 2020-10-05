@@ -29,14 +29,14 @@ export default ({ setCurrentTag, currentTag }) => {
   const [currentInput, setCurrentInput] = useState('');
   const [focusedLabel, setFocusedLabel] = useState(null);
 
-  const setTag = (label) => {
+  const updateCurrentLabel = (label) => {
     if (focusedLabel === null) {
       setCurrentTag(labelList.find((tag) => (tag.name === label.name)));
     }
   };
 
   const saveLabel = (e, label) => {
-    const saveToDB = () => {
+    const saveLabelToDB = () => {
       window.api.send('toCurrentPage', {
         name: 'local_db',
         collection: 'labels',
@@ -58,7 +58,7 @@ export default ({ setCurrentTag, currentTag }) => {
 
     if (e.keyCode === 13) {
       console.log('send');
-      saveToDB();
+      saveLabelToDB();
       if (focusedLabel !== null && currentInput.length !== 0) {
         setCurrentTag({ ...label, name: currentInput });
         updateLabelList();
@@ -68,7 +68,6 @@ export default ({ setCurrentTag, currentTag }) => {
   };
 
   const onMouseDown = (e, tag) => {
-    console.log(e.button);
     setCurrentInput(tag.name);
     if (e.button === 2) setFocusedLabel(tag.name);
     else if (focusedLabel !== tag.name) setFocusedLabel(null);
@@ -97,7 +96,7 @@ export default ({ setCurrentTag, currentTag }) => {
               backgroundColor: labelDown === tag.name ? '#ddd' : null,
               alignItems: 'center',
             }}
-            onClick={() => setTag(tag)}
+            onClick={() => updateCurrentLabel(tag)}
             onMouseDown={(e) => onMouseDown(e, tag)}
             onMouseUp={() => setLabelDown(null)}
             onKeyDown={(e) => saveLabel(e, tag)}
