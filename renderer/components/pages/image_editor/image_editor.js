@@ -88,7 +88,7 @@ export default function imageEditor({ page, store, closePage }) {
     },
   );
 
-  const drawAllRecords = () => {
+  const drawAllTags = () => {
     setSelectedTags([...tagList]);
   };
 
@@ -151,7 +151,7 @@ export default function imageEditor({ page, store, closePage }) {
         const height = img.naturalHeight * dpi;
         context.drawImage(img, 0, 0, width, height);
         setSnapshot(context.getImageData(0, 0, width, height));
-        if (tagList.length !== 0) drawAllRecords();
+        if (tagList.length !== 0) drawAllTags();
       })
       .catch((err) => {
         setContent(<div>Loading Media Error</div>);
@@ -209,7 +209,7 @@ export default function imageEditor({ page, store, closePage }) {
         contents: tagList,
       });
     }
-    drawAllRecords();
+    drawAllTags();
   }, [tagList]);
 
   // handle mouse events
