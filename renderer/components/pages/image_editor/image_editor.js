@@ -68,10 +68,10 @@ export default function imageEditor({ page, store, closePage }) {
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
 
-  const drawRecord = (record) => {
+  const drawTags = (tag) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    drawInstructions(context, snapshot, record);
+    drawInstructions(context, snapshot, tag);
   };
 
   const toggleRecords = useCallback(
@@ -195,7 +195,7 @@ export default function imageEditor({ page, store, closePage }) {
   useEffect(() => {
     if (content.type === 'canvas' && tagList.length !== 0) {
       console.log('selectedRecords');
-      drawRecord(selectedRecords);
+      drawTags(selectedRecords);
     }
   }, [selectedRecords]);
 
@@ -231,7 +231,7 @@ export default function imageEditor({ page, store, closePage }) {
 
       if (checkPoint(mouseDownPoint) && content !== null) {
         if (checkPoint(mouseUpPoint)) {
-          drawRecord(tagList);
+          drawTags(tagList);
           if (isArea(mouseDownPoint, mouseUpPoint)) {
             drawTagRectangle({
               left: Math.round(mouseDownPoint.left * scale().scaleX),
@@ -244,7 +244,7 @@ export default function imageEditor({ page, store, closePage }) {
           }
         } else if (checkPoint(currentMousePoint)) {
           // console.log(tagList);
-          drawRecord(tagList);
+          drawTags(tagList);
           drawPreviewingRectangle({
             left: mouseDownPoint.left * scale().scaleX,
             top: mouseDownPoint.top * scale().scaleY,
