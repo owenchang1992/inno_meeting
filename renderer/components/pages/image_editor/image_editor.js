@@ -16,7 +16,7 @@ import {
   findRecordIndex,
 } from './editor_utils';
 
-import Labels from './tags';
+import Labels from './labels';
 import Record from './records';
 
 const baseStyle = {
