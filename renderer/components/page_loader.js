@@ -1,5 +1,5 @@
 import React from 'react';
-import ImageTagger from './pages/image_editor/image_tagger';
+import ImageTagger from './pages/image_tagger/image_tagger';
 import { MEDIA_TAGGER } from '../constants';
 
 const PageLoader = ({ properties }) => {
