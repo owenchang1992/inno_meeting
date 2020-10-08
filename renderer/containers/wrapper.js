@@ -3,7 +3,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import '../assets/css/photon.css';
 
 import tabReducer from '../reducers/page_reducer';
-import { addNewPage, closePage } from '../reducers/page_actions';
+import { addNewTab, closeTab } from '../reducers/page_actions';
 
 import Main from './main_pane';
 import Header from './header';
@@ -13,11 +13,11 @@ const App = () => {
   const [tabs, dispatch] = useReducer(tabReducer, []);
 
   const addTab = (tab) => {
-    dispatch(addNewPage(tab));
+    dispatch(addNewTab(tab));
   };
 
-  const onCloseTab = (removedPage) => {
-    dispatch(closePage(removedPage));
+  const onCloseTab = (removedTab) => {
+    dispatch(closeTab(removedTab));
   };
 
   const checkTab = (midiaPath) => (

@@ -1,2 +1,2 @@
-export const ADD_PAGE = 'ADD_PAGE';
-export const CLOSE_PAGE = 'CLOSE_PAGE';
+export const ADD_TAB = 'ADD_TAB';
+export const CLOSE_TAB = 'CLOSE_TAB';

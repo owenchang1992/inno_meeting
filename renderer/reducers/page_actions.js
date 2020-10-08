@@ -1,11 +1,11 @@
-import { ADD_PAGE, CLOSE_PAGE } from './constants';
+import { ADD_TAB, CLOSE_TAB } from './constants';
 
-export const addNewPage = (page) => ({
-  type: ADD_PAGE,
-  payload: page,
+export const addNewTab = (tab) => ({
+  type: ADD_TAB,
+  payload: tab,
 });
 
-export const closePage = (page) => ({
-  type: CLOSE_PAGE,
-  payload: page,
+export const closeTab = (tab) => ({
+  type: CLOSE_TAB,
+  payload: tab,
 });
