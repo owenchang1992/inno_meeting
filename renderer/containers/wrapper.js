@@ -2,8 +2,8 @@ import React, { useReducer, useEffect } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import '../assets/css/photon.css';
 
-import tabReducer from '../reducers/page_reducer';
-import { addNewTab, closeTab } from '../reducers/page_actions';
+import tabReducer from '../reducers/tab_reducer';
+import { addNewTab, closeTab } from '../reducers/tab_actions';
 
 import Main from './main_pane';
 import Header from './header';
