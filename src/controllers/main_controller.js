@@ -11,7 +11,7 @@ module.exports = ({win, props}) => {
 
   const getCollection = (collectionName) => {
     return new Datastore({
-      filename: path.join(app.getPath('appData'), 'media_tagger/db/test', `${collectionName}.db`),
+      filename: path.join(app.getPath('appData'), 'media_tagger/db', `${collectionName}.db`),
       autoload: true,
     })
   }
