@@ -173,7 +173,7 @@ export default function imageTagger({ page, store, closePage }) {
       if (tagList.length === 0) {
         window.api.send('toCurrentPage', {
           name: 'local_db',
-          collection: 'images',
+          collection: 'pages',
           type: 'findOne',
           contents: { path: page.routingPath },
         });
