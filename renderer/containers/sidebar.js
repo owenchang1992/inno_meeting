@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import path from 'path';
-import { MEDIA_TAGGER } from '../constants';
 
 // temp
 const createNewPage = (mediaPath) => {
@@ -12,11 +11,8 @@ const createNewPage = (mediaPath) => {
 
   return ({
     name: getName(mediaPath),
-    type: MEDIA_TAGGER,
+    src: mediaPath,
     routingPath: mediaPath,
-    props: {
-      imagePath: mediaPath,
-    },
   });
 };
 

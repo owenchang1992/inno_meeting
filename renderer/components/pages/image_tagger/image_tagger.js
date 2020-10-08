@@ -21,6 +21,8 @@ import {
 import Labels from './labels';
 import TagList from './tag_list';
 
+import { MEDIA_TAGGER } from '../../../constants';
+
 const baseStyle = {
   borderRadius: '4px',
   boxShadow: '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
@@ -134,7 +136,7 @@ export default function imageTagger({ page, closePage }) {
       />
     );
 
-    const drawImage = () => loadImage(page.props.imagePath)
+    const drawImage = () => loadImage(page.src)
       .then((img) => {
         setContent(
           createCanvas(
@@ -203,7 +205,7 @@ export default function imageTagger({ page, closePage }) {
         type: 'update',
         contents: {
           path: page.routingPath,
-          type: page.type,
+          type: MEDIA_TAGGER,
           actions: tagList,
         },
       });
