@@ -23,15 +23,17 @@ const testLabel = [
   },
 ];
 
-export default ({ setCurrentLabel, currentLabel }) => {
+export default ({ setCurrentLabel }) => {
   const [labelDown, setLabelDown] = useState(null);
+  const [focusedLabel, setFocusLabel] = useState(testLabel[0]);
   const [labelList, setLabelList] = useState(testLabel); // get project labels
   const [currentInput, setCurrentInput] = useState('');
   const [editedLabel, setEditedLabel] = useState(null);
 
   const updateCurrentLabel = (selectedLabel) => {
     if (editedLabel === null) {
-      setCurrentLabel(labelList.find((label) => (label.name === selectedLabel.name)));
+      setCurrentLabel(selectedLabel);
+      setFocusLabel(selectedLabel);
     }
   };
 
@@ -102,7 +104,7 @@ export default ({ setCurrentLabel, currentLabel }) => {
             tabIndex={0}
           >
             <span
-              className={`icon ${currentLabel.name !== label.name ? 'icon-record' : 'icon-play'}`}
+              className={`icon ${focusedLabel.name !== label.name ? 'icon-record' : 'icon-play'}`}
               style={{ color: label.color, marginRight: '5px' }}
             />
             {

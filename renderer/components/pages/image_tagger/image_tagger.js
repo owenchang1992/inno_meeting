@@ -268,7 +268,7 @@ export default function imageTagger({ page, closePage }) {
       {
         useCallback(content.type === 'canvas' ? (
           <div style={{ height: '100%', width: '11em' }}>
-            <Labels setCurrentLabel={setCurrentLabel} currentLabel={currentLabel} />
+            <Labels setCurrentLabel={setCurrentLabel} />
             <TagList
               tagList={tagList}
               toggleTags={toggleTags}
