@@ -12,8 +12,8 @@ import SideBar from './sidebar';
 const App = () => {
   const [pages, dispatch] = useReducer(pageReducer, []);
 
-  const addTab = (page) => {
-    dispatch(addNewPage(page));
+  const addTab = (tab) => {
+    dispatch(addNewPage(tab));
   };
 
   const onClosePage = (removedPage) => {
@@ -21,8 +21,8 @@ const App = () => {
   };
 
   const checkTab = (midiaPath) => (
-    pages.findIndex((page) => (
-      page.routingPath === midiaPath
+    pages.findIndex((tab) => (
+      tab.routingPath === midiaPath
     ))
   );
 
