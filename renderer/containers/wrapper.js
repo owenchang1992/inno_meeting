@@ -9,44 +9,6 @@ import Main from './main_pane';
 import Header from './header';
 import SideBar from './sidebar';
 
-const reactStore = (() => {
-  const store = {};
-
-  const addStore = ({ name, contents }) => {
-    store[name].actions = contents;
-    window.api.send('toCurrentPage', {
-      name: 'local_db',
-      collection: 'pages',
-      type: 'update',
-      contents: store[name],
-    });
-  };
-
-  const getStore = (name) => store[name];
-
-  const createStore = ({ name, type }) => {
-    store[name] = {
-      path: name,
-      type,
-      actions: [],
-    };
-  };
-
-  const removeStore = (name) => {
-    delete store[name];
-  };
-
-  const getAll = () => store;
-
-  return {
-    addStore,
-    getStore,
-    removeStore,
-    getAll,
-    createStore,
-  };
-})();
-
 const App = () => {
   const [pages, dispatch] = useReducer(pageReducer, []);
 
@@ -56,7 +18,6 @@ const App = () => {
 
   const onClosePage = (removedPage) => {
     dispatch(closePage(removedPage));
-    reactStore.removeStore(removedPage.routingPath);
   };
 
   const checkPage = (midiaPath) => (
@@ -80,7 +41,7 @@ const App = () => {
         <div className="window-content">
           <div className="pane-group">
             <SideBar addPage={addPage} checkPage={checkPage} />
-            <Main pages={pages} closePage={onClosePage} store={reactStore} />
+            <Main pages={pages} closePage={onClosePage} />
           </div>
         </div>
       </div>

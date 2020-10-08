@@ -52,16 +52,14 @@ const tagListReducer = (state, [type, payload]) => {
 
 const initialPoint = { left: -1, top: -1 };
 
-export default function imageTagger({ page, store, closePage }) {
+export default function imageTagger({ page, closePage }) {
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
   const [currentLabel, setCurrentLabel] = useState({});
   const [tagList, dispatch] = useReducer(
     tagListReducer,
-    store.getStore(page.routingPath)
-      ? store.getStore(page.routingPath).actions
-      : [],
+    [],
   );
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
@@ -186,11 +184,6 @@ export default function imageTagger({ page, store, closePage }) {
       .then(() => getDbTagList())
       .catch(() => console.log('initial failed'));
 
-    store.createStore({
-      name: page.routingPath,
-      type: page.type,
-    });
-
     return () => window.api.removeListener('fromCurrentPage', getTagList);
   }, []);
 
@@ -204,9 +197,15 @@ export default function imageTagger({ page, store, closePage }) {
   // Cache tagList after tagList updated
   useEffect(() => {
     if (tagList.length !== 0) {
-      store.addStore({
-        name: page.routingPath,
-        contents: tagList,
+      window.api.send('toCurrentPage', {
+        name: 'local_db',
+        collection: 'pages',
+        type: 'update',
+        contents: {
+          path: page.routingPath,
+          type: page.type,
+          actions: tagList,
+        },
       });
     }
     drawAllTags();

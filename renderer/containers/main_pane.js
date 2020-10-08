@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import PageLoader from '../components/page_loader';
 import Tabs from '../components/tabs';
 
-const main = ({ closePage, pages, store }) => {
+const main = ({ closePage, pages }) => {
   console.log('new page', pages);
   return (
     <div className="pane">
@@ -20,7 +20,7 @@ const main = ({ closePage, pages, store }) => {
                   <PageLoader
                     {...props}
                     type={page.type}
-                    properties={{ page, store, closePage }}
+                    properties={{ page, closePage }}
                   />
                 </>
               )}
