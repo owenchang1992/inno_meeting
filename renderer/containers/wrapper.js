@@ -16,7 +16,7 @@ const App = () => {
     dispatch(addNewPage(tab));
   };
 
-  const onClosePage = (removedPage) => {
+  const onCloseTab = (removedPage) => {
     dispatch(closePage(removedPage));
   };
 
@@ -41,7 +41,7 @@ const App = () => {
         <div className="window-content">
           <div className="pane-group">
             <SideBar addTab={addTab} checkTab={checkTab} />
-            <Main pages={tabs} closePage={onClosePage} />
+            <Main tabs={tabs} closeTab={onCloseTab} />
           </div>
         </div>
       </div>

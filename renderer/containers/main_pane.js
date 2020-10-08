@@ -4,23 +4,22 @@ import { Route } from 'react-router-dom';
 import PageLoader from '../components/page_loader';
 import Tabs from '../components/tabs';
 
-const main = ({ closePage, pages }) => {
-  console.log('new page', pages);
+const main = ({ closeTab, tabs }) => {
+  console.log('new tab', tabs);
   return (
     <div className="pane">
       <>
         <Route path="/" exact component={() => <h1>Home Page fsb</h1>} />
         {
-          pages.map((page) => (
+          tabs.map((tab) => (
             <Route
-              path={page.routingPath}
+              path={tab.routingPath}
               render={(props) => (
                 <>
-                  <Tabs {...props} pages={pages} closePage={closePage} />
+                  <Tabs {...props} tabs={tabs} closeTab={closeTab} />
                   <PageLoader
                     {...props}
-                    type={page.type}
-                    properties={{ page, closePage }}
+                    properties={{ tab, closeTab }}
                   />
                 </>
               )}

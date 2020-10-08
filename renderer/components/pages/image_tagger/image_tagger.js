@@ -54,7 +54,7 @@ const tagListReducer = (state, [type, payload]) => {
 
 const initialPoint = { left: -1, top: -1 };
 
-export default function imageTagger({ page, closePage }) {
+export default function imageTagger({ tab, closeTab }) {
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
@@ -136,7 +136,7 @@ export default function imageTagger({ page, closePage }) {
       />
     );
 
-    const drawImage = () => loadImage(page.src)
+    const drawImage = () => loadImage(tab.src)
       .then((img) => {
         setContent(
           createCanvas(
@@ -158,7 +158,7 @@ export default function imageTagger({ page, closePage }) {
         console.log(err);
         setTimeout(() => {
           routeHistory.goBack();
-          closePage(page);
+          closeTab(tab);
         }, 1000);
       });
 
@@ -175,7 +175,7 @@ export default function imageTagger({ page, closePage }) {
           name: 'local_db',
           collection: 'pages',
           type: 'findOne',
-          contents: { path: page.routingPath },
+          contents: { path: tab.src },
         });
 
         window.api.receive('fromCurrentPage', getTagList);
@@ -204,7 +204,7 @@ export default function imageTagger({ page, closePage }) {
         collection: 'pages',
         type: 'update',
         contents: {
-          path: page.routingPath,
+          path: tab.src,
           type: MEDIA_TAGGER,
           actions: tagList,
         },

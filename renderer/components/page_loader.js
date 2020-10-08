@@ -3,7 +3,7 @@ import ImageTagger from './pages/image_tagger/image_tagger';
 
 // TODO: recognize the file type by mime
 const PageLoader = ({ properties }) => {
-  switch (properties.page.src) {
+  switch (properties.tab.src) {
     default:
       return <ImageTagger {...properties} />;
   }
