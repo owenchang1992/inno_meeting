@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import '../assets/css/photon.css';
 
-import pageReducer from '../reducers/page_reducer';
+import tabReducer from '../reducers/page_reducer';
 import { addNewPage, closePage } from '../reducers/page_actions';
 
 import Main from './main_pane';
@@ -10,7 +10,7 @@ import Header from './header';
 import SideBar from './sidebar';
 
 const App = () => {
-  const [pages, dispatch] = useReducer(pageReducer, []);
+  const [tabs, dispatch] = useReducer(tabReducer, []);
 
   const addTab = (tab) => {
     dispatch(addNewPage(tab));
@@ -21,7 +21,7 @@ const App = () => {
   };
 
   const checkTab = (midiaPath) => (
-    pages.findIndex((tab) => (
+    tabs.findIndex((tab) => (
       tab.routingPath === midiaPath
     ))
   );
@@ -41,7 +41,7 @@ const App = () => {
         <div className="window-content">
           <div className="pane-group">
             <SideBar addTab={addTab} checkTab={checkTab} />
-            <Main pages={pages} closePage={onClosePage} />
+            <Main pages={tabs} closePage={onClosePage} />
           </div>
         </div>
       </div>
