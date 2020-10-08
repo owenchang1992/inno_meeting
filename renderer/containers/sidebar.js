@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import path from 'path';
 
 // temp
-const createNewPage = (mediaPath) => {
+const createNewTab = (mediaPath) => {
   const getName = (splitedPath) => {
     const splitedName = splitedPath.split('/');
     return splitedName[splitedName.length - 1];
@@ -16,7 +16,7 @@ const createNewPage = (mediaPath) => {
   });
 };
 
-const sideBar = ({ addPage, checkPage }) => {
+const sideBar = ({ addTab, checkTab }) => {
   const [searchContents, setSearchContents] = useState('dev/icon.png');
   const [workingPath] = useState(window.api.getHomeDir());
   const history = useHistory();
@@ -28,8 +28,8 @@ const sideBar = ({ addPage, checkPage }) => {
         searchContents,
       );
 
-      if (checkPage(mediaPath) === -1) {
-        addPage(createNewPage(mediaPath));
+      if (checkTab(mediaPath) === -1) {
+        addTab(createNewTab(mediaPath));
         history.push(mediaPath);
       } else if (mediaPath !== history.location.pathname) {
         history.push(mediaPath);

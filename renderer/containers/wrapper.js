@@ -12,7 +12,7 @@ import SideBar from './sidebar';
 const App = () => {
   const [pages, dispatch] = useReducer(pageReducer, []);
 
-  const addPage = (page) => {
+  const addTab = (page) => {
     dispatch(addNewPage(page));
   };
 
@@ -20,7 +20,7 @@ const App = () => {
     dispatch(closePage(removedPage));
   };
 
-  const checkPage = (midiaPath) => (
+  const checkTab = (midiaPath) => (
     pages.findIndex((page) => (
       page.routingPath === midiaPath
     ))
@@ -40,7 +40,7 @@ const App = () => {
         <Header />
         <div className="window-content">
           <div className="pane-group">
-            <SideBar addPage={addPage} checkPage={checkPage} />
+            <SideBar addTab={addTab} checkTab={checkTab} />
             <Main pages={pages} closePage={onClosePage} />
           </div>
         </div>
