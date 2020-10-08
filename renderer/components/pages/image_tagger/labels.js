@@ -27,10 +27,10 @@ export default ({ setCurrentLabel, currentLabel }) => {
   const [labelDown, setLabelDown] = useState(null);
   const [labelList, setLabelList] = useState(testLabel); // get project labels
   const [currentInput, setCurrentInput] = useState('');
-  const [focusedLabel, setFocusedLabel] = useState(null);
+  const [editedLabel, setEditedLabel] = useState(null);
 
   const updateCurrentLabel = (selectedLabel) => {
-    if (focusedLabel === null) {
+    if (editedLabel === null) {
       setCurrentLabel(labelList.find((label) => (label.name === selectedLabel.name)));
     }
   };
@@ -58,18 +58,18 @@ export default ({ setCurrentLabel, currentLabel }) => {
 
     if (e.keyCode === 13) {
       saveLabelToDB();
-      if (focusedLabel !== null && currentInput.length !== 0) {
+      if (editedLabel !== null && currentInput.length !== 0) {
         setCurrentLabel({ ...selectedLabel, name: currentInput });
         updateLabelList();
       }
-      setFocusedLabel(null);
+      setEditedLabel(null);
     }
   };
 
   const onMouseDown = (e, selectedLabel) => {
     setCurrentInput(selectedLabel.name);
-    if (e.button === 2) setFocusedLabel(selectedLabel.name);
-    else if (focusedLabel !== selectedLabel.name) setFocusedLabel(null);
+    if (e.button === 2) setEditedLabel(selectedLabel.name);
+    else if (editedLabel !== selectedLabel.name) setEditedLabel(null);
     setLabelDown(selectedLabel.name);
   };
 
@@ -106,7 +106,7 @@ export default ({ setCurrentLabel, currentLabel }) => {
               style={{ color: label.color, marginRight: '5px' }}
             />
             {
-              focusedLabel === label.name
+              editedLabel === label.name
                 ? (
                   <input
                     className="form-control"
