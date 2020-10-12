@@ -1,61 +1,65 @@
 import React, { useState, useEffect } from 'react';
 
 const defaultContainter = {
-  _id: 'UoNuSbZeUVhBOzYf',
   name: 'Default',
+  key: 'default',
   type: 'container',
   description: '',
   labels: [
     {
+      name: 'Red',
       color: '#fc605b',
       labelID: 'LD3WVmBk5UaVeey1',
     },
     {
+      name: 'Orange',
       color: '#fdbc40',
       labelID: 'n11BSySlzrkkgtLy',
     },
     {
+      name: 'Green',
       color: '#34c84a',
       labelID: 'NmbFa1lovbl0Inyu',
     },
     {
+      name: 'Blue',
       color: '#57acf5',
       labelID: 'hYsFaP1GUKfNQ9Rh',
     },
   ],
 };
 
-const testLabel = [
-  {
-    labelID: 'LD3WVmBk5UaVeey1',
-    name: 'Red',
-    type: 'text',
-    description: '',
-  },
-  {
-    labelID: 'n11BSySlzrkkgtLy',
-    name: 'Orange',
-    type: 'text',
-    description: '',
-  },
-  {
-    labelID: 'NmbFa1lovbl0Inyu',
-    name: 'Green',
-    type: 'text',
-    description: '',
-  },
-  {
-    labelID: 'hYsFaP1GUKfNQ9Rh',
-    name: 'Blue',
-    type: 'text',
-    description: '',
-  },
-];
+// const testLabel = [
+//   {
+//     labelID: 'LD3WVmBk5UaVeey1',
+//     name: 'Red',
+//     type: 'text',
+//     description: '',
+//   },
+//   {
+//     labelID: 'n11BSySlzrkkgtLy',
+//     name: 'Orange',
+//     type: 'text',
+//     description: '',
+//   },
+//   {
+//     labelID: 'NmbFa1lovbl0Inyu',
+//     name: 'Green',
+//     type: 'text',
+//     description: '',
+//   },
+//   {
+//     labelID: 'hYsFaP1GUKfNQ9Rh',
+//     name: 'Blue',
+//     type: 'text',
+//     description: '',
+//   },
+// ];
 
 export default ({ setCurrentLabel }) => {
   const [labelDown, setLabelDown] = useState(null);
-  const [focusedLabel, setFocusLabel] = useState(testLabel[0]);
-  const [labelList, setLabelList] = useState([]); // get container labels
+  const [focusedLabel, setFocusLabel] = useState(defaultContainter.labels[0]);
+  const [labelList, setLabelList] = useState(defaultContainter.labels); // get container labels
   const [currentInput, setCurrentInput] = useState('');
   const [editedLabel, setEditedLabel] = useState(null);
 
@@ -104,37 +108,37 @@ export default ({ setCurrentLabel }) => {
 
   useEffect(() => {
     setCurrentLabel(labelList[0]);
-    const getLabels = (e, resp) => {
-      if (resp.contents) {
-        // const newLabels = resp.contents.labels.map(
-        //   (content) => {
-        //     const foundLabel = testLabel.find((label) => (
-        //       label.labelID === content.labelID
-        //     ));
+    // const getLabels = (e, resp) => {
+    //   if (resp.contents) {
+    //     const newLabels = resp.contents.labels.map(
+    //       (content) => {
+    //         const foundLabel = testLabel.find((label) => (
+    //           label.labelID === content.labelID
+    //         ));
 
-        //     return {
-        //       ...content,
-        //       ...foundLabel,
-        //     };
-        //   },
-        // );
+    //         return {
+    //           ...content,
+    //           ...foundLabel,
+    //         };
+    //       },
+    //     );
 
-        // if (resp.collection === 'labels' && resp.type === 'findOne') {
-        //   setLabelList(newLabels);
-        // }
-        console.log('getLabels', resp);
-      }
-    };
+    //     if (resp.collection === 'labels' && resp.type === 'findOne') {
+    //       setLabelList(newLabels);
+    //     }
+    // //     console.log('getLabels', resp);
+    // //   }
+    // // };
 
     const getDBLabels = () => {
-      window.api.send('toCurrentPage', {
-        name: 'local_db',
-        collection: 'labels',
-        type: 'findOne',
-        contents: { _id: 'UoNuSbZeUVhBOzYf' },
-      });
+      // window.api.send('toCurrentPage', {
+      //   name: 'local_db',
+      //   collection: 'labels',
+      //   type: 'findOne',
+      //   contents: { _id: 'UoNuSbZeUVhBOzYf' },
+      // });
 
-      window.api.receive('fromCurrentPage', getLabels);
+      // window.api.receive('fromCurrentPage', getLabels);
     };
 
     getDBLabels();
