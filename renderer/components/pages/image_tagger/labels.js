@@ -1,24 +1,53 @@
 import React, { useState, useEffect } from 'react';
 
+const defaultContainter = {
+  _id: 'UoNuSbZeUVhBOzYf',
+  name: 'Default',
+  type: 'container',
+  description: '',
+  contents: [
+    {
+      color: '#fc605b',
+      labelID: 'LD3WVmBk5UaVeey1',
+    },
+    {
+      color: '#fdbc40',
+      labelID: 'n11BSySlzrkkgtLy',
+    },
+    {
+      color: '#34c84a',
+      labelID: 'NmbFa1lovbl0Inyu',
+    },
+    {
+      color: '#57acf5',
+      labelID: 'hYsFaP1GUKfNQ9Rh',
+    },
+  ],
+};
+
 const testLabel = [
   {
+    labelID: 'LD3WVmBk5UaVeey1',
     name: 'Red',
-    color: '#fc605b',
+    type: 'text',
     description: '',
   },
   {
+    labelID: 'n11BSySlzrkkgtLy',
     name: 'Orange',
-    color: '#fdbc40',
+    type: 'text',
     description: '',
   },
   {
+    labelID: 'NmbFa1lovbl0Inyu',
     name: 'Green',
-    color: '#34c84a',
+    type: 'text',
     description: '',
   },
   {
+    labelID: 'hYsFaP1GUKfNQ9Rh',
     name: 'Blue',
-    color: '#57acf5',
+    type: 'text',
     description: '',
   },
 ];
@@ -26,7 +55,7 @@ const testLabel = [
 export default ({ setCurrentLabel }) => {
   const [labelDown, setLabelDown] = useState(null);
   const [focusedLabel, setFocusLabel] = useState(testLabel[0]);
-  const [labelList, setLabelList] = useState(testLabel); // get project labels
+  const [labelList, setLabelList] = useState([]); // get container labels
   const [currentInput, setCurrentInput] = useState('');
   const [editedLabel, setEditedLabel] = useState(null);
 
@@ -37,15 +66,26 @@ export default ({ setCurrentLabel }) => {
     }
   };
 
+  const getLabels = () => defaultContainter.contents.map(
+    (content) => {
+      const foundLabel = testLabel.find((label) => (
+        label.labelID === content.labelID
+      ));
+
+      return {
+        ...content,
+        ...foundLabel,
+      };
+    },
+  );
+
   const saveLabel = (e, selectedLabel) => {
     const saveLabelToDB = () => {
       window.api.send('toCurrentPage', {
         name: 'local_db',
         collection: 'labels',
         type: 'update',
-        contents: {
-          name: currentInput,
-        },
+        contents: defaultContainter,
       });
     };
 
@@ -77,6 +117,8 @@ export default ({ setCurrentLabel }) => {
 
   useEffect(() => {
     setCurrentLabel(labelList[0]);
+    // console.log('test', getLabels());
+    setLabelList(getLabels());
   }, []);
 
   return (
