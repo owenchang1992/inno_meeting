@@ -163,9 +163,11 @@ export default function imageTagger({ tab, closeTab }) {
       });
 
     const getTagList = (e, resp) => {
-      if (resp.collection === 'pages' && resp.type === 'findOne') {
-        console.log('fromCurrentPage', resp);
-        dispatch([GET_TAGS_FROM_DB, resp.contents.actions]);
+      if (resp.contents) {
+        if (resp.collection === 'pages' && resp.type === 'findOne') {
+          console.log('fromCurrentPage', resp);
+          dispatch([GET_TAGS_FROM_DB, resp.contents.actions]);
+        }
       }
     };
 
