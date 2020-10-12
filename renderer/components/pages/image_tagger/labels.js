@@ -5,7 +5,7 @@ const defaultContainter = {
   name: 'Default',
   type: 'container',
   description: '',
-  contents: [
+  labels: [
     {
       color: '#fc605b',
       labelID: 'LD3WVmBk5UaVeey1',
@@ -66,19 +66,6 @@ export default ({ setCurrentLabel }) => {
     }
   };
 
-  const getLabels = () => defaultContainter.contents.map(
-    (content) => {
-      const foundLabel = testLabel.find((label) => (
-        label.labelID === content.labelID
-      ));
-
-      return {
-        ...content,
-        ...foundLabel,
-      };
-    },
-  );
-
   const saveLabel = (e, selectedLabel) => {
     const saveLabelToDB = () => {
       window.api.send('toCurrentPage', {
@@ -117,8 +104,37 @@ export default ({ setCurrentLabel }) => {
 
   useEffect(() => {
     setCurrentLabel(labelList[0]);
-    // console.log('test', getLabels());
-    setLabelList(getLabels());
+    const getLabels = (e, resp) => {
+      let newLabels = resp.contents.labels.map(
+        (content) => {
+          const foundLabel = testLabel.find((label) => (
+            label.labelID === content.labelID
+          ));
+    
+          return {
+            ...content,
+            ...foundLabel,
+          };
+        },
+      );
+
+      if (resp.collection === 'labels' && resp.type === 'findOne') {
+        setLabelList(newLabels);
+      }
+    }
+
+    const getDBLabels = () => {
+      window.api.send('toCurrentPage', {
+        name: 'local_db',
+        collection: 'labels',
+        type: 'findOne',
+        contents: { _id: 'UoNuSbZeUVhBOzYf' },
+      });
+
+      window.api.receive('fromCurrentPage', getLabels);
+    };
+
+    getDBLabels();
   }, []);
 
   return (
