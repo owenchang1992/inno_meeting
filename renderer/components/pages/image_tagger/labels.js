@@ -52,21 +52,22 @@ export default ({ setCurrentLabel }) => {
       });
     };
 
-    const updateLabelList = () => {
+    const getNewLabelList = () => {
       const index = labelList.findIndex((label) => (label.name === selectedLabel.name));
       labelList.splice(index, 1, {
         ...selectedLabel,
         name: currentInput,
       });
 
-      saveLabelToDB(labelList);
-      setLabelList([...labelList]);
+      return [...labelList];
     };
 
     if (e.keyCode === 13) {
       if (editedLabel !== null && currentInput.length !== 0) {
         setCurrentLabel({ ...selectedLabel, name: currentInput });
-        updateLabelList();
+        const newLabelList = getNewLabelList();
+        saveLabelToDB(newLabelList);
+        setLabelList(newLabelList);
       }
       setEditedLabel(null);
     }
@@ -75,16 +76,19 @@ export default ({ setCurrentLabel }) => {
   const onMouseDown = (e, selectedLabel) => {
     setCurrentInput(selectedLabel.name);
     if (e.button === 2) setEditedLabel(selectedLabel.name);
-    else if (editedLabel !== selectedLabel.name) setEditedLabel(null);
-    setLabelDown(selectedLabel.name);
+    else if (editedLabel !== selectedLabel.name) {
+      setEditedLabel(null);
+      setLabelDown(selectedLabel.name);
+    }
   };
 
   useEffect(() => {
-    setCurrentLabel(labelList[0]);
     const getLabels = (e, resp) => {
       if (resp.contents) {
         if (resp.collection === 'labels' && resp.type === 'findOne') {
           setLabelList(resp.contents.labels);
+          setFocusLabel(resp.contents.labels[0]);
+          setCurrentLabel(resp.contents.labels[0]);
         }
       }
     };
