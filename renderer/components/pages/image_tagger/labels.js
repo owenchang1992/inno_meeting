@@ -73,7 +73,7 @@ export default ({ setCurrentLabel }) => {
     }
   };
 
-  const onMouseDown = (e, selectedLabel) => {
+  const editLabel = (e, selectedLabel) => {
     setCurrentInput(selectedLabel.name);
     if (e.button === 2) setEditedLabel(selectedLabel.name);
     else if (editedLabel !== selectedLabel.name) {
@@ -126,7 +126,7 @@ export default ({ setCurrentLabel }) => {
               alignItems: 'center',
             }}
             onClick={() => updateCurrentLabel(label)}
-            onMouseDown={(e) => onMouseDown(e, label)}
+            onMouseDown={(e) => editLabel(e, label)}
             onMouseUp={() => setLabelDown(null)}
             onKeyDown={(e) => saveLabel(e, label)}
             tabIndex={0}
