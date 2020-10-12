@@ -105,23 +105,26 @@ export default ({ setCurrentLabel }) => {
   useEffect(() => {
     setCurrentLabel(labelList[0]);
     const getLabels = (e, resp) => {
-      let newLabels = resp.contents.labels.map(
-        (content) => {
-          const foundLabel = testLabel.find((label) => (
-            label.labelID === content.labelID
-          ));
-    
-          return {
-            ...content,
-            ...foundLabel,
-          };
-        },
-      );
+      if (resp.contents) {
+        // const newLabels = resp.contents.labels.map(
+        //   (content) => {
+        //     const foundLabel = testLabel.find((label) => (
+        //       label.labelID === content.labelID
+        //     ));
 
-      if (resp.collection === 'labels' && resp.type === 'findOne') {
-        setLabelList(newLabels);
+        //     return {
+        //       ...content,
+        //       ...foundLabel,
+        //     };
+        //   },
+        // );
+
+        // if (resp.collection === 'labels' && resp.type === 'findOne') {
+        //   setLabelList(newLabels);
+        // }
+        console.log('getLabels', resp);
       }
-    }
+    };
 
     const getDBLabels = () => {
       window.api.send('toCurrentPage', {
