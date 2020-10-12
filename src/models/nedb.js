@@ -10,7 +10,7 @@ module.exports = (() => {
 
   const update = (db, props) => {
     return new Promise((resolve, reject) => {
-      db.update({path: props.contents.path}, props.contents, {}, (err, numReplace) => {
+      db.update({key: props.contents.key}, props.contents, {}, (err, numReplace) => {
         if (err) reject(err);
         resolve(numReplace);
       })

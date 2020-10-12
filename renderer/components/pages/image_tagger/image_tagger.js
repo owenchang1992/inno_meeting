@@ -204,6 +204,7 @@ export default function imageTagger({ tab, closeTab }) {
         collection: 'pages',
         type: 'update',
         contents: {
+          key: tab.src,
           path: tab.src,
           type: MEDIA_TAGGER,
           actions: tagList,
