@@ -6,6 +6,14 @@ export default ({ tagList, selectedTags, toggleTags }) => {
     findTagIndex(tag, selectedTags) === -1 ? '#ddd' : '#777'
   );
 
+  // const getContent = (tag) => {
+  //   const {
+  //     left, top, width, height,
+  //   } = tag.properties;
+
+  //   return `(${left}, ${top}, ${width}, ${height})`;
+  // };
+
   return (
     <>
       <h5 className="nav-group-title">
@@ -15,14 +23,6 @@ export default ({ tagList, selectedTags, toggleTags }) => {
         tagList.map((tag) => {
           const { label, key } = tag.properties;
 
-          const getContent = () => {
-            const {
-              left, top, width, height,
-            } = tag.properties;
-
-            return `(${left}, ${top}, ${width}, ${height})`;
-          };
-
           return (
             <div
               className="list-group-item"
@@ -30,7 +30,7 @@ export default ({ tagList, selectedTags, toggleTags }) => {
               key={key}
               style={{
                 position: 'relative',
-                padding: '5px 0px 5px 10px',
+                padding: '5px 10px',
                 border: `1px solid ${getBorderColor(tag)}`,
                 borderRadius: '3px',
                 marginTop: '5px',
@@ -44,8 +44,14 @@ export default ({ tagList, selectedTags, toggleTags }) => {
                 style={{ color: label.color, marginRight: '5px' }}
               />
               <strong>{label.name}</strong>
-              <br />
-              { getContent() }
+              <span
+                className="icon icon-delete"
+                style={{
+                  position: 'absolute',
+                  right: 0,
+                  color: label.color,
+                }}
+              />
             </div>
           );
         })
