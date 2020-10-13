@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { findTagIndex } from './utils';
 
 const EditBar = () => (
@@ -24,6 +24,8 @@ const EditBar = () => (
 );
 
 export default ({ tagList, selectedTags, toggleTags }) => {
+  const [focusedTag, setFocusTag] = useState(null);
+
   const getBorderColor = (tag) => (
     findTagIndex(tag, selectedTags) === -1 ? '#ddd' : '#777'
   );
@@ -35,6 +37,19 @@ export default ({ tagList, selectedTags, toggleTags }) => {
 
   //   return `(${left}, ${top}, ${width}, ${height})`;
   // };
+  const onTagPressed = (e, tag) => {
+    console.log(tag);
+    if (e.button === 2) setFocusTag(tag);
+    else setFocusTag(null);
+  };
+
+  const getEditBar = (tag) => {
+    if (focusedTag && focusedTag.properties.key === tag.properties.key) {
+      return <EditBar />;
+    }
+
+    return null;
+  };
 
   return (
     <>
@@ -59,7 +74,8 @@ export default ({ tagList, selectedTags, toggleTags }) => {
                 display: 'flex',
               }}
               tabIndex={0}
-              onClick={() => { toggleTags(tag); }}
+              onMouseDown={(e) => onTagPressed(e, tag)}
+              onClick={() => toggleTags(tag)}
               onKeyDown={() => (null)}
             >
               <span
@@ -67,7 +83,7 @@ export default ({ tagList, selectedTags, toggleTags }) => {
                 style={{ color: label.color, marginRight: '5px' }}
               />
               <strong>{label.name}</strong>
-              <EditBar />
+              {getEditBar(tag)}
             </div>
           );
         })
