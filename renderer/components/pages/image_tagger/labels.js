@@ -25,7 +25,7 @@ const defaultContainter = {
   ],
 };
 
-export default ({ setCurrentLabel }) => {
+export default ({ setTagConfig }) => {
   const [labelDown, setLabelDown] = useState(null);
   const [focusedLabel, setFocusLabel] = useState(defaultContainter.labels[0]);
   const [labelList, setLabelList] = useState(defaultContainter.labels); // get container labels
@@ -34,7 +34,7 @@ export default ({ setCurrentLabel }) => {
 
   const updateCurrentLabel = (selectedLabel) => {
     if (editedLabel === null) {
-      setCurrentLabel(selectedLabel);
+      setTagConfig(selectedLabel);
       setFocusLabel(selectedLabel);
     }
   };
@@ -64,7 +64,7 @@ export default ({ setCurrentLabel }) => {
 
     if (e.keyCode === 13) {
       if (editedLabel !== null && currentInput.length !== 0) {
-        setCurrentLabel({ ...selectedLabel, name: currentInput });
+        setTagConfig({ ...selectedLabel, name: currentInput });
         const newLabelList = getNewLabelList();
         saveLabelToDB(newLabelList);
         setLabelList(newLabelList);
@@ -88,7 +88,7 @@ export default ({ setCurrentLabel }) => {
         if (resp.collection === 'labels' && resp.type === 'findOne') {
           setLabelList(resp.contents.labels);
           setFocusLabel(resp.contents.labels[0]);
-          setCurrentLabel(resp.contents.labels[0]);
+          setTagConfig(resp.contents.labels[0]);
         }
       }
     };

@@ -58,7 +58,7 @@ export default function imageTagger({ tab, closeTab }) {
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
-  const [currentLabel, setCurrentLabel] = useState({});
+  const [tagConfig, setTagConfig] = useState({});
   const [tagList, dispatch] = useReducer(
     tagListReducer,
     [],
@@ -244,8 +244,8 @@ export default function imageTagger({ tab, closeTab }) {
               top: Math.round(mouseDownPoint.top * scale().scaleY),
               width: Math.round((mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX),
               height: Math.round((mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY),
-              color: currentLabel.color,
-              label: currentLabel,
+              color: tagConfig.color,
+              label: tagConfig,
             }, context, dispatch);
           }
         } else if (checkPoint(currentMousePoint)) {
@@ -271,14 +271,14 @@ export default function imageTagger({ tab, closeTab }) {
       {
         useCallback(content.type === 'canvas' ? (
           <div style={{ height: '100%', width: '11em' }}>
-            <Labels setCurrentLabel={setCurrentLabel} />
+            <Labels setTagConfig={setTagConfig} />
             <TagList
               tagList={tagList}
               toggleTags={toggleTags}
               selectedTags={selectedTags}
             />
           </div>
-        ) : null, [tagList, currentLabel, selectedTags, content])
+        ) : null, [tagList, tagConfig, selectedTags, content])
       }
     </div>
   );
