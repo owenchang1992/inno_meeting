@@ -1,6 +1,28 @@
 import React from 'react';
 import { findTagIndex } from './utils';
 
+const EditBar = () => (
+  <div
+    style={{
+      backgroundColor: '#ff6666',
+      color: '#fff',
+      textAlign: 'center',
+      borderRadius: '6px',
+      padding: '5px 10px',
+      position: 'absolute',
+      zIndex: '1',
+      top: '0px',
+      left: 'calc(100% + 5px)',
+      display: 'flex',
+    }}
+  >
+    <span
+      className="icon icon-trash"
+      style={{ color: '#fff' }}
+    />
+  </div>
+);
+
 export default ({ tagList, selectedTags, toggleTags }) => {
   const getBorderColor = (tag) => (
     findTagIndex(tag, selectedTags) === -1 ? '#ddd' : '#777'
@@ -34,6 +56,7 @@ export default ({ tagList, selectedTags, toggleTags }) => {
                 border: `1px solid ${getBorderColor(tag)}`,
                 borderRadius: '3px',
                 marginTop: '5px',
+                display: 'flex',
               }}
               tabIndex={0}
               onClick={() => { toggleTags(tag); }}
@@ -44,14 +67,7 @@ export default ({ tagList, selectedTags, toggleTags }) => {
                 style={{ color: label.color, marginRight: '5px' }}
               />
               <strong>{label.name}</strong>
-              <span
-                className="icon icon-delete"
-                style={{
-                  position: 'absolute',
-                  right: 0,
-                  color: label.color,
-                }}
-              />
+              <EditBar />
             </div>
           );
         })
