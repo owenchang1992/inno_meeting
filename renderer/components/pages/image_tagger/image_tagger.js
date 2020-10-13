@@ -8,7 +8,7 @@ import React, {
 
 import { useHistory } from 'react-router-dom';
 
-import { DRAW_RECTANGLE, GET_TAGS_FROM_DB } from './constant';
+import { DRAW_RECTANGLE, GET_TAGS_FROM_DB, DELETE_TAG } from './constant';
 
 import {
   loadImage,
@@ -16,6 +16,7 @@ import {
   drawPreviewingRectangle,
   drawInstructions,
   findTagIndex,
+  removeFromList,
 } from './utils';
 
 import Labels from './labels';
@@ -47,6 +48,8 @@ const tagListReducer = (state, [type, payload]) => {
       }];
     case GET_TAGS_FROM_DB:
       return payload;
+    case DELETE_TAG:
+      return removeFromList(payload, state);
     default:
       return state;
   }
@@ -59,10 +62,7 @@ export default function imageTagger({ tab, closeTab }) {
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
   const [tagConfig, setTagConfig] = useState({});
-  const [tagList, dispatch] = useReducer(
-    tagListReducer,
-    [],
-  );
+  const [tagList, dispatch] = useReducer(tagListReducer, []);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
   const [selectedTags, setSelectedTags] = useState([]);

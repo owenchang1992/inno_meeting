@@ -90,3 +90,8 @@ export const drawInstructions = (ctx, imgData, tagList) => {
 export const findTagIndex = (tag, tagList) => tagList.findIndex(
   (list) => (list.properties.key === tag.properties.key),
 );
+
+export const removeFromList = (tag, tagList) => {
+  tagList.splice(findTagIndex(tag, tagList), 1);
+  return [...tagList];
+};
