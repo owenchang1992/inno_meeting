@@ -92,6 +92,10 @@ export default function imageTagger({ tab, closeTab }) {
     setSelectedTags([...tagList]);
   };
 
+  const removeTag = (selectedTag) => {
+    dispatch([DELETE_TAG, selectedTag]);
+  };
+
   // Initial content
   useEffect(() => {
     const onMouseDown = (e) => {
@@ -276,6 +280,7 @@ export default function imageTagger({ tab, closeTab }) {
               tagList={tagList}
               toggleTags={toggleTags}
               selectedTags={selectedTags}
+              removeTag={removeTag}
             />
           </div>
         ) : null, [tagList, tagConfig, selectedTags, content])
