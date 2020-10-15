@@ -17,7 +17,7 @@ const EditBar = () => (
   >
     <span
       className="icon icon-trash trash"
-      style={{ color: '#aaa' }}
+      style={{ color: '#888' }}
     />
   </div>
 );
@@ -62,7 +62,7 @@ export default ({
               style={{
                 position: 'relative',
                 padding: '5px 10px',
-                border: '1px solid #ddd',
+                border: `1px solid ${tag.hide ? '#ddd' : '#888'}`,
                 borderRadius: '3px',
                 marginTop: '5px',
                 display: 'flex',
