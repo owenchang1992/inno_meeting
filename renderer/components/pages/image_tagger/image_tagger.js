@@ -127,7 +127,6 @@ export default function imageTagger({ tab, closeTab }) {
 
         context.drawImage(img, 0, 0, width, height);
         setSnapshot(context.getImageData(0, 0, width, height));
-        if (tagList.length !== 0) drawTags(tagList);
       })
       .catch((err) => {
         setContent(<div>Loading Media Error</div>);
@@ -138,7 +137,7 @@ export default function imageTagger({ tab, closeTab }) {
         }, 1000);
       });
 
-    const getTagList = (e, resp) => {
+    const dbRespHandler = (e, resp) => {
       if (resp.contents) {
         if (resp.collection === 'pages' && resp.type === 'findOne') {
           console.log('fromCurrentPage', resp);
@@ -148,23 +147,21 @@ export default function imageTagger({ tab, closeTab }) {
     };
 
     const getDbTagList = () => {
-      if (tagList.length === 0) {
-        window.api.send('toCurrentPage', {
-          name: 'local_db',
-          collection: 'pages',
-          type: 'findOne',
-          contents: { path: tab.src },
-        });
+      window.api.send('toCurrentPage', {
+        name: 'local_db',
+        collection: 'pages',
+        type: 'findOne',
+        contents: { path: tab.src },
+      });
 
-        window.api.receive('fromCurrentPage', getTagList);
-      }
+      window.api.receive('fromCurrentPage', dbRespHandler);
     };
 
     drawImage()
       .then(() => getDbTagList())
       .catch(() => console.log('initial failed'));
 
-    return () => window.api.removeListener('fromCurrentPage', getTagList);
+    return () => window.api.removeListener('fromCurrentPage', dbRespHandler);
   }, []);
 
   // Cache tagList after tagList updated
