@@ -8,7 +8,7 @@ import React, {
 
 import { useHistory } from 'react-router-dom';
 
-import { DRAW_RECTANGLE, GET_TAGS_FROM_DB, DELETE_TAG } from './constant';
+import { GET_TAGS_FROM_DB, DELETE_TAG } from './constant';
 
 import {
   loadImage,
@@ -16,8 +16,9 @@ import {
   drawPreviewingRectangle,
   drawInstructions,
   findTagIndex,
-  removeFromList,
 } from './utils';
+
+import tagListReducer from './tag_reducer';
 
 import Labels from './labels';
 import TagList from './tag_list';
@@ -37,22 +38,6 @@ const containerStyle = {
   justifyContent: 'center',
   alignItems: 'center',
   padding: '5px',
-};
-
-const tagListReducer = (state, [type, payload]) => {
-  switch (type) {
-    case DRAW_RECTANGLE:
-      return [...state, {
-        action: type,
-        properties: payload,
-      }];
-    case GET_TAGS_FROM_DB:
-      return payload;
-    case DELETE_TAG:
-      return removeFromList(payload, state);
-    default:
-      return state;
-  }
 };
 
 const initialPoint = { left: -1, top: -1 };
