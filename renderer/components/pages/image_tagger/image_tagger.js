@@ -8,7 +8,12 @@ import React, {
 
 import { useHistory } from 'react-router-dom';
 
-import { GET_TAGS_FROM_DB, DELETE_TAG } from './constant';
+import {
+  GET_TAGS_FROM_DB,
+  DELETE_TAG,
+  SHOW_TAG,
+  HIDE_TAG,
+} from './constant';
 
 import {
   loadImage,
@@ -61,7 +66,11 @@ export default function imageTagger({ tab, closeTab }) {
     }
   };
 
-  const toggleTags = () => {};
+  const toggleTags = (selectedTag) => {
+    console.log('toggle', selectedTag);
+    if (selectedTag.hide) dispatch([SHOW_TAG, selectedTag]);
+    else dispatch([HIDE_TAG, selectedTag]);
+  };
 
   const removeTag = (selectedTag) => {
     dispatch([DELETE_TAG, selectedTag]);

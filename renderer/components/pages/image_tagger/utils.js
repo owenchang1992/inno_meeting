@@ -71,6 +71,7 @@ export const drawTagRectangle = (properties, dispatch) => {
       type: DRAW_RECTANGLE,
       ...properties,
       key: generateKey(properties),
+      hide: true,
     },
   ]);
 };
@@ -78,7 +79,7 @@ export const drawTagRectangle = (properties, dispatch) => {
 export const drawInstructions = (ctx, imgData, tagList) => {
   ctx.putImageData(imgData, 0, 0);
   tagList.map((tag) => {
-    if (tag.type === DRAW_RECTANGLE) {
+    if (tag.type === DRAW_RECTANGLE && !tag.hide) {
       drawRectangle(tag, ctx);
     }
     return true;
@@ -93,4 +94,15 @@ export const removeFromList = (tag, tagList) => {
   console.log('removeFromList');
   tagList.splice(findTagIndex(tag, tagList), 1);
   return [...tagList];
+};
+
+export const replaceFromList = (tag, tagList) => {
+  tagList.splice(findTagIndex(tag, tagList), 1, tag);
+  return [...tagList];
+};
+
+export const hideTag = (tag, tagList) => {
+  const newTag = tag;
+  newTag.hide = true;
+  return replaceFromList(newTag, tagList);
 };
