@@ -67,7 +67,6 @@ export default function imageTagger({ tab, closeTab }) {
   };
 
   const toggleTags = (selectedTag) => {
-    console.log('toggle', selectedTag);
     if (selectedTag.hide) dispatch([SHOW_TAG, selectedTag]);
     else dispatch([HIDE_TAG, selectedTag]);
   };

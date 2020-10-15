@@ -106,3 +106,9 @@ export const hideTag = (tag, tagList) => {
   newTag.hide = true;
   return replaceFromList(newTag, tagList);
 };
+
+export const showTag = (tag, tagList) => {
+  const newTag = tag;
+  newTag.hide = false;
+  return replaceFromList(newTag, tagList);
+};

@@ -3,9 +3,10 @@ import {
   DELETE_TAG,
   ADD_TAG,
   HIDE_TAG,
+  SHOW_TAG,
 } from './constant';
 
-import { removeFromList, hideTag } from './utils';
+import { removeFromList, hideTag, showTag } from './utils';
 
 export default (state, [type, payload]) => {
   switch (type) {
@@ -17,6 +18,8 @@ export default (state, [type, payload]) => {
       return [...state, payload];
     case HIDE_TAG:
       return hideTag(payload, state);
+    case SHOW_TAG:
+      return showTag(payload, state);
     default:
       return state;
   }
