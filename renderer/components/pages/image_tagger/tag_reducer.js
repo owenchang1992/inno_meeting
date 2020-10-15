@@ -10,7 +10,7 @@ export default (state, [type, payload]) => {
   switch (type) {
     case DRAW_RECTANGLE:
       return [...state, {
-        action: type,
+        type,
         properties: payload,
       }];
     case GET_TAGS_FROM_DB:

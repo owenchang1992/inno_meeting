@@ -80,7 +80,7 @@ export const drawTagRectangle = (properties, context, dispatch) => {
 export const drawInstructions = (ctx, imgData, tagList) => {
   ctx.putImageData(imgData, 0, 0);
   tagList.map((tag) => {
-    if (tag.action === DRAW_RECTANGLE) {
+    if (tag.type === DRAW_RECTANGLE) {
       drawRectangle(tag.properties, ctx);
     }
     return true;
