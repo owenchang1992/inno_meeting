@@ -73,10 +73,6 @@ export default function imageTagger({ tab, closeTab }) {
     },
   );
 
-  const drawAllTags = () => {
-    setSelectedTags([...tagList]);
-  };
-
   const removeTag = (selectedTag) => {
     dispatch([DELETE_TAG, selectedTag]);
   };
@@ -140,7 +136,7 @@ export default function imageTagger({ tab, closeTab }) {
         const height = img.naturalHeight * dpi;
         context.drawImage(img, 0, 0, width, height);
         setSnapshot(context.getImageData(0, 0, width, height));
-        if (tagList.length !== 0) drawAllTags();
+        if (tagList.length !== 0) drawTags(tagList);
       })
       .catch((err) => {
         setContent(<div>Loading Media Error</div>);
@@ -201,8 +197,8 @@ export default function imageTagger({ tab, closeTab }) {
           actions: tagList,
         },
       });
+      drawTags(tagList);
     }
-    drawAllTags();
   }, [tagList]);
 
   // handle mouse events
