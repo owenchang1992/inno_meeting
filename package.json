@@ -40,6 +40,18 @@
       "artifactName": "media-manager.${ext}",
       "category": "public.app-category.developer-tools"
     },
+    "win": {
+      "artifactName": "jitsi-meet.${ext}",
+      "target": [
+        {
+          "arch": [
+            "ia32",
+            "x64"
+          ],
+          "target": "nsis"
+        }
+      ]
+    },
     "directories": {
       "buildResources": "public"
     }
