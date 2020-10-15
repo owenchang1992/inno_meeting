@@ -23,32 +23,34 @@ const EditBar = () => (
   </div>
 );
 
-export default ({ tagList, selectedTags, toggleTags }) => {
+export default ({
+  tagList,
+  selectedTags,
+  toggleTags,
+}) => {
   const [focusedTag, setFocusTag] = useState(null);
 
   const getBorderColor = (tag) => (
     findTagIndex(tag, selectedTags) === -1 ? '#ddd' : '#777'
   );
 
-  // const getContent = (tag) => {
-  //   const {
-  //     left, top, width, height,
-  //   } = tag.properties;
-
-  //   return `(${left}, ${top}, ${width}, ${height})`;
-  // };
   const onTagPressed = (e, tag) => {
-    console.log(tag);
+    console.log(e.target);
     if (e.button === 2) setFocusTag(tag);
     else setFocusTag(null);
   };
 
   const getEditBar = (tag) => {
     if (focusedTag && focusedTag.properties.key === tag.properties.key) {
+      console.log('getEditBar');
       return <EditBar />;
     }
 
     return null;
+  };
+
+  const handleClick = (e, tag) => {
+    toggleTags(tag);
   };
 
   return (
@@ -75,7 +77,7 @@ export default ({ tagList, selectedTags, toggleTags }) => {
               }}
               tabIndex={0}
               onMouseDown={(e) => onTagPressed(e, tag)}
-              onClick={() => toggleTags(tag)}
+              onClick={(e) => handleClick(e, tag)}
               onKeyDown={() => (null)}
             >
               <span

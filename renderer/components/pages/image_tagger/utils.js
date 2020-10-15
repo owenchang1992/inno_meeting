@@ -92,6 +92,7 @@ export const findTagIndex = (tag, tagList) => tagList.findIndex(
 );
 
 export const removeFromList = (tag, tagList) => {
+  console.log('removeFromList');
   tagList.splice(findTagIndex(tag, tagList), 1);
   return [...tagList];
 };
