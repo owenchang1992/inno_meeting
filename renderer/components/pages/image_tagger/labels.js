@@ -140,6 +140,7 @@ export default ({ setTagConfig }) => {
                 ? (
                   <input
                     className="form-control"
+                    style={{ padding: '3px 7px' }}
                     value={currentInput}
                     onChange={(e) => setCurrentInput(e.target.value)}
                     type="text"
