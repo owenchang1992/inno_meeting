@@ -4,21 +4,20 @@ const EditBar = () => (
   <div
     className="trash"
     style={{
-      backgroundColor: '#ff6666',
-      color: '#fff',
       textAlign: 'center',
-      borderRadius: '6px',
+      borderRadius: '0 3px 3px 0',
       padding: '5px 10px',
       position: 'absolute',
       zIndex: '1',
       top: '0px',
-      left: 'calc(100% + 5px)',
+      right: '0',
       display: 'flex',
+      boxSizing: 'border-box',
     }}
   >
     <span
       className="icon icon-trash trash"
-      style={{ color: '#fff' }}
+      style={{ color: '#aaa' }}
     />
   </div>
 );
@@ -30,16 +29,8 @@ export default ({
 }) => {
   const [focusedTag, setFocusTag] = useState(null);
 
-  const getBorderColor = (tag) => (
-    tag.hide ? '#ddd' : '#777'
-  );
-
   const onTagPressed = (e, tag) => {
-    if (e.button === 2) setFocusTag(tag);
-    else {
-      if (e.target.className.includes('trash')) removeTag(tag);
-      setFocusTag(null);
-    }
+    if (e.target.className.includes('trash')) removeTag(tag);
   };
 
   const getEditBar = (tag) => {
@@ -71,13 +62,16 @@ export default ({
               style={{
                 position: 'relative',
                 padding: '5px 10px',
-                border: `1px solid ${getBorderColor(tag)}`,
+                border: '1px solid #ddd',
                 borderRadius: '3px',
                 marginTop: '5px',
                 display: 'flex',
+                boxSizing: 'border-box',
               }}
               tabIndex={0}
               onMouseDown={(e) => onTagPressed(e, tag)}
+              onMouseEnter={() => setFocusTag(tag)}
+              onMouseLeave={() => setFocusTag(null)}
               onClick={(e) => handleClick(e, tag)}
               onKeyDown={() => (null)}
             >
