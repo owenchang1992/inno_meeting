@@ -244,7 +244,7 @@ export default function imageTagger({ tab, closeTab }) {
       { content }
       {
         useCallback(content.type === 'canvas' ? (
-          <div style={{ height: '100%' }}>
+          <div style={{ height: '100%', width: '10em' }}>
             <Labels setTagConfig={setTagConfig} />
             <TagList
               tagList={tagList}
