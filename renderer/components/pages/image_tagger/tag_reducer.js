@@ -1,7 +1,10 @@
-import { DRAW_RECTANGLE, GET_TAGS_FROM_DB, DELETE_TAG } from './constant';
 import {
-  removeFromList,
-} from './utils';
+  DRAW_RECTANGLE,
+  GET_TAGS_FROM_DB,
+  DELETE_TAG,
+} from './constant';
+
+import { removeFromList } from './utils';
 
 export default (state, [type, payload]) => {
   switch (type) {
