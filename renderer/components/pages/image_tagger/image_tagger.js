@@ -46,7 +46,7 @@ export default function imageTagger({ tab, closeTab }) {
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
   const [tagConfig, setTagConfig] = useState({});
-  const [tagList, dispatch] = useReducer(tagListReducer, []);
+  const [tagList, dispatch] = useReducer(tagListReducer, null);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
   const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
@@ -143,7 +143,7 @@ export default function imageTagger({ tab, closeTab }) {
           console.log('fromCurrentPage', resp);
           dispatch([GET_TAGS_FROM_DB, resp.contents.actions]);
         }
-      }
+      } else dispatch([GET_TAGS_FROM_DB, []]);
     };
 
     const getDbTagList = () => {
@@ -166,7 +166,7 @@ export default function imageTagger({ tab, closeTab }) {
 
   // Cache tagList after tagList updated
   useEffect(() => {
-    if (tagList.length !== 0) {
+    if (tagList !== null) {
       window.api.send('toCurrentPage', {
         name: 'local_db',
         collection: 'pages',
@@ -178,8 +178,8 @@ export default function imageTagger({ tab, closeTab }) {
           actions: tagList,
         },
       });
+      drawTags(tagList);
     }
-    drawTags(tagList);
   }, [tagList]);
 
   // handle mouse events

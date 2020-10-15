@@ -62,7 +62,7 @@ export default ({
         Tags
       </h5>
       {
-        tagList.map((tag) => {
+        tagList !== null ? tagList.map((tag) => {
           const { label, key } = tag;
 
           return (
@@ -91,7 +91,7 @@ export default ({
               {getEditBar(tag)}
             </div>
           );
-        })
+        }) : null
       }
     </>
   );
