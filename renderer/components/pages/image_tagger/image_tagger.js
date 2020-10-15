@@ -206,6 +206,7 @@ export default function imageTagger({ tab, closeTab }) {
 
       if (checkPoint(mouseDownPoint) && content !== null) {
         if (checkPoint(mouseUpPoint)) {
+          // Clean canvas
           drawTags(tagList);
           if (isArea(mouseDownPoint, mouseUpPoint)) {
             drawTagRectangle({
@@ -218,7 +219,7 @@ export default function imageTagger({ tab, closeTab }) {
             }, dispatch);
           }
         } else if (checkPoint(currentMousePoint)) {
-          // console.log(tagList);
+          // Clean canvas
           drawTags(tagList);
           drawPreviewingRectangle({
             left: mouseDownPoint.left * scale().scaleX,
