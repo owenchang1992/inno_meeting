@@ -124,6 +124,7 @@ export default function imageTagger({ tab, closeTab }) {
         const context = canvas.getContext('2d');
         const width = img.naturalWidth * dpi;
         const height = img.naturalHeight * dpi;
+
         context.drawImage(img, 0, 0, width, height);
         setSnapshot(context.getImageData(0, 0, width, height));
         if (tagList.length !== 0) drawTags(tagList);
@@ -214,7 +215,7 @@ export default function imageTagger({ tab, closeTab }) {
               height: Math.round((mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY),
               color: tagConfig.color,
               label: tagConfig,
-            }, context, dispatch);
+            }, dispatch);
           }
         } else if (checkPoint(currentMousePoint)) {
           // console.log(tagList);

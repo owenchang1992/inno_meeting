@@ -54,10 +54,7 @@ export const drawPreviewingRectangle = (position, context) => {
   }, context);
 };
 
-export const drawTagRectangle = (properties, context, dispatch) => {
-  // Draw Rectangle
-  drawRectangle(properties, context);
-
+export const drawTagRectangle = (properties, dispatch) => {
   const generateKey = () => {
     const {
       left, top, width, height, color,
