@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { findTagIndex } from './utils';
 
 const EditBar = () => (
   <div
@@ -26,14 +25,13 @@ const EditBar = () => (
 
 export default ({
   tagList,
-  selectedTags,
   toggleTags,
   removeTag,
 }) => {
   const [focusedTag, setFocusTag] = useState(null);
 
   const getBorderColor = (tag) => (
-    findTagIndex(tag, selectedTags) === -1 ? '#ddd' : '#777'
+    tag.hide ? '#ddd' : '#777'
   );
 
   const onTagPressed = (e, tag) => {

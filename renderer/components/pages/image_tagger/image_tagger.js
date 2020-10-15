@@ -15,7 +15,6 @@ import {
   drawTagRectangle,
   drawPreviewingRectangle,
   drawInstructions,
-  findTagIndex,
 } from './utils';
 
 import tagListReducer from './tag_reducer';
@@ -50,28 +49,19 @@ export default function imageTagger({ tab, closeTab }) {
   const [tagList, dispatch] = useReducer(tagListReducer, []);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
-  const [selectedTags, setSelectedTags] = useState([]);
   const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
 
   const drawTags = (tag) => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-    drawInstructions(context, snapshot, tag);
+    if (content.type === 'canvas') {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d');
+      drawInstructions(context, snapshot, tag);
+    }
   };
 
-  const toggleTags = useCallback(
-    (value) => {
-      const index = findTagIndex(value, selectedTags);
-      if (index === -1) {
-        setSelectedTags([...selectedTags, value]);
-      } else {
-        selectedTags.splice(index, 1);
-        setSelectedTags([...selectedTags]);
-      }
-    },
-  );
+  const toggleTags = () => {};
 
   const removeTag = (selectedTag) => {
     dispatch([DELETE_TAG, selectedTag]);
@@ -176,13 +166,6 @@ export default function imageTagger({ tab, closeTab }) {
     return () => window.api.removeListener('fromCurrentPage', getTagList);
   }, []);
 
-  useEffect(() => {
-    if (content.type === 'canvas' && tagList.length !== 0) {
-      console.log('selectedTags');
-      drawTags(selectedTags);
-    }
-  }, [selectedTags]);
-
   // Cache tagList after tagList updated
   useEffect(() => {
     if (tagList.length !== 0) {
@@ -197,8 +180,8 @@ export default function imageTagger({ tab, closeTab }) {
           actions: tagList,
         },
       });
-      drawTags(tagList);
     }
+    drawTags(tagList);
   }, [tagList]);
 
   // handle mouse events
@@ -260,11 +243,10 @@ export default function imageTagger({ tab, closeTab }) {
             <TagList
               tagList={tagList}
               toggleTags={toggleTags}
-              selectedTags={selectedTags}
               removeTag={removeTag}
             />
           </div>
-        ) : null, [tagList, tagConfig, selectedTags, content])
+        ) : null, [tagList, tagConfig, content])
       }
     </div>
   );
