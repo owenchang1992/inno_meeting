@@ -53,11 +53,11 @@ export default function imageTagger({ tab, closeTab }) {
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
 
-  const drawTags = (tag) => {
+  const drawTags = (tags) => {
     if (content.type === 'canvas') {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
-      drawInstructions(context, snapshot, tag);
+      drawInstructions(context, snapshot, tags);
     }
   };
 
