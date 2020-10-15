@@ -71,7 +71,7 @@ export const drawTagRectangle = (properties, dispatch) => {
       type: DRAW_RECTANGLE,
       ...properties,
       key: generateKey(properties),
-      hide: true,
+      hide: false,
     },
   ]);
 };
@@ -91,7 +91,6 @@ export const findTagIndex = (tag, tagList) => tagList.findIndex(
 );
 
 export const removeFromList = (tag, tagList) => {
-  console.log('removeFromList');
   tagList.splice(findTagIndex(tag, tagList), 1);
   return [...tagList];
 };

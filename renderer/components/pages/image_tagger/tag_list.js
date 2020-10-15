@@ -35,7 +35,6 @@ export default ({
   );
 
   const onTagPressed = (e, tag) => {
-    console.log(e.target.className);
     if (e.button === 2) setFocusTag(tag);
     else {
       if (e.target.className.includes('trash')) removeTag(tag);
@@ -52,7 +51,6 @@ export default ({
   };
 
   const handleClick = (e, tag) => {
-    console.log(e.target.className);
     toggleTags(tag);
   };
 
