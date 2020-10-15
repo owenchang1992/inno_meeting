@@ -44,7 +44,7 @@ export default ({
   };
 
   const getEditBar = (tag) => {
-    if (focusedTag && focusedTag.properties.key === tag.properties.key) {
+    if (focusedTag && focusedTag.key === tag.key) {
       return <EditBar />;
     }
 
@@ -63,7 +63,7 @@ export default ({
       </h5>
       {
         tagList.map((tag) => {
-          const { label, key } = tag.properties;
+          const { label, key } = tag;
 
           return (
             <div

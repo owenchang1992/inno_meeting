@@ -1,6 +1,6 @@
 import url from 'url';
 import path from 'path';
-import { DRAW_RECTANGLE } from './constant';
+import { DRAW_RECTANGLE, ADD_TAG } from './constant';
 
 export function loadImage(src) {
   return new Promise((resolve, reject) => {
@@ -69,8 +69,9 @@ export const drawTagRectangle = (properties, context, dispatch) => {
 
   // tag
   dispatch([
-    DRAW_RECTANGLE,
+    ADD_TAG,
     {
+      type: DRAW_RECTANGLE,
       ...properties,
       key: generateKey(properties),
     },
@@ -81,14 +82,14 @@ export const drawInstructions = (ctx, imgData, tagList) => {
   ctx.putImageData(imgData, 0, 0);
   tagList.map((tag) => {
     if (tag.type === DRAW_RECTANGLE) {
-      drawRectangle(tag.properties, ctx);
+      drawRectangle(tag, ctx);
     }
     return true;
   });
 };
 
 export const findTagIndex = (tag, tagList) => tagList.findIndex(
-  (list) => (list.properties.key === tag.properties.key),
+  (list) => (list.key === tag.key),
 );
 
 export const removeFromList = (tag, tagList) => {
