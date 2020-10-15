@@ -3,6 +3,7 @@ import { findTagIndex } from './utils';
 
 const EditBar = () => (
   <div
+    className="trash"
     style={{
       backgroundColor: '#ff6666',
       color: '#fff',
@@ -17,7 +18,7 @@ const EditBar = () => (
     }}
   >
     <span
-      className="icon icon-trash"
+      className="icon icon-trash trash"
       style={{ color: '#fff' }}
     />
   </div>
@@ -27,6 +28,7 @@ export default ({
   tagList,
   selectedTags,
   toggleTags,
+  removeTag,
 }) => {
   const [focusedTag, setFocusTag] = useState(null);
 
@@ -35,14 +37,16 @@ export default ({
   );
 
   const onTagPressed = (e, tag) => {
-    console.log(e.target);
+    console.log(e.target.className);
     if (e.button === 2) setFocusTag(tag);
-    else setFocusTag(null);
+    else {
+      if (e.target.className.includes('trash')) removeTag(tag);
+      setFocusTag(null);
+    }
   };
 
   const getEditBar = (tag) => {
     if (focusedTag && focusedTag.properties.key === tag.properties.key) {
-      console.log('getEditBar');
       return <EditBar />;
     }
 
@@ -50,6 +54,7 @@ export default ({
   };
 
   const handleClick = (e, tag) => {
+    console.log(e.target.className);
     toggleTags(tag);
   };
 
