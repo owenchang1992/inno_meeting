@@ -61,7 +61,7 @@ function createWindow () {
       return filePaths.map((filePath) => ({
         fullPath: filePath,
         basePath: path.basename(filePath),
-        routingPath: path.posix.normalize(filePath),
+        routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
       }))
     };
 
