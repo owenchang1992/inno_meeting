@@ -2,7 +2,6 @@ import React from 'react';
 
 const Header = () => {
   const openSelectFileDialog = () => {
-    console.log('send');
     window.api.send('toMain', 'select-file-dialog');
   };
 
