@@ -57,11 +57,20 @@ function createWindow () {
   // win.webContents.openDevTools()
 
   ipcMain.on('toMain', (e, props) => {
+    const parsePaths = (filePaths) => {
+      return filePaths.map((filePath) => ({
+        fullPath: filePath,
+        basePath: path.basename(filePath),
+        routingPath: path.posix.normalize(filePath),
+      }))
+    };
+
     if (props === 'select-file-dialog') {
       dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
         .then(resp => win.webContents.send('fromMain', {
           ...resp,
-          name: 'from-select-file-dialog'
+          name: 'from-select-file-dialog',
+          filePaths: parsePaths(resp.filePaths)
         }))
         .catch(() => console.log('select file error'));
     }

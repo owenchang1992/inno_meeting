@@ -1,7 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
-import path from 'path';
 
 import tabReducer from '../reducers/tab_reducer';
 import { addNewTab, closeTab } from '../reducers/tab_actions';
@@ -34,12 +33,13 @@ const App = () => {
         window.api.send('toMain', 'close');
       } else {
         const filePath = resp.filePaths[0];
+        console.log(filePath);
         addTab({
-          name: path.basename(filePath),
-          src: filePath,
-          routingPath: filePath,
+          name: filePath.basePath,
+          src: filePath.fullPath,
+          routingPath: filePath.routingPath,
         });
-        history.push(filePath);
+        history.push(filePath.routingPath);
       }
     });
   }, []);
