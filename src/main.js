@@ -1,4 +1,5 @@
-const { app, BrowserWindow, ipcMain, screen } = require('electron')
+const { app, BrowserWindow, ipcMain, screen } = require('electron');
+const electronShortcut = require('electron-localshortcut');
 
 const path = require('path');
 const URL = require('url');
@@ -43,7 +44,7 @@ function createWindow () {
 	});
 
   // and load the index.html of the app.
-  win.loadURL(indexURL)
+  win.loadURL(indexURL);
 
   win.on('close', (e) => {
     if (win) {
@@ -66,6 +67,11 @@ function createWindow () {
   ipcMain.on('toCurrentPage', (e, props) => {
     main_controller({win, app, props})
     console.log(props);
+  })
+
+  // Register the shortcut for windows version
+  electronShortcut.register(win, 'F12', () => {
+    win.toggleDevTools();
   })
 }
 
