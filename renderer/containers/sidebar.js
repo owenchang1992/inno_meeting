@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import path from 'path';
 
-console.log(path);
-
 // temp
 const createNewTab = (mediaPath) => ({
   name: path.basename(mediaPath),
