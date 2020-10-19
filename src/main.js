@@ -59,7 +59,10 @@ function createWindow () {
   ipcMain.on('toMain', (e, props) => {
     if (props === 'select-file-dialog') {
       dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
-        .then(resp => win.webContents.send('fromMain', resp))
+        .then(resp => win.webContents.send('fromMain', {
+          ...resp,
+          name: 'from-select-file-dialog'
+        }))
         .catch(() => console.log('select file error'));
     }
   })
