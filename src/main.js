@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, screen, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, screen, Menu, dialog } = require('electron');
 const electronShortcut = require('electron-localshortcut');
 
 const path = require('path');
@@ -68,6 +68,8 @@ function createWindow () {
     main_controller({win, app, props})
     console.log(props);
   })
+
+  console.log(dialog.showOpenDialogSync({ properties: ['openFile', 'multiSelections'] }));
 
   // Register the shortcut for windows version
   electronShortcut.register(win, 'F12', () => {
