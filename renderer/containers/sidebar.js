@@ -2,19 +2,14 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import path from 'path';
 
-// temp
-const createNewTab = (mediaPath) => {
-  const getName = (splitedPath) => {
-    const splitedName = splitedPath.split('/');
-    return splitedName[splitedName.length - 1];
-  };
+console.log(path);
 
-  return ({
-    name: getName(mediaPath),
-    src: mediaPath,
-    routingPath: mediaPath,
-  });
-};
+// temp
+const createNewTab = (mediaPath) => ({
+  name: path.basename(mediaPath),
+  src: path.normalize(mediaPath),
+  routingPath: path.normalize(mediaPath),
+});
 
 const sideBar = ({ addTab, checkTab }) => {
   const [searchContents, setSearchContents] = useState('dev/icon.png');
