@@ -8,7 +8,7 @@ import { addNewTab, closeTab } from '../reducers/tab_actions';
 
 import Main from './main_pane';
 import Header from './header';
-import SideBar from './sidebar';
+// import SideBar from './sidebar';
 
 const App = () => {
   const history = useHistory();
@@ -22,11 +22,11 @@ const App = () => {
     dispatch(closeTab(removedTab));
   };
 
-  const checkTab = (midiaPath) => (
-    tabs.findIndex((tab) => (
-      tab.routingPath === midiaPath
-    ))
-  );
+  // const checkTab = (midiaPath) => (
+  //   tabs.findIndex((tab) => (
+  //     tab.routingPath === midiaPath
+  //   ))
+  // );
 
   useEffect(() => {
     window.api.receive('fromMain', (e, resp) => {
@@ -49,7 +49,7 @@ const App = () => {
       <Header />
       <div className="window-content">
         <div className="pane-group">
-          <SideBar addTab={addTab} checkTab={checkTab} />
+          {/* <SideBar addTab={addTab} checkTab={checkTab} /> */}
           <Main tabs={tabs} closeTab={onCloseTab} />
         </div>
       </div>
