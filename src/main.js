@@ -79,8 +79,10 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  // Clean the menubar
   const menu = Menu.buildFromTemplate([]);
-  Menu.setApplicationMenu(menu)
+  Menu.setApplicationMenu(menu);
+
   createWindow();
 });
 
