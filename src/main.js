@@ -57,19 +57,17 @@ function createWindow () {
   // win.webContents.openDevTools()
 
   ipcMain.on('toMain', (e, props) => {
-    console.log('Hi', props);
-    // if (props === 'close') {
-    //   win = null;
-    //   app.quit();
-    // }
+    if (props === 'select-file-dialog') {
+      dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
+        .then(resp => win.webContents.send('fromMain', resp))
+        .catch(() => console.log('select file error'));
+    }
   })
 
   ipcMain.on('toCurrentPage', (e, props) => {
     main_controller({win, app, props})
     console.log(props);
   })
-
-  console.log(dialog.showOpenDialogSync({ properties: ['openFile', 'multiSelections'] }));
 
   // Register the shortcut for windows version
   electronShortcut.register(win, 'F12', () => {
@@ -82,8 +80,10 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   // Clean the menubar
-  const menu = Menu.buildFromTemplate([]);
-  Menu.setApplicationMenu(menu);
+  if (process.platform !== 'darwin') {
+    const menu = Menu.buildFromTemplate([]);
+    Menu.setApplicationMenu(menu);
+  }
 
   createWindow();
 });
