@@ -14,9 +14,9 @@ const Header = () => {
           {/* <button type="button" className="btn btn-default">
             <span className="icon icon-home" />
           </button> */}
-          <button type="button" className="btn btn-default">
+          {/* <button type="button" className="btn btn-default">
             <span className="icon icon-folder" />
-          </button>
+          </button> */}
           <button
             type="button"
             className="btn btn-default"
