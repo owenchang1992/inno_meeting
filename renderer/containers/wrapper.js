@@ -6,7 +6,7 @@ import tabReducer from '../reducers/tab_reducer';
 import { addNewTab, closeTab } from '../reducers/tab_actions';
 
 import Main from './main_pane';
-import Header from './header';
+// import Header from './header';
 import SideBar from './sidebar';
 
 const App = () => {
@@ -37,7 +37,7 @@ const App = () => {
   return (
     <Router>
       <div className="window">
-        <Header />
+        {/* <Header /> */}
         <div className="window-content">
           <div className="pane-group">
             <SideBar addTab={addTab} checkTab={checkTab} />
