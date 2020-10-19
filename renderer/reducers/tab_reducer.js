@@ -10,10 +10,14 @@ const removeTabFromState = (tabs, removedTab) => {
   return [...tabs];
 };
 
+const tabExist = (newTab, tabList) => (
+  tabList.findIndex((tab) => newTab.routingPath === tab.routingPath)
+);
+
 export default (state, action) => {
   switch (action.type) {
     case ADD_TAB:
-      return [...state, action.payload];
+      return tabExist(action.payload, state) !== -1 ? state : [...state, action.payload];
     case CLOSE_TAB:
       return removeTabFromState(state, action.payload);
     default:

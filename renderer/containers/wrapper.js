@@ -21,27 +21,27 @@ const App = () => {
     dispatch(closeTab(removedTab));
   };
 
-  // const checkTab = (midiaPath) => (
-  //   tabs.findIndex((tab) => (
-  //     tab.routingPath === midiaPath
-  //   ))
-  // );
+  const mainRespHandler = (resp) => {
+    const filePath = resp.filePaths[0];
+
+    addTab({
+      name: filePath.basePath,
+      src: filePath.fullPath,
+      routingPath: filePath.routingPath,
+    });
+    history.push(filePath.routingPath);
+  };
 
   useEffect(() => {
     window.api.receive('fromMain', (e, resp) => {
       if (resp === 'app-close') {
         window.api.send('toMain', 'close');
       } else {
-        const filePath = resp.filePaths[0];
-        console.log(filePath);
-        addTab({
-          name: filePath.basePath,
-          src: filePath.fullPath,
-          routingPath: filePath.routingPath,
-        });
-        history.push(filePath.routingPath);
+        mainRespHandler(resp);
       }
     });
+
+    return () => window.api.removeListener('fromMain', mainRespHandler);
   }, []);
 
   return (
