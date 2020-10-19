@@ -21,8 +21,8 @@ const App = () => {
     dispatch(closeTab(removedTab));
   };
 
-  const mainRespHandler = (resp) => {
-    const filePath = resp.filePaths[0];
+  const mainRespHandler = (filePaths) => {
+    const filePath = filePaths[0];
 
     addTab({
       name: filePath.basePath,
@@ -37,7 +37,7 @@ const App = () => {
       if (resp === 'app-close') {
         window.api.send('toMain', 'close');
       } else {
-        mainRespHandler(resp);
+        mainRespHandler(resp.filePaths);
       }
     });
 
