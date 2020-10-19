@@ -5,32 +5,32 @@ const Header = () => (
     {/* <h1 className="title">Title</h1> */}
 
     <div className="toolbar-actions">
-      {/* <div className="btn-group">
-        <button type="button" className="btn btn-default">
+      <div className="btn-group">
+        {/* <button type="button" className="btn btn-default">
           <span className="icon icon-home" />
-        </button>
+        </button> */}
         <button type="button" className="btn btn-default">
           <span className="icon icon-folder" />
         </button>
-        <button type="button" className="btn btn-default active">
-          <span className="icon icon-cloud" />
-        </button>
         <button type="button" className="btn btn-default">
+          <span className="icon icon-picture" />
+        </button>
+        {/* <button type="button" className="btn btn-default">
           <span className="icon icon-popup" />
         </button>
         <button type="button" className="btn btn-default">
           <span className="icon icon-shuffle" />
-        </button>
-      </div> */}
+        </button> */}
+      </div>
 
       {/* <button type="button" className="btn btn-default">
         <span className="icon icon-home icon-text" />
         Filters
       </button> */}
-
+      {/*
       <button type="button" className="btn btn-default btn-dropdown pull-right">
         <span className="icon icon-cog" />
-      </button>
+      </button> */}
     </div>
   </div>
 );
