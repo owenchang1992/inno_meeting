@@ -27,8 +27,8 @@
     "url": "https://github.com/owenchang1992/media_viewer/issues"
   },
   "build": {
-    "appId": "media_tagger",
-    "productName": "media_tagger",
+    "appId": "Media Tagger",
+    "productName": "Media Tagger",
     "files": [
       "**/*",
       "public",

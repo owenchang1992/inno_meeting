@@ -6,8 +6,11 @@ const URL = require('url');
 const isDev = require('electron-is-dev');
 
 const main_controller = require('./controllers/main_controller');
+const appMenu = require('./menu');
 
 const config = require('./config');
+
+app.setName(config.appName);
 
 /**
  * When in development mode:
@@ -27,7 +30,7 @@ function createWindow () {
 
   // Create the browser window.
   let win = new BrowserWindow({
-    title: config.appName,
+    title: app.name,
     width: width,
     height: height,
     webPreferences: {
@@ -61,6 +64,9 @@ function createWindow () {
     win.toggleDevTools();
   })
 
+  //Loadind Menu
+  Menu.setApplicationMenu(Menu.buildFromTemplate(appMenu()));
+
   // ipcEvents
   ipcMain.on('toMain', (e, props) => {
     //TODO: Extract the to Main handler when needed
@@ -92,12 +98,6 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  // Clean the menubar
-  if (process.platform !== 'darwin') {
-    const menu = Menu.buildFromTemplate([]);
-    Menu.setApplicationMenu(menu);
-  }
-
   createWindow();
 });
 
