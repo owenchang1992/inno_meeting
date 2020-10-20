@@ -11,14 +11,21 @@ module.exports = ({win, props}) => {
 
   const getCollection = (collectionName) => {
     return new Datastore({
-      filename: path.join(app.getPath('appData'), 'media_tagger/db', `${collectionName}.db`),
+      filename: path.join(
+        app.getPath('appData'),
+        'media_tagger/db',
+        `${collectionName}.db`,
+      ),
       autoload: true,
     })
   }
 
   switch(props.name) {
     case 'local_db':
-      require('../models/nedb')[props.type](getCollection(props.collection), props)
+      require('../models/nedb')[props.type](
+        getCollection(props.collection),
+        props,
+      )
         .then((resp) => sendResponse({
           ...props,
           contents: resp
