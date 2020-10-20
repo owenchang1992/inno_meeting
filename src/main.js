@@ -34,6 +34,7 @@ function createWindow () {
       enableRemoteModule: false, // turn off remote
       preload: path.resolve(basePath, './build/preload.js')
     },
+    fullscreen: true,
 	})
 
 	// URL for index.html which will be our entry point.
