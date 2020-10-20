@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import PageLoader from '../components/page_loader';
+import Home from '../components/pages/home/home';
 import Tabs from '../components/tabs';
 
 const main = ({ closeTab, tabs }) => {
@@ -9,7 +10,7 @@ const main = ({ closeTab, tabs }) => {
   return (
     <div className="pane">
       <>
-        <Route path="/" exact component={() => <h1>Home Page fsb</h1>} />
+        <Route path="/" exact component={() => <Home />} />
         {
           tabs.map((tab) => (
             <Route
