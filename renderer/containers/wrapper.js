@@ -22,14 +22,13 @@ const App = () => {
   };
 
   const mainRespHandler = (filePaths) => {
-    const filePath = filePaths[0];
-
-    addTab({
+    filePaths.forEach((filePath) => addTab({
       name: filePath.basePath,
       src: filePath.fullPath,
       routingPath: filePath.routingPath,
-    });
-    history.push(filePath.routingPath);
+    }));
+
+    history.push(filePaths[0].routingPath);
   };
 
   useEffect(() => {
