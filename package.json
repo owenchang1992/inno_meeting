@@ -27,8 +27,8 @@
     "url": "https://github.com/owenchang1992/media_viewer/issues"
   },
   "build": {
-    "appId": "media-manager",
-    "productName": "media-manager",
+    "appId": "media_tagger",
+    "productName": "media_tagger",
     "files": [
       "**/*",
       "public",
@@ -37,11 +37,11 @@
       "!src/main.js"
     ],
     "mac": {
-      "artifactName": "media-manager.${ext}",
+      "artifactName": "media_tagger.${ext}",
       "category": "public.app-category.developer-tools"
     },
     "win": {
-      "artifactName": "jitsi-meet.${ext}",
+      "artifactName": "media_tagger.${ext}",
       "target": [
         {
           "arch": [
