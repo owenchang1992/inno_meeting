@@ -7,6 +7,8 @@ const isDev = require('electron-is-dev');
 
 const main_controller = require('./controllers/main_controller');
 
+const config = require('./config');
+
 /**
  * When in development mode:
  * - Enable automatic reloads
@@ -23,9 +25,10 @@ function createWindow () {
   const { width, height } = screen.getPrimaryDisplay().rotation;
     // Path to root directory.
   const basePath = isDev ?  path.resolve(__dirname, '../') : app.getAppPath();
-  
+
   // Create the browser window.
   let win = new BrowserWindow({
+    title: config.appName,
     width: width,
     height: height,
     webPreferences: {
