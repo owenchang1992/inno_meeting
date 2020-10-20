@@ -14,7 +14,6 @@ const config = require('./config');
  * - Enable automatic reloads
  */
 if (isDev) {
-  console.log(path.join(__dirname, '../', './node_modules/@electron'));
 	require('electron-reload')(path.join(__dirname, '../'), {
     // Note that the path to electron may vary according to the main file
     electron: path.join(__dirname, '../', './node_modules/electron')
@@ -82,7 +81,6 @@ function createWindow () {
 
   ipcMain.on('toCurrentPage', (e, props) => {
     main_controller({win, app, props})
-    console.log(props);
   })
 
   // Register the shortcut for windows version
