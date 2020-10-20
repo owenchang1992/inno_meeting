@@ -56,7 +56,14 @@ function createWindow () {
     }
   })
 
+  // Register the shortcut for windows version
+  electronShortcut.register(win, 'F12', () => {
+    win.toggleDevTools();
+  })
+
+  // ipcEvents
   ipcMain.on('toMain', (e, props) => {
+    //TODO: Extract the to Main handler when needed
     const parsePaths = (filePaths) => {
       return filePaths.map((filePath) => ({
         fullPath: filePath,
@@ -78,11 +85,6 @@ function createWindow () {
 
   ipcMain.on('toCurrentPage', (e, props) => {
     main_controller({win, app, props})
-  })
-
-  // Register the shortcut for windows version
-  electronShortcut.register(win, 'F12', () => {
-    win.toggleDevTools();
   })
 }
 
