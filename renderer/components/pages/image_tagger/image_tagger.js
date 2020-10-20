@@ -128,13 +128,21 @@ export default function imageTagger({ tab, closeTab }) {
           ),
         );
 
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
-        const width = img.naturalWidth * dpi;
-        const height = img.naturalHeight * dpi;
+        const initDraw = () => {
+          const canvas = canvasRef.current;
+          const context = canvas.getContext('2d');
+          const width = img.naturalWidth * dpi;
+          const height = img.naturalHeight * dpi;
 
-        context.drawImage(img, 0, 0, width, height);
-        setSnapshot(context.getImageData(0, 0, width, height));
+          context.drawImage(img, 0, 0, width, height);
+          setSnapshot(context.getImageData(0, 0, width, height));
+        };
+
+        if (canvasRef.current) {
+          initDraw();
+        } else {
+          setTimeout(() => initDraw(), 0);
+        }
       })
       .catch((err) => {
         setContent(<div>Loading Media Error</div>);
