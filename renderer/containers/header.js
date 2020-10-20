@@ -1,8 +1,14 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Header = () => {
+  const history = useHistory();
   const openSelectFileDialog = () => {
     window.api.send('toMain', 'select-file-dialog');
+  };
+
+  const toHomePage = () => {
+    history.push('/');
   };
 
   return (
@@ -11,9 +17,13 @@ const Header = () => {
 
       <div className="toolbar-actions">
         <div className="btn-group">
-          {/* <button type="button" className="btn btn-default">
+          <button
+            type="button"
+            className="btn btn-default"
+            onClick={toHomePage}
+          >
             <span className="icon icon-home" />
-          </button> */}
+          </button>
           {/* <button type="button" className="btn btn-default">
             <span className="icon icon-folder" />
           </button> */}
