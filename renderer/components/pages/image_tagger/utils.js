@@ -27,6 +27,9 @@ export function drawRectangle(props, ctx) {
     left, top, width, height, color,
   } = props;
 
+  ctx.lineWidth = ctx.canvas.width > ctx.canvas.height
+    ? Math.round(ctx.canvas.width / 500)
+    : Math.round(ctx.canvas.height / 500);
   ctx.beginPath();
   ctx.strokeStyle = color;
   ctx.rect(left, top, width, height);
