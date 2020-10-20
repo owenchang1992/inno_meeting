@@ -56,9 +56,6 @@ function createWindow () {
     }
   })
 
-  // Open the DevTools.
-  // win.webContents.openDevTools()
-
   ipcMain.on('toMain', (e, props) => {
     const parsePaths = (filePaths) => {
       return filePaths.map((filePath) => ({

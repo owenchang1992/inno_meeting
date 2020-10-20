@@ -11,7 +11,7 @@ const createNewTab = (mediaPath) => ({
 
 const sideBar = ({ addTab, checkTab }) => {
   const [searchContents, setSearchContents] = useState('dev/icon.png');
-  const [workingPath] = useState(window.api.getHomeDir());
+  const [workingPath] = useState();
   const history = useHistory();
 
   const keyUpHandler = (e) => {
