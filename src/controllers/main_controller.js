@@ -5,7 +5,7 @@ const { app } = require('electron');
 
 module.exports = ({win, props}) => {
   const sendResponse = (msg) => {
-    console.log('msg', msg);
+    // console.log('msg', msg);
     win.webContents.send('fromCurrentPage', msg)
   }
 
