@@ -29,7 +29,6 @@ const defaultContainter = {
 
 export default ({ setTagConfig }) => {
   const [enteredLabel, setEnteredLabel] = useState(null);
-  const [pressedLabel, setPressedLabel] = useState(null);
   const [focusedLabel, setFocusLabel] = useState(defaultContainter.labels[0]);
   const [labelList, setLabelList] = useState(defaultContainter.labels); // get container labels
   const [currentInput, setCurrentInput] = useState('');
@@ -83,7 +82,6 @@ export default ({ setTagConfig }) => {
     } else if (e.button === 2) setEditedLabel(selectedLabel.name);
     else if (editedLabel !== selectedLabel.name) {
       setEditedLabel(null);
-      setPressedLabel(selectedLabel.name);
     }
   };
 
@@ -138,12 +136,11 @@ export default ({ setTagConfig }) => {
               padding: '3px 10px',
               borderRadius: '5px',
               marginTop: '5px',
-              backgroundColor: pressedLabel === label.name ? '#ddd' : null,
+              // backgroundColor: pressedLabel === label.name ? '#ddd' : null,
               alignItems: 'center',
             }}
             onClick={() => updateCurrentLabel(label)}
             onMouseDown={(e) => editLabel(e, label)}
-            onMouseUp={() => setPressedLabel(null)}
             onMouseEnter={() => setEnteredLabel(label)}
             onMouseLeave={() => setEnteredLabel(null)}
             onKeyDown={(e) => saveLabel(e, label)}
