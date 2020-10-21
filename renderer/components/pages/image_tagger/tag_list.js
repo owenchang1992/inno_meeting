@@ -1,26 +1,6 @@
 import React, { useState } from 'react';
 
-const EditBar = () => (
-  <div
-    className="trash"
-    style={{
-      textAlign: 'center',
-      borderRadius: '0 3px 3px 0',
-      padding: '5px 10px',
-      position: 'absolute',
-      zIndex: '1',
-      top: '0px',
-      right: '0',
-      display: 'flex',
-      boxSizing: 'border-box',
-    }}
-  >
-    <span
-      className="icon icon-trash trash"
-      style={{ color: '#888' }}
-    />
-  </div>
-);
+import EditBar from './edit_bar';
 
 export default ({
   tagList,
@@ -35,7 +15,7 @@ export default ({
 
   const getEditBar = (tag) => {
     if (focusedTag && focusedTag.key === tag.key) {
-      return <EditBar />;
+      return <EditBar name="trash" />;
     }
 
     return null;
