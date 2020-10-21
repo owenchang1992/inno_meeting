@@ -65,8 +65,10 @@ function createWindow () {
   })
 
   //Loadind Menu
-  Menu.setApplicationMenu(Menu.buildFromTemplate(appMenu()));
-
+  if (!isDev) {
+    Menu.setApplicationMenu(Menu.buildFromTemplate(appMenu()));
+  }
+  
   // ipcEvents
   ipcMain.on('toMain', (e, props) => {
     //TODO: Extract the to Main handler when needed
