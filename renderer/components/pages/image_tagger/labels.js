@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import EditBar from './edit_bar';
+
 const defaultContainter = {
   name: 'Default',
   key: 'default',
@@ -26,6 +28,7 @@ const defaultContainter = {
 };
 
 export default ({ setTagConfig }) => {
+  const [enteredLabel, setEnteredLabel] = useState(null);
   const [pressedLabel, setPressedLabel] = useState(null);
   const [focusedLabel, setFocusLabel] = useState(defaultContainter.labels[0]);
   const [labelList, setLabelList] = useState(defaultContainter.labels); // get container labels
@@ -75,11 +78,23 @@ export default ({ setTagConfig }) => {
 
   const editLabel = (e, selectedLabel) => {
     setCurrentInput(selectedLabel.name);
-    if (e.button === 2) setEditedLabel(selectedLabel.name);
+    if (e.target.className.includes('pencil')) {
+      setEditedLabel(selectedLabel.name);
+    } else if (e.button === 2) setEditedLabel(selectedLabel.name);
     else if (editedLabel !== selectedLabel.name) {
       setEditedLabel(null);
       setPressedLabel(selectedLabel.name);
     }
+  };
+
+  const getEditBar = (label) => {
+    if (enteredLabel && editedLabel === null) {
+      return enteredLabel.name === label.name
+        ? <EditBar name="pencil" />
+        : null;
+    }
+
+    return null;
   };
 
   useEffect(() => {
@@ -118,6 +133,7 @@ export default ({ setTagConfig }) => {
             key={label.name}
             role="button"
             style={{
+              position: 'relative',
               display: 'flex',
               padding: '3px 10px',
               borderRadius: '5px',
@@ -128,6 +144,8 @@ export default ({ setTagConfig }) => {
             onClick={() => updateCurrentLabel(label)}
             onMouseDown={(e) => editLabel(e, label)}
             onMouseUp={() => setPressedLabel(null)}
+            onMouseEnter={() => setEnteredLabel(label)}
+            onMouseLeave={() => setEnteredLabel(null)}
             onKeyDown={(e) => saveLabel(e, label)}
             tabIndex={0}
           >
@@ -149,6 +167,7 @@ export default ({ setTagConfig }) => {
                 )
                 : <strong>{label.name}</strong>
             }
+            { getEditBar(label) }
           </div>
         ))
       }
