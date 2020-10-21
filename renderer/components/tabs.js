@@ -15,7 +15,11 @@ export default function Tab({ tabs, closeTab }) {
     }
   };
 
-  const getTab = (tab) => (tab.routingPath === history.location.pathname ? 'active' : '');
+  const getTab = (tab) => (
+    tab.routingPath === history.location.pathname
+      ? 'active'
+      : ''
+  );
 
   return (
     <div className="tab-group">
