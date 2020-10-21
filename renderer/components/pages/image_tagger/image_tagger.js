@@ -260,7 +260,7 @@ export default function imageTagger({ tab, closeTab }) {
               removeTag={removeTag}
             />
           </div>
-        ) : null, [tagList, tagConfig, content])
+        ) : null, [tagList, content])
       }
     </div>
   );
