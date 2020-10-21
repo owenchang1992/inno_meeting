@@ -16,7 +16,7 @@ export default ({ name }) => (
     }}
   >
     <span
-      className={`icon icon-trash ${name}`}
+      className={`icon icon-${name} ${name}`}
       style={{ color: '#888' }}
     />
   </div>
