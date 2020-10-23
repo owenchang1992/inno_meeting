@@ -7,3 +7,7 @@ export const ADD_TAG = 'ADD_TAG';
 
 // TAG TYPE
 export const DRAW_RECTANGLE = 'DRAW_RECTANGLE';
+
+// Collection
+export const PAGES = 'pages';
+export const LABELS = 'labels';

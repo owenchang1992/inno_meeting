@@ -13,6 +13,7 @@ import {
   DELETE_TAG,
   SHOW_TAG,
   HIDE_TAG,
+  PAGES,
 } from './constant';
 
 import {
@@ -162,14 +163,14 @@ export default function imageTagger({ tab, closeTab }) {
 
     const dbRespHandler = (e, resp) => {
       if (resp.contents) {
-        if (resp.collection === 'pages' && resp.type === 'findOne') {
+        if (resp.collection === PAGES && resp.type === 'findOne') {
           dispatch([GET_TAGS_FROM_DB, resp.contents.actions]);
         }
       } else dispatch([GET_TAGS_FROM_DB, []]);
     };
 
     const getDbTagList = () => {
-      findOne('pages', { path: tab.src });
+      findOne(PAGES, { path: tab.src });
       receive(dbRespHandler);
     };
 
@@ -184,7 +185,7 @@ export default function imageTagger({ tab, closeTab }) {
   useEffect(() => {
     if (tagList !== null) {
       update(
-        'pages',
+        PAGES,
         {
           key: tab.src,
           path: tab.src,
