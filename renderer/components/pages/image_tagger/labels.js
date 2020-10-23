@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import EditBar from './edit_bar';
 
-import { TO_CURRENT_PAGE, FROM_CURRENT_PAGE } from '../../../constants';
+import { update, findOne, receive } from '../../../db_request';
 
 const defaultContainter = {
   name: 'Default',
@@ -45,15 +45,13 @@ export default ({ setTagConfig }) => {
 
   const saveLabel = (e, selectedLabel) => {
     const saveLabelToDB = (newList) => {
-      window.api.send(TO_CURRENT_PAGE, {
-        name: 'local_db',
-        collection: 'labels',
-        type: 'update',
-        contents: {
+      update(
+        'labels',
+        {
           ...defaultContainter,
           labels: newList,
         },
-      });
+      );
     };
 
     const getNewLabelList = () => {
@@ -109,14 +107,9 @@ export default ({ setTagConfig }) => {
     };
 
     const getDBLabels = () => {
-      window.api.send(TO_CURRENT_PAGE, {
-        name: 'local_db',
-        collection: 'labels',
-        type: 'findOne',
-        contents: { key: 'default' },
-      });
+      findOne('labels', { key: 'default' });
 
-      window.api.receive(FROM_CURRENT_PAGE, getLabels);
+      receive(getLabels);
     };
 
     getDBLabels();

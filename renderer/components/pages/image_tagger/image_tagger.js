@@ -169,7 +169,7 @@ export default function imageTagger({ tab, closeTab }) {
     };
 
     const getDbTagList = () => {
-      findOne({ path: tab.src });
+      findOne('pages', { path: tab.src });
       receive(dbRespHandler);
     };
 
@@ -183,12 +183,15 @@ export default function imageTagger({ tab, closeTab }) {
   // Cache tagList after tagList updated
   useEffect(() => {
     if (tagList !== null) {
-      update({
-        key: tab.src,
-        path: tab.src,
-        type: MEDIA_TAGGER,
-        actions: tagList,
-      });
+      update(
+        'pages',
+        {
+          key: tab.src,
+          path: tab.src,
+          type: MEDIA_TAGGER,
+          actions: tagList,
+        },
+      );
 
       drawTags(tagList);
     }
