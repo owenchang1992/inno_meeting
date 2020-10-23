@@ -12,6 +12,13 @@ const config = require('./config');
 
 app.setName(config.appName);
 
+const {
+  TO_MAIN,
+  FROM_MAIN,
+  TO_CURRENT_PAGE,
+  FROM_CURRENT_PAGE,
+} = require("./const");
+
 /**
  * When in development mode:
  * - Enable automatic reloads
@@ -55,7 +62,7 @@ function createWindow () {
   win.on('close', (e) => {
     if (win) {
       // e.preventDefault();
-      win.webContents.send('fromMain', 'app-close');
+      win.webContents.send(FROM_MAIN, 'app-close');
     }
   })
 
@@ -70,7 +77,7 @@ function createWindow () {
   }
   
   // ipcEvents
-  ipcMain.on('toMain', (e, props) => {
+  ipcMain.on(TO_MAIN, (e, props) => {
     //TODO: Extract the to Main handler when needed
     const parsePaths = (filePaths) => {
       return filePaths.map((filePath) => ({
@@ -87,7 +94,7 @@ function createWindow () {
           { name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }
         ]
       })
-        .then(resp => win.webContents.send('fromMain', {
+        .then(resp => win.webContents.send(FROM_MAIN, {
           ...resp,
           name: 'from-select-file-dialog',
           filePaths: parsePaths(resp.filePaths)
@@ -96,7 +103,7 @@ function createWindow () {
     }
   })
 
-  ipcMain.on('toCurrentPage', (e, props) => {
+  ipcMain.on(TO_CURRENT_PAGE, (e, props) => {
     main_controller({win, app, props})
   })
 }

@@ -4,6 +4,8 @@ const config = require('../config');
 
 const { app } = require('electron');
 
+const { FROM_CURRENT_PAGE } = require("../const");
+
 module.exports = ({win, props}) => {
   const sendResponse = (channel, msg) => {
     win.webContents.send(channel, msg)
@@ -27,7 +29,7 @@ module.exports = ({win, props}) => {
         props,
       )
         .then((resp) => sendResponse(
-          'fromCurrentPage',
+          FROM_CURRENT_PAGE,
           {
             ...props,
             contents: resp,
