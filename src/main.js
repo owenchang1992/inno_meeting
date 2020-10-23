@@ -16,7 +16,6 @@ const {
   TO_MAIN,
   FROM_MAIN,
   TO_CURRENT_PAGE,
-  FROM_CURRENT_PAGE,
 } = require("./const");
 
 /**
