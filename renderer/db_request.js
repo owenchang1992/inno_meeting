@@ -1,19 +1,23 @@
 import { TO_CURRENT_PAGE, FROM_CURRENT_PAGE } from './constants';
 
+const DB_TYPE = 'local_db';
+const FIND_ONE = 'findOne';
+const UPDATE = 'update';
+
 export const findOne = (collection, contents) => {
   window.api.send(TO_CURRENT_PAGE, {
-    name: 'local_db',
+    name: DB_TYPE,
     collection,
-    type: 'findOne',
+    type: FIND_ONE,
     contents,
   });
 };
 
 export const update = (collection, contents) => {
   window.api.send(TO_CURRENT_PAGE, {
-    name: 'local_db',
+    name: DB_TYPE,
     collection,
-    type: 'update',
+    type: UPDATE,
     contents,
   });
 };

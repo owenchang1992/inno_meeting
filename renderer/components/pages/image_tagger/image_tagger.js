@@ -182,7 +182,6 @@ export default function imageTagger({ tab, closeTab }) {
     return () => removeListener(dbRespHandler);
   }, []);
 
-  // Cache tagList after tagList updated
   useEffect(() => {
     if (tagList !== null) {
       update(
