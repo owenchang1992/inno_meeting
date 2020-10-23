@@ -1,19 +1,19 @@
 const Datastore = require('nedb');
 const path = require('path');
+const config = require('../config');
+
 const { app } = require('electron');
 
-
 module.exports = ({win, props}) => {
-  const sendResponse = (msg) => {
-    // console.log('msg', msg);
-    win.webContents.send('fromCurrentPage', msg)
+  const sendResponse = (channel, msg) => {
+    win.webContents.send(channel, msg)
   }
 
   const getCollection = (collectionName) => {
     return new Datastore({
       filename: path.join(
         app.getPath('appData'),
-        'media_tagger/db',
+        config.dbPath,
         `${collectionName}.db`,
       ),
       autoload: true,
@@ -26,10 +26,13 @@ module.exports = ({win, props}) => {
         getCollection(props.collection),
         props,
       )
-        .then((resp) => sendResponse({
-          ...props,
-          contents: resp
-        }))
+        .then((resp) => sendResponse(
+          'fromCurrentPage',
+          {
+            ...props,
+            contents: resp,
+          }
+        ))
         .catch((err) => { console.log(err) })
       break;
   }
