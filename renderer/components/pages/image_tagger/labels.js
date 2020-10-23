@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { LABELS } from 'constants';
+
 import EditBar from './edit_bar';
 
 import { update, findOne, receive } from '../../../db_request';
@@ -46,7 +48,7 @@ export default ({ setTagConfig }) => {
   const saveLabel = (e, selectedLabel) => {
     const saveLabelToDB = (newList) => {
       update(
-        'labels',
+        LABELS,
         {
           ...defaultContainter,
           labels: newList,
@@ -98,7 +100,7 @@ export default ({ setTagConfig }) => {
   useEffect(() => {
     const getLabels = (e, resp) => {
       if (resp.contents) {
-        if (resp.collection === 'labels' && resp.type === 'findOne') {
+        if (resp.collection === LABELS && resp.type === 'findOne') {
           setLabelList(resp.contents.labels);
           setFocusLabel(resp.contents.labels[0]);
           setTagConfig(resp.contents.labels[0]);
@@ -107,7 +109,7 @@ export default ({ setTagConfig }) => {
     };
 
     const getDBLabels = () => {
-      findOne('labels', { key: 'default' });
+      findOne(LABELS, { key: 'default' });
 
       receive(getLabels);
     };
