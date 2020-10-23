@@ -6,6 +6,7 @@ const URL = require('url');
 const isDev = require('electron-is-dev');
 
 const pageController = require('./controllers/page_controller');
+const mainController = require('./controllers/main_controller');
 const appMenu = require('./menu');
 
 const config = require('./config');
@@ -77,29 +78,7 @@ function createWindow () {
   
   // ipcEvents
   ipcMain.on(TO_MAIN, (e, props) => {
-    //TODO: Extract the to Main handler when needed
-    const parsePaths = (filePaths) => {
-      return filePaths.map((filePath) => ({
-        fullPath: filePath,
-        basePath: path.basename(filePath),
-        routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
-      }))
-    };
-
-    if (props === 'select-file-dialog') {
-      dialog.showOpenDialog({
-        properties: ['openFile', 'multiSelections'],
-        filters: [
-          { name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }
-        ]
-      })
-        .then(resp => win.webContents.send(FROM_MAIN, {
-          ...resp,
-          name: 'from-select-file-dialog',
-          filePaths: parsePaths(resp.filePaths)
-        }))
-        .catch(() => console.log('select file error'));
-    }
+    mainController({win, props})
   })
 
   ipcMain.on(TO_CURRENT_PAGE, (e, props) => {
