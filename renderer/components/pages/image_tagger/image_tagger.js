@@ -14,6 +14,7 @@ import {
   SHOW_TAG,
   HIDE_TAG,
   PAGES,
+  FIND_ONE,
 } from './constant';
 
 import {
@@ -163,7 +164,7 @@ export default function imageTagger({ tab, closeTab }) {
 
     const dbRespHandler = (e, resp) => {
       if (resp.contents) {
-        if (resp.collection === PAGES && resp.type === 'findOne') {
+        if (resp.collection === PAGES && resp.type === FIND_ONE) {
           dispatch([GET_TAGS_FROM_DB, resp.contents.actions]);
         }
       } else dispatch([GET_TAGS_FROM_DB, []]);

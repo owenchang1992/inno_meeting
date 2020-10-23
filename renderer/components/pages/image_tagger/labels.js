@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { LABELS } from 'constants';
+import { LABELS, FIND_ONE } from 'constants';
 
 import EditBar from './edit_bar';
 
@@ -102,7 +102,7 @@ export default ({ setTagConfig }) => {
   useEffect(() => {
     const getLabels = (e, resp) => {
       if (resp.contents) {
-        if (resp.collection === LABELS && resp.type === 'findOne') {
+        if (resp.collection === LABELS && resp.type === FIND_ONE) {
           setLabelList(resp.contents.labels);
           setFocusLabel(resp.contents.labels[0]);
           setTagConfig(resp.contents.labels[0]);
