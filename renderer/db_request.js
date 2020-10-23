@@ -21,3 +21,7 @@ export const update = (contents) => {
 export const removeListener = (handler) => {
   window.api.removeListener(FROM_CURRENT_PAGE, handler);
 };
+
+export const receive = (handler) => {
+  window.api.receive(FROM_CURRENT_PAGE, handler);
+};

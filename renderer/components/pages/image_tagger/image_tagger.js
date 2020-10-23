@@ -27,9 +27,14 @@ import tagListReducer from './tag_reducer';
 import Labels from './labels';
 import TagList from './tag_list';
 
-import { MEDIA_TAGGER, FROM_CURRENT_PAGE } from '../../../constants';
+import { MEDIA_TAGGER } from '../../../constants';
 
-import { findOne, update, removeListener } from '../../../db_request';
+import {
+  findOne,
+  update,
+  removeListener,
+  receive,
+} from '../../../db_request';
 
 const baseStyle = {
   borderRadius: '4px',
@@ -165,7 +170,7 @@ export default function imageTagger({ tab, closeTab }) {
 
     const getDbTagList = () => {
       findOne({ path: tab.src });
-      window.api.receive(FROM_CURRENT_PAGE, dbRespHandler);
+      receive(dbRespHandler);
     };
 
     drawImage()
