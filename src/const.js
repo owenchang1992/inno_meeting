@@ -1,6 +1,6 @@
 module.exports = {
-  TO_MAIN: 'toMain',
-  FROM_MAIN: 'fromMain',
-  TO_CURRENT_PAGE: 'toCurrentPage',
-  FROM_CURRENT_PAGE: 'fromCurrentPage',
+  TO_MAIN: 'TO_MAIN',
+  FROM_MAIN: 'FROM_MAIN',
+  TO_CURRENT_PAGE: 'TO_CURRENT_PAGE',
+  FROM_CURRENT_PAGE: 'FROM_CURRENT_PAGE',
 }
