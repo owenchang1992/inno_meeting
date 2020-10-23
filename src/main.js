@@ -81,7 +81,12 @@ function createWindow () {
     };
 
     if (props === 'select-file-dialog') {
-      dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
+      dialog.showOpenDialog({
+        properties: ['openFile', 'multiSelections'],
+        filters: [
+          { name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }
+        ]
+      })
         .then(resp => win.webContents.send('fromMain', {
           ...resp,
           name: 'from-select-file-dialog',
