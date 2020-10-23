@@ -1,7 +1,6 @@
-import { TO_CURRENT_PAGE } from './constants';
+import { TO_CURRENT_PAGE, FROM_CURRENT_PAGE } from './constants';
 
 export const findOne = (contents) => {
-  console.log(contents);
   window.api.send(TO_CURRENT_PAGE, {
     name: 'local_db',
     collection: 'pages',
@@ -17,4 +16,8 @@ export const update = (contents) => {
     type: 'update',
     contents,
   });
+};
+
+export const removeListener = (handler) => {
+  window.api.removeListener(FROM_CURRENT_PAGE, handler);
 };

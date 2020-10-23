@@ -29,7 +29,7 @@ import TagList from './tag_list';
 
 import { MEDIA_TAGGER, FROM_CURRENT_PAGE } from '../../../constants';
 
-import { findOne, update } from '../../../db_request';
+import { findOne, update, removeListener } from '../../../db_request';
 
 const baseStyle = {
   borderRadius: '4px',
@@ -172,7 +172,7 @@ export default function imageTagger({ tab, closeTab }) {
       .then(() => getDbTagList())
       .catch(() => console.log('initial failed'));
 
-    return () => window.api.removeListener(FROM_CURRENT_PAGE, dbRespHandler);
+    return () => removeListener(dbRespHandler);
   }, []);
 
   // Cache tagList after tagList updated
