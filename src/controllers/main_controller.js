@@ -3,27 +3,41 @@ const path = require('path');
 
 const { FROM_MAIN } = require("../const");
 
-module.exports = ({win, props}) => {
-  const parsePaths = (filePaths) => {
-    return filePaths.map((filePath) => ({
-      fullPath: filePath,
-      basePath: path.basename(filePath),
-      routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
-    }))
-  };
+const FROM_SELECT_FILE_DIALOG = 'select-file-dialog';
 
-  if (props === 'select-file-dialog') {
+module.exports = ({win, props}) => {
+  const sendResp = (message) => {
+    win.webContents.send(FROM_MAIN, message)
+  }
+
+  const selectFiles = () => {
+    const parsePaths = (filePaths) => {
+      return filePaths.map((filePath) => ({
+        fullPath: filePath,
+        basePath: path.basename(filePath),
+        routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
+      }))
+    };
+
     dialog.showOpenDialog({
       properties: ['openFile', 'multiSelections'],
       filters: [
         { name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }
       ]
     })
-      .then(resp => win.webContents.send(FROM_MAIN, {
+      .then(resp => sendResp({
         ...resp,
-        name: 'from-select-file-dialog',
+        name: FROM_SELECT_FILE_DIALOG,
         filePaths: parsePaths(resp.filePaths)
       }))
       .catch((err) => console.log(err));
-    }
+  }
+
+  switch(props) {
+    case FROM_SELECT_FILE_DIALOG:
+      selectFiles();
+      break;
+    default:
+      console.log('event not found');
+  }
 }

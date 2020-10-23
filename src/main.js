@@ -76,7 +76,7 @@ function createWindow () {
     Menu.setApplicationMenu(Menu.buildFromTemplate(appMenu()));
   }
   
-  // ipcEvents
+  // ipc connection
   ipcMain.on(TO_MAIN, (e, props) => {
     mainController({win, props})
   })
