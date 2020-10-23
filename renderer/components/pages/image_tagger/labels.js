@@ -31,6 +31,8 @@ const defaultContainter = {
   ],
 };
 
+const PENCIL = 'pencil';
+
 export default ({ setTagConfig }) => {
   const [enteredLabel, setEnteredLabel] = useState(null);
   const [focusedLabel, setFocusLabel] = useState(defaultContainter.labels[0]);
@@ -79,7 +81,7 @@ export default ({ setTagConfig }) => {
 
   const editLabel = (e, selectedLabel) => {
     setCurrentInput(selectedLabel.name);
-    if (e.target.className.includes('pencil')) {
+    if (e.target.className.includes(PENCIL)) {
       setEditedLabel(selectedLabel.name);
     } else if (e.button === 2) setEditedLabel(selectedLabel.name);
     else if (editedLabel !== selectedLabel.name) {
@@ -90,7 +92,7 @@ export default ({ setTagConfig }) => {
   const getEditBar = (label) => {
     if (enteredLabel && editedLabel === null) {
       return enteredLabel.name === label.name
-        ? <EditBar name="pencil" />
+        ? <EditBar name={PENCIL} />
         : null;
     }
 
