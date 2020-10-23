@@ -5,7 +5,7 @@ const path = require('path');
 const URL = require('url');
 const isDev = require('electron-is-dev');
 
-const main_controller = require('./controllers/main_controller');
+const pageController = require('./controllers/page_controller');
 const appMenu = require('./menu');
 
 const config = require('./config');
@@ -103,7 +103,7 @@ function createWindow () {
   })
 
   ipcMain.on(TO_CURRENT_PAGE, (e, props) => {
-    main_controller({win, app, props})
+    pageController({win, app, props})
   })
 }
 
