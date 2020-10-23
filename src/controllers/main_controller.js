@@ -19,6 +19,7 @@ module.exports = ({win, props}) => {
       }))
     };
 
+    // TODO copy the file to temp folder
     dialog.showOpenDialog({
       properties: ['openFile', 'multiSelections'],
       filters: [
