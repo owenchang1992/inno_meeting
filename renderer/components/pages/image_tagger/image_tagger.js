@@ -27,7 +27,7 @@ import tagListReducer from './tag_reducer';
 import Labels from './labels';
 import TagList from './tag_list';
 
-import { MEDIA_TAGGER } from '../../../constants';
+import { MEDIA_TAGGER, TO_CURRENT_PAGE, FROM_CURRENT_PAGE } from '../../../constants';
 
 const baseStyle = {
   borderRadius: '4px',
@@ -162,27 +162,27 @@ export default function imageTagger({ tab, closeTab }) {
     };
 
     const getDbTagList = () => {
-      window.api.send('toCurrentPage', {
+      window.api.send(TO_CURRENT_PAGE, {
         name: 'local_db',
         collection: 'pages',
         type: 'findOne',
         contents: { path: tab.src },
       });
 
-      window.api.receive('fromCurrentPage', dbRespHandler);
+      window.api.receive(FROM_CURRENT_PAGE, dbRespHandler);
     };
 
     drawImage()
       .then(() => getDbTagList())
       .catch(() => console.log('initial failed'));
 
-    return () => window.api.removeListener('fromCurrentPage', dbRespHandler);
+    return () => window.api.removeListener(FROM_CURRENT_PAGE, dbRespHandler);
   }, []);
 
   // Cache tagList after tagList updated
   useEffect(() => {
     if (tagList !== null) {
-      window.api.send('toCurrentPage', {
+      window.api.send(TO_CURRENT_PAGE, {
         name: 'local_db',
         collection: 'pages',
         type: 'update',

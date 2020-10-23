@@ -7,7 +7,8 @@ import { addNewTab, closeTab } from '../reducers/tab_actions';
 
 import Main from './main_pane';
 import Header from './header';
-// import SideBar from './sidebar';
+
+import { TO_MAIN, FROM_MAIN } from '../constants';
 
 const App = () => {
   const history = useHistory();
@@ -32,15 +33,15 @@ const App = () => {
   };
 
   useEffect(() => {
-    window.api.receive('fromMain', (e, resp) => {
+    window.api.receive(FROM_MAIN, (e, resp) => {
       if (resp === 'app-close') {
-        window.api.send('toMain', 'close');
+        window.api.send(TO_MAIN, 'close');
       } else {
         mainRespHandler(resp.filePaths);
       }
     });
 
-    return () => window.api.removeListener('fromMain', mainRespHandler);
+    return () => window.api.removeListener(FROM_MAIN, mainRespHandler);
   }, []);
 
   return (

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import EditBar from './edit_bar';
 
+import { TO_CURRENT_PAGE, FROM_CURRENT_PAGE } from '../../../constants';
+
 const defaultContainter = {
   name: 'Default',
   key: 'default',
@@ -43,7 +45,7 @@ export default ({ setTagConfig }) => {
 
   const saveLabel = (e, selectedLabel) => {
     const saveLabelToDB = (newList) => {
-      window.api.send('toCurrentPage', {
+      window.api.send(TO_CURRENT_PAGE, {
         name: 'local_db',
         collection: 'labels',
         type: 'update',
@@ -107,14 +109,14 @@ export default ({ setTagConfig }) => {
     };
 
     const getDBLabels = () => {
-      window.api.send('toCurrentPage', {
+      window.api.send(TO_CURRENT_PAGE, {
         name: 'local_db',
         collection: 'labels',
         type: 'findOne',
         contents: { key: 'default' },
       });
 
-      window.api.receive('fromCurrentPage', getLabels);
+      window.api.receive(FROM_CURRENT_PAGE, getLabels);
     };
 
     getDBLabels();

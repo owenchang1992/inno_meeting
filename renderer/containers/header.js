@@ -1,10 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { TO_MAIN } from '../constants';
 
 const Header = () => {
   const history = useHistory();
   const openSelectFileDialog = () => {
-    window.api.send('toMain', 'select-file-dialog');
+    window.api.send(TO_MAIN, 'select-file-dialog');
   };
 
   const toHomePage = () => {
