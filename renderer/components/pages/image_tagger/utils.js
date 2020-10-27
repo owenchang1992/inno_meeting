@@ -1,6 +1,6 @@
 import url from 'url';
 import path from 'path';
-import { DRAW_RECTANGLE, ADD_TAG } from './constant';
+import { DRAW_RECTANGLE, ADD_TAG } from './constants';
 
 export function loadImage(src) {
   return new Promise((resolve, reject) => {

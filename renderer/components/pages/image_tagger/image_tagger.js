@@ -15,7 +15,7 @@ import {
   HIDE_TAG,
   PAGES,
   FIND_ONE,
-} from './constant';
+} from './constants';
 
 import {
   loadImage,

@@ -4,7 +4,7 @@ import {
   ADD_TAG,
   HIDE_TAG,
   SHOW_TAG,
-} from './constant';
+} from './constants';
 
 import { removeFromList, hideTag, showTag } from './utils';
 
