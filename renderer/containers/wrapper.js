@@ -34,9 +34,10 @@ const App = () => {
 
   useEffect(() => {
     window.api.receive(FROM_MAIN, (e, resp) => {
+      // Need refactory
       if (resp === 'app-close') {
         window.api.send(TO_MAIN, 'close');
-      } else {
+      } else if (!resp.canceled) {
         mainRespHandler(resp.filePaths);
       }
     });
