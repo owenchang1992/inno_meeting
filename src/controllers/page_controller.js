@@ -22,7 +22,7 @@ module.exports = ({win, props}) => {
     })
   }
 
-  switch(props.name) {
+  switch(props.dest) {
     case 'local_db':
       require('../models/nedb')[props.type](
         getCollection(props.collection),

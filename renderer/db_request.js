@@ -4,9 +4,15 @@ const DB_TYPE = 'local_db';
 const FIND_ONE = 'findOne';
 const UPDATE = 'update';
 
-export const findOne = (collection, contents) => {
+const sendLocal2DB = (content) => {
   window.api.send(TO_CURRENT_PAGE, {
-    name: DB_TYPE,
+    dest: DB_TYPE,
+    ...content,
+  });
+};
+
+export const findOne = (collection, contents) => {
+  sendLocal2DB({
     collection,
     type: FIND_ONE,
     contents,
@@ -14,8 +20,7 @@ export const findOne = (collection, contents) => {
 };
 
 export const update = (collection, contents) => {
-  window.api.send(TO_CURRENT_PAGE, {
-    name: DB_TYPE,
+  sendLocal2DB({
     collection,
     type: UPDATE,
     contents,
