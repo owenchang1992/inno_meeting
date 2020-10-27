@@ -21,19 +21,16 @@ const Header = () => {
           <button
             type="button"
             className="btn btn-default"
-            onClick={toHomePage}
-          >
-            <span className="icon icon-home" />
-          </button>
-          {/* <button type="button" className="btn btn-default">
-            <span className="icon icon-folder" />
-          </button> */}
-          <button
-            type="button"
-            className="btn btn-default"
             onClick={openSelectFileDialog}
           >
             <span className="icon icon-picture" />
+          </button>
+          <button
+            type="button"
+            className="btn btn-default"
+            onClick={toHomePage}
+          >
+            <span className="icon icon-export" />
           </button>
           {/* <button type="button" className="btn btn-default">
             <span className="icon icon-popup" />
