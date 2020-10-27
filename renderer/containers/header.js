@@ -2,10 +2,16 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { TO_MAIN } from '../constants';
 
+const SELECT_FILES = 'SELECT_FILES';
+const PROJECT_NAME = 'DEFAULT';
+
 const Header = () => {
   const history = useHistory();
   const openSelectFileDialog = () => {
-    window.api.send(TO_MAIN, 'select-file-dialog');
+    window.api.send(TO_MAIN, {
+      name: SELECT_FILES,
+      project: PROJECT_NAME,
+    });
   };
 
   const toHomePage = () => {
@@ -32,6 +38,9 @@ const Header = () => {
           >
             <span className="icon icon-export" />
           </button>
+          {/* <button type="button" className="btn btn-default">
+            <span className="icon icon-folder" />
+          </button> */}
           {/* <button type="button" className="btn btn-default">
             <span className="icon icon-popup" />
           </button>

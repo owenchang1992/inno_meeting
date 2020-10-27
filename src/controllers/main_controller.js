@@ -3,7 +3,7 @@ const path = require('path');
 
 const { FROM_MAIN } = require("../const");
 
-const FROM_SELECT_FILE_DIALOG = 'select-file-dialog';
+const SELECT_FILES = 'SELECT_FILES';
 
 module.exports = ({win, props}) => {
   const sendResp = (message) => {
@@ -25,16 +25,18 @@ module.exports = ({win, props}) => {
         { name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }
       ]
     })
-      .then(resp => sendResp({
-        ...resp,
-        name: FROM_SELECT_FILE_DIALOG,
-        filePaths: parsePaths(resp.filePaths)
-      }))
+      .then(resp => {
+        sendResp({
+          ...resp,
+          name: SELECT_FILES,
+          filePaths: parsePaths(resp.filePaths)
+        })
+      })
       .catch((err) => console.log(err));
   }
 
-  switch(props) {
-    case FROM_SELECT_FILE_DIALOG:
+  switch(props.name) {
+    case SELECT_FILES:
       selectFiles();
       break;
     default:
