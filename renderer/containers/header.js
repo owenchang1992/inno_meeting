@@ -10,7 +10,7 @@ const Header = () => {
   const openSelectFileDialog = () => {
     window.api.send(TO_MAIN, {
       name: SELECT_FILES,
-      project: PROJECT_NAME,
+      projectName: PROJECT_NAME,
     });
   };
 
