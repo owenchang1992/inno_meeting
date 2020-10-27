@@ -11,14 +11,13 @@ module.exports = ({win, props}) => {
   }
 
   const selectFiles = () => {
-    const parsePaths = (filePaths) => {
-      return filePaths.map((filePath) => ({
-        fullPath: filePath,
-        basePath: path.basename(filePath),
-        routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
-      }))
-    };
-
+    const parsePaths = (filePaths) => filePaths.map((filePath) => ({
+      fullPath: filePath,
+      basePath: path.basename(filePath),
+      routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
+    }));
+  
+    const updateProject = () => {
     // TODO copy the file to temp folder
     dialog.showOpenDialog({
       properties: ['openFile', 'multiSelections'],
