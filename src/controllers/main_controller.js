@@ -33,7 +33,7 @@ module.exports = ({win, props}) => {
       routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
     }));
   
-    const updateProject = (props) => {
+    const addImages2Project = (props) => {
       require('../models/nedb')[props.type](
         getCollection(props.collection),
         props
@@ -48,7 +48,7 @@ module.exports = ({win, props}) => {
       ]
     })
       .then(resp => {
-        updateProject({
+        addImages2Project({
           type: 'update',
           collection: COLLECTION_NAME,
           contents: {
@@ -57,6 +57,7 @@ module.exports = ({win, props}) => {
             media: resp.filePaths
           }
         });
+
         sendResp({
           ...resp,
           name: SELECT_FILES,
