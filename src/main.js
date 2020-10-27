@@ -11,6 +11,7 @@ const appMenu = require('./menu');
 
 const config = require('./config');
 
+// TODO: Is this necessary?
 app.setName(config.appName);
 
 const {
