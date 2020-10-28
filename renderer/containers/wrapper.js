@@ -9,7 +9,12 @@ import Main from './main_pane';
 import Header from './header';
 import SideBar from './new_sidebar';
 
-import { TO_MAIN, FROM_MAIN } from '../constants';
+import {
+  TO_MAIN,
+  FROM_MAIN,
+  DEFAULT,
+  FIND_PROJECT,
+} from '../constants';
 
 const App = () => {
   const history = useHistory();
@@ -34,6 +39,17 @@ const App = () => {
   };
 
   useEffect(() => {
+    const getProject = () => {
+      window.api.send(TO_MAIN, {
+        name: FIND_PROJECT,
+        projectName: DEFAULT,
+      });
+    };
+
+    // Get Project
+    getProject();
+
+    // Add listener
     window.api.receive(FROM_MAIN, (e, resp) => {
       // Need refactory
       if (resp === 'app-close') {
