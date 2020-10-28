@@ -6,28 +6,23 @@ const { app } = require('electron');
 
 const { FROM_CURRENT_PAGE } = require("../const");
 
+const db = new Datastore({
+  filename: path.join(
+    app.getPath('appData'),
+    config.dbPath,
+    'pages.db',
+  ),
+  autoload: true,
+});
+
 module.exports = ({win, props}) => {
   const sendResponse = (channel, msg) => {
     win.webContents.send(channel, msg)
   }
 
-  const getCollection = (collectionName) => {
-    return new Datastore({
-      filename: path.join(
-        app.getPath('appData'),
-        config.dbPath,
-        `${collectionName}.db`,
-      ),
-      autoload: true,
-    })
-  }
-
   switch(props.dest) {
     case 'local_db':
-      require('../models/nedb')[props.type](
-        getCollection(props.collection),
-        props,
-      )
+      require('../models/nedb')[props.type](db, props)
         .then((resp) => sendResponse(
           FROM_CURRENT_PAGE,
           {

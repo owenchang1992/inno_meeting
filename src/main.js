@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, screen, Menu, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, screen, Menu } = require('electron');
 const electronShortcut = require('electron-localshortcut');
 
 const path = require('path');

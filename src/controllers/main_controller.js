@@ -11,20 +11,18 @@ const SELECT_FILES = 'SELECT_FILES';
 const COLLECTION_NAME = 'projects.db';
 const FIND_PROJECT = 'FIND_PROJECT';
 
+const db = new Datastore({
+  filename: path.join(
+    app.getPath('appData'),
+    config.dbPath,
+    COLLECTION_NAME,
+  ),
+  autoload: true,
+});
+
 module.exports = ({win, props}) => {
   const sendResp = (message) => {
     win.webContents.send(FROM_MAIN, message)
-  }
-
-  const getCollection = (collectionName) => {
-    return new Datastore({
-      filename: path.join(
-        app.getPath('appData'),
-        config.dbPath,
-        collectionName,
-      ),
-      autoload: true,
-    })
   }
 
   const selectFiles = () => {
@@ -36,7 +34,7 @@ module.exports = ({win, props}) => {
   
     const addImages2Project = (props) => {
       require('../models/nedb')[props.type](
-        getCollection(props.collection),
+        db,
         props
       )
     }
@@ -70,7 +68,7 @@ module.exports = ({win, props}) => {
 
   const findProject = (props) => {
     require('../models/nedb')[props.type](
-      getCollection(props.collection),
+      db,
       props
     )
       .then((resp) => {
