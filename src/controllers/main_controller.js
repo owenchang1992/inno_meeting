@@ -57,7 +57,7 @@ module.exports = ({win, props}) => {
           }
         });
 
-        sendResp({
+        return sendResp({
           ...resp,
           name: SELECT_FILES,
           filePaths: parsePaths(resp.filePaths)
