@@ -101,13 +101,13 @@ export default ({ setTagConfig }) => {
 
   useEffect(() => {
     const getLabels = (e, resp) => {
-      if (resp.contents) {
+      if (resp.contents !== null) {
         if (resp.collection === LABELS && resp.type === FIND_ONE) {
           setLabelList(resp.contents.labels);
           setFocusLabel(resp.contents.labels[0]);
           setTagConfig(resp.contents.labels[0]);
         }
-      }
+      } else setTagConfig(focusedLabel);
     };
 
     const getDBLabels = () => {
