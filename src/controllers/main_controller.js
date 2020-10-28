@@ -9,6 +9,7 @@ const Datastore = require('nedb');
 
 const SELECT_FILES = 'SELECT_FILES';
 const COLLECTION_NAME = 'projects.db';
+const FIND_PROJECT = 'FIND_PROJECT';
 
 module.exports = ({win, props}) => {
   const sendResp = (message) => {
@@ -67,11 +68,33 @@ module.exports = ({win, props}) => {
       .catch((err) => console.log(err));
   }
 
+  const findProject = (props) => {
+    require('../models/nedb')[props.type](
+      getCollection(props.collection),
+      props
+    )
+      .then((resp) => {
+        console.log('findProject result', resp);
+        sendResp({
+          name: FIND_PROJECT,
+          content: resp
+        })
+      })
+      .catch((err) => console.log('findProject', err))
+  }
+
   switch(props.name) {
     case SELECT_FILES:
       selectFiles();
       break;
+    case FIND_PROJECT:
+      findProject({
+        type: 'findOne',
+        collection: COLLECTION_NAME,
+        contents: { name: props.projectName }
+      });
+      break;
     default:
-      console.log('event not found');
+      console.log('event not found', props);
   }
 }
