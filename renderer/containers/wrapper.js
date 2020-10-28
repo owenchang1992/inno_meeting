@@ -7,6 +7,7 @@ import { addNewTab, closeTab } from '../reducers/tab_actions';
 
 import Main from './main_pane';
 import Header from './header';
+import SideBar from './new_sidebar';
 
 import { TO_MAIN, FROM_MAIN } from '../constants';
 
@@ -50,7 +51,7 @@ const App = () => {
       <Header />
       <div className="window-content">
         <div className="pane-group">
-          {/* <SideBar addTab={addTab} checkTab={checkTab} /> */}
+          <SideBar />
           <Main tabs={tabs} closeTab={onCloseTab} />
         </div>
       </div>
