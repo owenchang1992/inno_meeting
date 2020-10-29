@@ -47,7 +47,7 @@ const App = () => {
       routingPath: filePath.routingPath,
     }));
 
-    history.push(filePaths[0].routingPath);
+    history.push(filePaths[filePaths.length - 1].routingPath);
   };
 
   useEffect(() => {
