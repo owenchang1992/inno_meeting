@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
 
@@ -7,7 +7,7 @@ import { addNewTab, closeTab } from '../reducers/tab_actions';
 
 import Main from './main_pane';
 import Header from './header';
-import SideBar from './new_sidebar';
+// import SideBar from './new_sidebar';
 
 import {
   TO_MAIN,
@@ -20,7 +20,6 @@ import {
 const App = () => {
   const history = useHistory();
   const [tabs, dispatch] = useReducer(tabReducer, []);
-  const [mediaList, setMediaList] = useState([]);
 
   const addTab = (tab) => {
     dispatch(addNewTab(tab));
@@ -35,19 +34,15 @@ const App = () => {
       name: SELECT_FILES,
       projectName: DEFAULT,
       contents: {
-        preMediaList: mediaList,
+        preMediaList: tabs,
       },
     });
   };
 
-  const mainRespHandler = (filePaths) => {
-    filePaths.forEach((filePath) => addTab({
-      name: filePath.basePath,
-      src: filePath.fullPath,
-      routingPath: filePath.routingPath,
-    }));
+  const mainRespHandler = (newTabs) => {
+    newTabs.forEach((newTab) => addTab(newTab));
 
-    history.push(filePaths[filePaths.length - 1].routingPath);
+    history.push(newTabs[newTabs.length - 1].routingPath);
   };
 
   useEffect(() => {
@@ -66,12 +61,10 @@ const App = () => {
       // Need refactory
       if (resp === 'app-close') {
         window.api.send(TO_MAIN, 'close');
-      } else if (resp.name === SELECT_FILES) {
-        console.log(SELECT_FILES, resp);
-        mainRespHandler(resp.filePaths);
-      } else if (resp.name === FIND_PROJECT) {
-        console.log(resp);
-        setMediaList(resp.content);
+      } else if (
+        resp.name === SELECT_FILES || resp.name === FIND_PROJECT
+      ) {
+        mainRespHandler(resp.contents);
       }
     });
 
@@ -83,7 +76,6 @@ const App = () => {
       <Header openSelectFileDialog={openSelectFileDialog} />
       <div className="window-content">
         <div className="pane-group">
-          <SideBar mediaList={mediaList} />
           <Main tabs={tabs} closeTab={onCloseTab} />
         </div>
       </div>

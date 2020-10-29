@@ -26,17 +26,16 @@ module.exports = ({win, props}) => {
   }
 
   const parsePaths = (filePaths) => filePaths.map((filePath) => ({
-    fullPath: filePath,
-    basePath: path.basename(filePath),
+    src: filePath,
+    name: path.basename(filePath),
     routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
   }));
 
   const checkMediaExisting = (mainList, comparedList) => {
     const newList = comparedList.reduce(
       (accumulator, item) => {
-        console.log(accumulator);
         const index = mainList.findIndex(
-          (main) => (main.fullPath === item.fullPath),
+          (main) => (main.src === item.src),
         );
   
         if (index === -1) accumulator.push(item);
@@ -82,7 +81,7 @@ module.exports = ({win, props}) => {
         return sendResp({
           ...resp,
           name: SELECT_FILES,
-          filePaths: newList
+          contents: newList
         })
       })
       .catch((err) => console.log(err));
@@ -99,7 +98,7 @@ module.exports = ({win, props}) => {
         if (resp !== null) {
           sendResp({
             name: FIND_PROJECT,
-            content: resp.media
+            contents: resp.media
           })
         }
       })
