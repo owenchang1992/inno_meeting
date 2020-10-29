@@ -53,7 +53,7 @@ module.exports = ({win, props}) => {
           contents: {
             name: props.projectName,
             key:  props.projectName,
-            media: resp.filePaths
+            media: parsePaths(resp.filePaths)
           }
         });
 
@@ -67,6 +67,7 @@ module.exports = ({win, props}) => {
   }
 
   const findProject = (props) => {
+    console.log('findProject aaa', props);
     require('../models/nedb')[props.type](
       db,
       props
@@ -75,7 +76,7 @@ module.exports = ({win, props}) => {
         console.log('findProject result', resp);
         sendResp({
           name: FIND_PROJECT,
-          content: parsePaths(resp.media)
+          content: resp.media
         })
       })
       .catch((err) => console.log('findProject', err))
