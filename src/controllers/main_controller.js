@@ -31,7 +31,7 @@ module.exports = ({win, props}) => {
     routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
   }));
 
-  const selectFiles = () => {
+  const selectFiles = (contents) => {
     const addImages2Project = (props) => {
       require('../models/nedb')[props.type](
         db,
@@ -47,20 +47,25 @@ module.exports = ({win, props}) => {
       ]
     })
       .then(resp => {
+        const newList = [
+          ...contents.preMediaList,
+          ...parsePaths(resp.filePaths)
+        ];
+
         addImages2Project({
           type: 'update',
           collection: COLLECTION_NAME,
           contents: {
             name: props.projectName,
             key:  props.projectName,
-            media: parsePaths(resp.filePaths)
+            media: newList
           }
         });
 
         return sendResp({
           ...resp,
           name: SELECT_FILES,
-          filePaths: parsePaths(resp.filePaths)
+          filePaths: newList
         })
       })
       .catch((err) => console.log(err));
@@ -84,7 +89,7 @@ module.exports = ({win, props}) => {
 
   switch(props.name) {
     case SELECT_FILES:
-      selectFiles();
+      selectFiles(props.contents);
       break;
     case FIND_PROJECT:
       findProject({

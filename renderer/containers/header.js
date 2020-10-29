@@ -1,17 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { TO_MAIN, DEFAULT } from '../constants';
 
-const SELECT_FILES = 'SELECT_FILES';
-
-const Header = () => {
+const Header = ({ openSelectFileDialog }) => {
   const history = useHistory();
-  const openSelectFileDialog = () => {
-    window.api.send(TO_MAIN, {
-      name: SELECT_FILES,
-      projectName: DEFAULT,
-    });
-  };
 
   const toHomePage = () => {
     history.push('/');

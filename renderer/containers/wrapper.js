@@ -30,6 +30,16 @@ const App = () => {
     dispatch(closeTab(removedTab));
   };
 
+  const openSelectFileDialog = () => {
+    window.api.send(TO_MAIN, {
+      name: SELECT_FILES,
+      projectName: DEFAULT,
+      contents: {
+        preMediaList: mediaList,
+      },
+    });
+  };
+
   const mainRespHandler = (filePaths) => {
     filePaths.forEach((filePath) => addTab({
       name: filePath.basePath,
@@ -70,7 +80,7 @@ const App = () => {
 
   return (
     <div className="window">
-      <Header />
+      <Header openSelectFileDialog={openSelectFileDialog} />
       <div className="window-content">
         <div className="pane-group">
           <SideBar mediaList={mediaList} />
