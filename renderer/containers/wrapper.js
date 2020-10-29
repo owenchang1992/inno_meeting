@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
 
@@ -20,6 +20,7 @@ import {
 const App = () => {
   const history = useHistory();
   const [tabs, dispatch] = useReducer(tabReducer, []);
+  const [mediaList, setMediaList] = useState([]);
 
   const addTab = (tab) => {
     dispatch(addNewTab(tab));
@@ -60,6 +61,7 @@ const App = () => {
         mainRespHandler(resp.filePaths);
       } else if (resp.name === FIND_PROJECT) {
         console.log(resp);
+        setMediaList(resp.content);
       }
     });
 
@@ -71,7 +73,7 @@ const App = () => {
       <Header />
       <div className="window-content">
         <div className="pane-group">
-          <SideBar />
+          <SideBar mediaList={mediaList} />
           <Main tabs={tabs} closeTab={onCloseTab} />
         </div>
       </div>

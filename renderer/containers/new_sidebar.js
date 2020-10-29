@@ -1,41 +1,36 @@
 import React from 'react';
 
-const SideBar = () => {
-  console.log('');
+const SideBarItem = ({ media }) => (
+  <li className="list-group-item">
+    <div className="media-body">
+      <strong>{media.basePath}</strong>
+    </div>
+  </li>
+);
+
+const SideBar = ({ mediaList }) => {
+  console.log(mediaList);
+  const getList = () => {
+    if (mediaList) {
+      return mediaList.map((media) => (
+        <SideBarItem media={media} />
+      ));
+    }
+
+    return null;
+  };
+
   return (
     <div className="pane-sm sidebar">
       <ul className="list-group">
-        <li className="list-group-header">
+        {/* <li className="list-group-header">
           <input
             className="form-control"
             type="text"
             placeholder="Search for image"
           />
-        </li>
-        <li className="list-group-item">
-          {/* <img
-            className="img-circle media-object pull-left"
-            src="/assets/img/avatar.jpg"
-            alt="test"
-            width="32"
-            height="32"
-          /> */}
-          <div className="media-body">
-            <strong>List item title</strong>
-          </div>
-        </li>
-        <li className="list-group-item">
-          {/* <img
-            className="img-circle media-object pull-left"
-            src="/assets/img/avatar2.png"
-            alt="test"
-            width="32"
-            height="32"
-          /> */}
-          <div className="media-body">
-            <strong>List item title</strong>
-          </div>
-        </li>
+        </li> */}
+        {getList()}
       </ul>
     </div>
   );

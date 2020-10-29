@@ -25,13 +25,13 @@ module.exports = ({win, props}) => {
     win.webContents.send(FROM_MAIN, message)
   }
 
+  const parsePaths = (filePaths) => filePaths.map((filePath) => ({
+    fullPath: filePath,
+    basePath: path.basename(filePath),
+    routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
+  }));
+
   const selectFiles = () => {
-    const parsePaths = (filePaths) => filePaths.map((filePath) => ({
-      fullPath: filePath,
-      basePath: path.basename(filePath),
-      routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
-    }));
-  
     const addImages2Project = (props) => {
       require('../models/nedb')[props.type](
         db,
@@ -75,7 +75,7 @@ module.exports = ({win, props}) => {
         console.log('findProject result', resp);
         sendResp({
           name: FIND_PROJECT,
-          content: resp
+          content: parsePaths(resp.media)
         })
       })
       .catch((err) => console.log('findProject', err))
