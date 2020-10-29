@@ -31,12 +31,29 @@ module.exports = ({win, props}) => {
     routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
   }));
 
+  const checkMediaExisting = (mainList, comparedList) => {
+    const newList = comparedList.reduce(
+      (accumulator, item) => {
+        console.log(accumulator);
+        const index = mainList.findIndex(
+          (main) => (main.fullPath === item.fullPath),
+        );
+  
+        if (index === -1) accumulator.push(item);
+        return accumulator;
+      },
+      []
+    )
+
+    return [
+      ...mainList,
+      ...newList,
+    ]
+  }
+
   const selectFiles = (contents) => {
     const addImages2Project = (props) => {
-      require('../models/nedb')[props.type](
-        db,
-        props
-      )
+      require('../models/nedb')[props.type](db, props)
     }
 
     // TODO copy the file to temp folder
@@ -47,10 +64,10 @@ module.exports = ({win, props}) => {
       ]
     })
       .then(resp => {
-        const newList = [
-          ...contents.preMediaList,
-          ...parsePaths(resp.filePaths)
-        ];
+        const newList = checkMediaExisting(
+          contents.preMediaList,
+          parsePaths(resp.filePaths)
+        )
 
         addImages2Project({
           type: 'update',
@@ -79,10 +96,12 @@ module.exports = ({win, props}) => {
     )
       .then((resp) => {
         console.log('findProject result', resp);
-        sendResp({
-          name: FIND_PROJECT,
-          content: resp.media
-        })
+        if (resp !== null) {
+          sendResp({
+            name: FIND_PROJECT,
+            content: resp.media
+          })
+        }
       })
       .catch((err) => console.log('findProject', err))
   }
