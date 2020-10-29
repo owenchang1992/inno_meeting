@@ -1,9 +1,9 @@
 import React from 'react';
 
 const SideBarItem = ({ media }) => (
-  <li className="list-group-item">
+  <li className="list-group-item active">
     <div className="media-body">
-      <strong>{media.basePath}</strong>
+      <strong>{media.name}</strong>
     </div>
   </li>
 );
@@ -23,13 +23,13 @@ const SideBar = ({ mediaList }) => {
   return (
     <div className="pane-sm sidebar">
       <ul className="list-group">
-        {/* <li className="list-group-header">
+        <li className="list-group-header">
           <input
             className="form-control"
             type="text"
             placeholder="Search for image"
           />
-        </li> */}
+        </li>
         {getList()}
       </ul>
     </div>

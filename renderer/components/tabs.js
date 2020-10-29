@@ -32,7 +32,7 @@ export default function Tab({ tabs, closeTab }) {
             onKeyDown={() => {}}
             tabIndex={0}
           >
-            <span className="icon icon-cancel icon-close-tab" />
+            {/* <span className="icon icon-cancel icon-close-tab" /> */}
             {tab.name}
           </div>
         ))
