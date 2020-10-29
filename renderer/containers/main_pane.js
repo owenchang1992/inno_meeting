@@ -3,7 +3,6 @@ import { Route } from 'react-router-dom';
 
 import PageLoader from '../components/page_loader';
 import Home from '../components/pages/home/home';
-import Tabs from '../components/tabs';
 
 const main = ({ closeTab, tabs }) => {
   console.log('new tab', tabs);
@@ -17,7 +16,6 @@ const main = ({ closeTab, tabs }) => {
               path={tab.routingPath}
               render={(props) => (
                 <>
-                  <Tabs {...props} tabs={tabs} closeTab={closeTab} />
                   <PageLoader
                     {...props}
                     properties={{ tab, closeTab }}
