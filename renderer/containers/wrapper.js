@@ -14,6 +14,7 @@ import {
   FROM_MAIN,
   DEFAULT,
   FIND_PROJECT,
+  SELECT_FILES,
 } from '../constants';
 
 const App = () => {
@@ -54,8 +55,11 @@ const App = () => {
       // Need refactory
       if (resp === 'app-close') {
         window.api.send(TO_MAIN, 'close');
-      } else if (!resp.canceled) {
+      } else if (resp.name === SELECT_FILES) {
+        console.log(SELECT_FILES, resp);
         mainRespHandler(resp.filePaths);
+      } else if (resp.name === FIND_PROJECT) {
+        console.log(resp);
       }
     });
 

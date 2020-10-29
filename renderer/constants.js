@@ -7,3 +7,4 @@ export const TO_CURRENT_PAGE = 'TO_CURRENT_PAGE';
 export const FROM_CURRENT_PAGE = 'FROM_CURRENT_PAGE';
 
 export const FIND_PROJECT = 'FIND_PROJECT';
+export const SELECT_FILES = 'SELECT_FILES';
