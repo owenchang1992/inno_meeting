@@ -7,9 +7,11 @@ const config = require('../config');
 
 const Datastore = require('nedb');
 
-const SELECT_FILES = 'SELECT_FILES';
 const COLLECTION_NAME = 'projects.db';
+const SELECT_FILES = 'SELECT_FILES';
 const FIND_PROJECT = 'FIND_PROJECT';
+const UPDATE_PROJECT = 'UPDATE_PROJECT';
+
 
 const db = new Datastore({
   filename: path.join(
@@ -112,6 +114,17 @@ module.exports = ({win, props}) => {
         type: 'findOne',
         collection: COLLECTION_NAME,
         contents: { name: props.projectName }
+      });
+      break;
+    case UPDATE_PROJECT:
+      require('../models/nedb').update(db, {
+        type: 'update',
+        collection: COLLECTION_NAME,
+        contents: {
+          name: props.projectName,
+          key:  props.projectName,
+          media: newList
+        }
       });
       break;
     default:
