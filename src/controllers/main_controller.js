@@ -88,13 +88,11 @@ module.exports = ({win, props}) => {
   }
 
   const findProject = (props) => {
-    console.log('findProject aaa', props);
     require('../models/nedb')[props.type](
       db,
       props
     )
       .then((resp) => {
-        console.log('findProject result', resp);
         if (resp !== null) {
           sendResp({
             name: FIND_PROJECT,
