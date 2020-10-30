@@ -46,7 +46,7 @@ const baseStyle = {
 
 const containerStyle = {
   width: '100%',
-  height: 'calc(100% - 25px)',
+  height: '100%',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -254,9 +254,7 @@ export default function imageTagger({ tab, closeTab }) {
       {
         useCallback(content.type === 'canvas' ? (
           <div style={{ height: '100%', width: '10em' }}>
-            <h3
-              style={{ marginLeft: '10px' }}
-            >
+            <h3 style={{ marginLeft: '10px' }}>
               {tab.name}
             </h3>
             <Labels setTagConfig={setTagConfig} />
