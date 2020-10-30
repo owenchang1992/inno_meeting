@@ -15,6 +15,7 @@ import {
   DEFAULT,
   FIND_PROJECT,
   SELECT_FILES,
+  UPDATE_PROJECT,
 } from '../constants';
 
 const App = () => {
@@ -70,6 +71,14 @@ const App = () => {
 
     return () => window.api.removeListener(FROM_MAIN, mainRespHandler);
   }, []);
+
+  useEffect(() => {
+    window.api.send(TO_MAIN, {
+      name: UPDATE_PROJECT,
+      projectName: DEFAULT,
+      contents: tabs,
+    });
+  }, [tabs]);
 
   return (
     <div className="window">

@@ -53,10 +53,6 @@ module.exports = ({win, props}) => {
   }
 
   const selectFiles = (contents) => {
-    const addImages2Project = (props) => {
-      require('../models/nedb')[props.type](db, props)
-    }
-
     // TODO copy the file to temp folder
     dialog.showOpenDialog({
       properties: ['openFile', 'multiSelections'],
@@ -69,16 +65,6 @@ module.exports = ({win, props}) => {
           contents.preMediaList,
           parsePaths(resp.filePaths)
         )
-
-        addImages2Project({
-          type: 'update',
-          collection: COLLECTION_NAME,
-          contents: {
-            name: props.projectName,
-            key:  props.projectName,
-            media: newList
-          }
-        });
 
         return sendResp({
           ...resp,
@@ -123,7 +109,7 @@ module.exports = ({win, props}) => {
         contents: {
           name: props.projectName,
           key:  props.projectName,
-          media: newList
+          media: props.contents
         }
       });
       break;
