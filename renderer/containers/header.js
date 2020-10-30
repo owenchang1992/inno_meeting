@@ -19,7 +19,7 @@ const Header = ({ openSelectFileDialog }) => {
             className="btn btn-default"
             onClick={openSelectFileDialog}
           >
-            <span className="icon icon-picture" />
+            <span className="icon icon-archive" />
           </button>
           <button
             type="button"

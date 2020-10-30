@@ -17,29 +17,37 @@ const SideBarItem = ({ media, handleClick, focusMedia }) => {
         onKeyDown={() => {}}
         tabIndex={0}
       >
+        <span
+          className="icon icon-picture pull-left"
+          style={{ marginRight: '10px' }}
+        />
+        <span
+          className="icon icon-cancel-circled pull-right"
+          style={{ marginLeft: '10px' }}
+        />
         <strong>{media.name}</strong>
       </div>
     </li>
   );
 };
 
-const SideBar = ({ mediaList }) => {
+const SideBar = ({ mediaList, closeTab }) => {
   const history = useHistory();
   const [focusMedia, setFocusMedia] = useState({
     routingPath: history.location.pathname,
   });
 
   const handleClick = (e, media) => {
-    setFocusMedia(media);
-    history.push(media.routingPath);
-    // if (e.target.className.indexOf('icon-cancel') !== -1) {
-    //   closeTab(tab);
-    //   if (tab.routingPath === history.location.pathname) {
-    //     history.goBack();
-    //   }
-    // } else if (history.location.pathname !== tab.routingPath) {
-    //   history.push(tab.routingPath);
-    // }
+    console.log(e.target.className);
+    if (e.target.className.indexOf('icon-cancel-circled') !== -1) {
+      closeTab(media);
+      if (media.routingPath === history.location.pathname) {
+        history.goBack();
+      }
+    } else if (history.location.pathname !== media.routingPath) {
+      setFocusMedia(media);
+      history.push(media.routingPath);
+    }
   };
 
   const getList = () => {
@@ -59,13 +67,13 @@ const SideBar = ({ mediaList }) => {
   return (
     <div className="pane-sm sidebar">
       <ul className="list-group">
-        <li className="list-group-header">
+        {/* <li className="list-group-header">
           <input
             className="form-control"
             type="text"
             placeholder="Search for image"
           />
-        </li>
+        </li> */}
         {getList()}
       </ul>
     </div>

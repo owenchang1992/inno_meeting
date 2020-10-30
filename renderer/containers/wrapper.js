@@ -76,8 +76,8 @@ const App = () => {
       <Header openSelectFileDialog={openSelectFileDialog} />
       <div className="window-content">
         <div className="pane-group">
-          <SideBar mediaList={tabs} />
-          <Main tabs={tabs} closeTab={onCloseTab} />
+          <SideBar mediaList={tabs} closeTab={onCloseTab} />
+          <Main tabs={tabs} />
         </div>
       </div>
     </div>
