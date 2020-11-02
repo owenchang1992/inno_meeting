@@ -4,13 +4,13 @@ const config = require('../config');
 
 const { app } = require('electron');
 
-const { FROM_CURRENT_PAGE } = require("../const");
+const { FROM_CURRENT_PAGE, PAGE_COLLECTION } = require("../const");
 
 const db = new Datastore({
   filename: path.join(
     app.getPath('appData'),
     config.dbPath,
-    'pages.db',
+    PAGE_COLLECTION,
   ),
   autoload: true,
 });

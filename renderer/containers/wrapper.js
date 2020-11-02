@@ -54,7 +54,7 @@ const App = () => {
     });
   };
 
-  // Initialize Project
+  // Initial Project
   useEffect(() => {
     // Get the preject information from DB
     getProject();

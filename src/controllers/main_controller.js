@@ -2,12 +2,11 @@ const { dialog } = require('electron');
 const path = require('path');
 const { app } = require('electron');
 
-const { FROM_MAIN } = require("../const");
+const { FROM_MAIN, PROJECT_COLLECTION} = require("../const");
 const config = require('../config');
 
 const Datastore = require('nedb');
 
-const COLLECTION_NAME = 'projects.db';
 const SELECT_FILES = 'SELECT_FILES';
 const FIND_PROJECT = 'FIND_PROJECT';
 const UPDATE_PROJECT = 'UPDATE_PROJECT';
@@ -17,7 +16,7 @@ const db = new Datastore({
   filename: path.join(
     app.getPath('appData'),
     config.dbPath,
-    COLLECTION_NAME,
+    PROJECT_COLLECTION,
   ),
   autoload: true,
 });
@@ -98,14 +97,14 @@ module.exports = ({win, props}) => {
     case FIND_PROJECT:
       findProject({
         type: 'findOne',
-        collection: COLLECTION_NAME,
+        collection: PROJECT_COLLECTION,
         contents: { name: props.projectName }
       });
       break;
     case UPDATE_PROJECT:
       require('../models/nedb').update(db, {
         type: 'update',
-        collection: COLLECTION_NAME,
+        collection: PROJECT_COLLECTION,
         contents: {
           name: props.projectName,
           key:  props.projectName,
