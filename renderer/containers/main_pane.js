@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 
 import PageLoader from '../components/page_loader';
 import Home from '../components/pages/home/home';
+import SideBar from './sidebar';
 
 const main = ({ closeTab, tabs }) => {
   console.log('new tab', tabs);
@@ -16,10 +17,15 @@ const main = ({ closeTab, tabs }) => {
               path={tab.routingPath}
               render={(props) => (
                 <>
-                  <PageLoader
-                    {...props}
-                    properties={{ tab, closeTab }}
-                  />
+                  <div className="pane-group">
+                    <SideBar tabs={tabs} closeTab={closeTab} />
+                    <div className="pane">
+                      <PageLoader
+                        {...props}
+                        properties={{ tab, closeTab }}
+                      />
+                    </div>
+                  </div>
                 </>
               )}
             />

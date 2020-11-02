@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const SideBarItem = ({ tab, handleClick, focusTab }) => {
+const SideBarItem = ({ tab, handleClick, focusTabName }) => {
   const getTab = () => (
-    tab.routingPath === focusTab.routingPath
+    tab.routingPath === focusTabName
       ? 'active'
       : ''
   );
@@ -33,9 +33,6 @@ const SideBarItem = ({ tab, handleClick, focusTab }) => {
 
 const SideBar = ({ tabs, closeTab }) => {
   const history = useHistory();
-  const [focusTab, setFocusTab] = useState({
-    routingPath: history.location.pathname,
-  });
 
   const handleClick = (e, tab) => {
     if (e.target.className.indexOf('icon-cancel-circled') !== -1) {
@@ -44,7 +41,6 @@ const SideBar = ({ tabs, closeTab }) => {
         history.goBack();
       }
     } else if (history.location.pathname !== tab.routingPath) {
-      setFocusTab(tab);
       history.push(tab.routingPath);
     }
   };
@@ -55,7 +51,7 @@ const SideBar = ({ tabs, closeTab }) => {
         <SideBarItem
           tab={tab}
           handleClick={handleClick}
-          focusTab={focusTab}
+          focusTabName={history.location.pathname}
         />
       ));
     }

@@ -7,7 +7,6 @@ import { addNewTab, closeTab } from '../reducers/tab_actions';
 
 import Main from './main_pane';
 import Header from './header';
-import SideBar from './sidebar';
 
 import {
   TO_MAIN,
@@ -82,10 +81,7 @@ const App = () => {
     <div className="window">
       <Header openSelectFileDialog={openSelectFileDialog} />
       <div className="window-content">
-        <div className="pane-group">
-          <SideBar tabs={tabs} closeTab={onCloseTab} />
-          <Main tabs={tabs} />
-        </div>
+        <Main tabs={tabs} closeTab={onCloseTab} />
       </div>
     </div>
   );
