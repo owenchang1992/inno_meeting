@@ -662,8 +662,8 @@ textarea {
 }
 
 .pane-sm {
-  max-width: 220px;
-  min-width: 150px;
+  max-width: 170px;
+  min-width: 170px;
 }
 
 .pane-mini {
