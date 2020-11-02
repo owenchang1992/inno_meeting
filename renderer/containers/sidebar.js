@@ -16,6 +16,7 @@ const SideBarItem = ({ tab, handleClick, focusTabName }) => {
         onClick={(e) => handleClick(e, tab)}
         onKeyDown={() => {}}
         tabIndex={0}
+        style={{ padding: '10px' }}
       >
         <span
           className="icon icon-picture pull-left"
