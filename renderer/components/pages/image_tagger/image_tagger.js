@@ -14,6 +14,7 @@ import {
   SHOW_TAG,
   HIDE_TAG,
   FIND_ONE,
+  PAGES,
 } from './constants';
 
 import {
@@ -162,7 +163,7 @@ export default function imageTagger({ tab, closeTab }) {
       });
 
     const dbRespHandler = (e, resp) => {
-      if (resp.type === FIND_ONE) {
+      if (resp.collection === PAGES && resp.type === FIND_ONE) {
         if (resp.contents) {
           dispatch([GET_TAGS_FROM_DB, resp.contents.actions]);
         } else dispatch([GET_TAGS_FROM_DB, []]);
@@ -170,7 +171,7 @@ export default function imageTagger({ tab, closeTab }) {
     };
 
     const getDbTagList = () => {
-      findOne({ path: tab.src });
+      findOne(PAGES, { path: tab.src });
       receive(dbRespHandler);
     };
 
@@ -183,12 +184,15 @@ export default function imageTagger({ tab, closeTab }) {
 
   useEffect(() => {
     if (tagList !== null) {
-      update({
-        key: tab.src,
-        path: tab.src,
-        type: MEDIA_TAGGER,
-        actions: tagList,
-      });
+      update(
+        PAGES,
+        {
+          key: tab.src,
+          path: tab.src,
+          type: MEDIA_TAGGER,
+          actions: tagList,
+        },
+      );
 
       drawTags(tagList);
     }

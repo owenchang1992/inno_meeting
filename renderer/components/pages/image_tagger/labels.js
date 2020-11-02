@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import { LABELS, FIND_ONE } from './constants';
+import { FIND_ONE } from './constants';
 
 import EditBar from './edit_bar';
 
 import { update, findOne, receive } from '../../../page_request';
+
+const LABELS = 'labels';
 
 const defaultContainter = {
   name: 'Default',
@@ -49,10 +51,13 @@ export default ({ setTagConfig }) => {
 
   const saveLabel = (e, selectedLabel) => {
     const saveLabelToDB = (newList) => {
-      update({
-        ...defaultContainter,
-        labels: newList,
-      });
+      update(
+        LABELS,
+        {
+          ...defaultContainter,
+          labels: newList,
+        },
+      );
     };
 
     const getNewLabelList = () => {
@@ -131,7 +136,6 @@ export default ({ setTagConfig }) => {
               padding: '3px 10px',
               borderRadius: '5px',
               marginTop: '5px',
-              // backgroundColor: pressedLabel === label.name ? '#ddd' : null,
               alignItems: 'center',
             }}
             onClick={() => updateCurrentLabel(label)}
