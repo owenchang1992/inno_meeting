@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const SideBarItem = ({ tab, handleClick, focusMedia }) => {
+const SideBarItem = ({ tab, handleClick, focusTab }) => {
   const getTab = () => (
-    tab.routingPath === focusMedia.routingPath
+    tab.routingPath === focusTab.routingPath
       ? 'active'
       : ''
   );
@@ -33,7 +33,7 @@ const SideBarItem = ({ tab, handleClick, focusMedia }) => {
 
 const SideBar = ({ tabs, closeTab }) => {
   const history = useHistory();
-  const [focusMedia, setFocusMedia] = useState({
+  const [focusTab, setFocusTab] = useState({
     routingPath: history.location.pathname,
   });
 
@@ -45,7 +45,7 @@ const SideBar = ({ tabs, closeTab }) => {
         history.goBack();
       }
     } else if (history.location.pathname !== tab.routingPath) {
-      setFocusMedia(tab);
+      setFocusTab(tab);
       history.push(tab.routingPath);
     }
   };
@@ -56,7 +56,7 @@ const SideBar = ({ tabs, closeTab }) => {
         <SideBarItem
           tab={tab}
           handleClick={handleClick}
-          focusMedia={focusMedia}
+          focusTab={focusTab}
         />
       ));
     }
@@ -67,13 +67,6 @@ const SideBar = ({ tabs, closeTab }) => {
   return (
     <div className="pane-sm sidebar">
       <ul className="list-group">
-        {/* <li className="list-group-header">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Search for image"
-          />
-        </li> */}
         {getList()}
       </ul>
     </div>
