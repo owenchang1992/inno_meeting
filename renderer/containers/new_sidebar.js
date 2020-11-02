@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const SideBarItem = ({ media, handleClick, focusMedia }) => {
+const SideBarItem = ({ tab, handleClick, focusMedia }) => {
   const getTab = () => (
-    media.routingPath === focusMedia.routingPath
+    tab.routingPath === focusMedia.routingPath
       ? 'active'
       : ''
   );
@@ -11,9 +11,9 @@ const SideBarItem = ({ media, handleClick, focusMedia }) => {
   return (
     <li className={`list-group-item ${getTab()}`}>
       <div
-        className="media-body"
+        className="tab-body"
         role="button"
-        onClick={(e) => handleClick(e, media)}
+        onClick={(e) => handleClick(e, tab)}
         onKeyDown={() => {}}
         tabIndex={0}
       >
@@ -25,36 +25,36 @@ const SideBarItem = ({ media, handleClick, focusMedia }) => {
           className="icon icon-cancel-circled pull-right"
           style={{ marginLeft: '10px' }}
         />
-        <strong>{media.name}</strong>
+        <strong>{tab.name}</strong>
       </div>
     </li>
   );
 };
 
-const SideBar = ({ mediaList, closeTab }) => {
+const SideBar = ({ tabs, closeTab }) => {
   const history = useHistory();
   const [focusMedia, setFocusMedia] = useState({
     routingPath: history.location.pathname,
   });
 
-  const handleClick = (e, media) => {
+  const handleClick = (e, tab) => {
     console.log(e.target.className);
     if (e.target.className.indexOf('icon-cancel-circled') !== -1) {
-      closeTab(media);
-      if (media.routingPath === history.location.pathname) {
+      closeTab(tab);
+      if (tab.routingPath === history.location.pathname) {
         history.goBack();
       }
-    } else if (history.location.pathname !== media.routingPath) {
-      setFocusMedia(media);
-      history.push(media.routingPath);
+    } else if (history.location.pathname !== tab.routingPath) {
+      setFocusMedia(tab);
+      history.push(tab.routingPath);
     }
   };
 
   const getList = () => {
-    if (mediaList) {
-      return mediaList.map((media) => (
+    if (tabs) {
+      return tabs.map((tab) => (
         <SideBarItem
-          media={media}
+          tab={tab}
           handleClick={handleClick}
           focusMedia={focusMedia}
         />
