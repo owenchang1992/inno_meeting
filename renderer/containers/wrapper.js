@@ -40,36 +40,34 @@ const App = () => {
     });
   };
 
-  const mainRespHandler = (newTabs) => {
+  const addTabs = (newTabs) => {
+    // Add tab to list
     newTabs.forEach((newTab) => addTab(newTab));
 
+    // Add tab to routing list
     history.push(newTabs[newTabs.length - 1].routingPath);
   };
 
-  useEffect(() => {
-    const getProject = () => {
-      window.api.send(TO_MAIN, {
-        name: FIND_PROJECT,
-        projectName: DEFAULT,
-      });
-    };
+  const getProject = () => {
+    window.api.send(TO_MAIN, {
+      name: FIND_PROJECT,
+      projectName: DEFAULT,
+    });
+  };
 
-    // Get Project
+  // Initialize Project
+  useEffect(() => {
+    // Get the preject information from DB
     getProject();
 
     // Add listener
     window.api.receive(FROM_MAIN, (e, resp) => {
-      // Need refactory
-      if (resp === 'app-close') {
-        window.api.send(TO_MAIN, 'close');
-      } else if (
-        resp.name === SELECT_FILES || resp.name === FIND_PROJECT
-      ) {
-        mainRespHandler(resp.contents);
+      if (resp.name === SELECT_FILES || resp.name === FIND_PROJECT) {
+        addTabs(resp.contents);
       }
     });
 
-    return () => window.api.removeListener(FROM_MAIN, mainRespHandler);
+    return () => window.api.removeListener(FROM_MAIN, addTabs);
   }, []);
 
   useEffect(() => {
