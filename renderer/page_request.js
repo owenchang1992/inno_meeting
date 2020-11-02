@@ -11,17 +11,15 @@ const send2LocalDB = (content) => {
   });
 };
 
-export const findOne = (collection, contents) => {
+export const findOne = (contents) => {
   send2LocalDB({
-    collection,
     type: FIND_ONE,
     contents,
   });
 };
 
-export const update = (collection, contents) => {
+export const update = (contents) => {
   send2LocalDB({
-    collection,
     type: UPDATE,
     contents,
   });

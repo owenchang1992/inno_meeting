@@ -4,7 +4,7 @@ import { LABELS, FIND_ONE } from './constants';
 
 import EditBar from './edit_bar';
 
-import { update, findOne, receive } from '../../../db_request';
+import { update, findOne, receive } from '../../../page_request';
 
 const defaultContainter = {
   name: 'Default',
@@ -49,13 +49,10 @@ export default ({ setTagConfig }) => {
 
   const saveLabel = (e, selectedLabel) => {
     const saveLabelToDB = (newList) => {
-      update(
-        LABELS,
-        {
-          ...defaultContainter,
-          labels: newList,
-        },
-      );
+      update({
+        ...defaultContainter,
+        labels: newList,
+      });
     };
 
     const getNewLabelList = () => {
