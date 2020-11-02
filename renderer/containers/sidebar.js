@@ -38,7 +38,6 @@ const SideBar = ({ tabs, closeTab }) => {
   });
 
   const handleClick = (e, tab) => {
-    console.log(e.target.className);
     if (e.target.className.indexOf('icon-cancel-circled') !== -1) {
       closeTab(tab);
       if (tab.routingPath === history.location.pathname) {

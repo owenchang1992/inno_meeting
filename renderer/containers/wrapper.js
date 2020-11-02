@@ -7,7 +7,7 @@ import { addNewTab, closeTab } from '../reducers/tab_actions';
 
 import Main from './main_pane';
 import Header from './header';
-import SideBar from './new_sidebar';
+import SideBar from './sidebar';
 
 import {
   TO_MAIN,
