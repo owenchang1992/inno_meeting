@@ -4,6 +4,7 @@ export default function () {
   return (
     <div
       style={{
+        color: '#666',
         fontSize: '2rem',
         display: 'flex',
         width: '100%',
