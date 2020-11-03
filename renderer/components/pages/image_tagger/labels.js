@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { FIND_ONE } from './constants';
+import { FROM_CURRENT_PAGE } from '../../../constants';
 
 import EditBar from './edit_bar';
 
@@ -114,7 +115,7 @@ export default ({ setTagConfig }) => {
 
     const getDBLabels = () => {
       findOne(LABELS, { key: 'default' });
-      receive(getLabels);
+      receive(FROM_CURRENT_PAGE, getLabels);
     };
 
     getDBLabels();
