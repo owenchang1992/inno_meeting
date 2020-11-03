@@ -31,7 +31,7 @@ module.exports = ({win, props}) => {
     routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
   }));
 
-  const checkMediaExisting = (mainList, comparedList) => {
+  const checkTabsExisting = (mainList, comparedList) => {
     const newList = comparedList.reduce(
       (accumulator, item) => {
         const index = mainList.findIndex(
@@ -59,15 +59,13 @@ module.exports = ({win, props}) => {
       ]
     })
       .then(resp => {
-        const newList = checkMediaExisting(
-          contents.tabs,
-          parsePaths(resp.filePaths)
-        )
-
         return sendResp({
           ...resp,
           name: SELECT_FILES,
-          contents: newList
+          contents: checkTabsExisting(
+            contents.tabs,
+            parsePaths(resp.filePaths)
+          )
         })
       })
       .catch((err) => console.log(err));
