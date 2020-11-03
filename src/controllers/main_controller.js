@@ -89,7 +89,6 @@ module.exports = ({win, props}) => {
       break;
     case UPDATE_PROJECT:
       require('../models/nedb').update(db, {
-        type: 'update',
         contents: props.contents
       });
       break;
