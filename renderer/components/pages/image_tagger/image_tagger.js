@@ -36,7 +36,7 @@ import {
   update,
   removeListener,
   receive,
-} from '../../../page_request';
+} from '../../../request';
 
 const baseStyle = {
   borderRadius: '4px',

@@ -5,7 +5,7 @@ import { FROM_CURRENT_PAGE } from '../../../constants';
 
 import EditBar from './edit_bar';
 
-import { update, findOne, receive } from '../../../page_request';
+import { update, findOne, receive } from '../../../request';
 
 const LABELS = 'labels';
 
