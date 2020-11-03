@@ -6,6 +6,4 @@ module.exports = {
   PAGE_COLLECTION: 'pages.db',
   PROJECT_COLLECTION: 'projects.db',
   LABEL_COLLECTION: 'labels.db',
-  TO_CURRENT_LABEL: 'TO_CURRENT_LABEL',
-  FROM_CURRENT_LABEL: 'FROM_CURRENT_LABEL'
 }

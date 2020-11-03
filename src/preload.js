@@ -8,8 +8,6 @@ const {
   FROM_MAIN,
   TO_CURRENT_PAGE,
   FROM_CURRENT_PAGE,
-  TO_CURRENT_LABEL,
-  FROM_CURRENT_LABEL,
 } = require("./const");
 
 // Expose protected methods that allow the renderer process to use
@@ -18,13 +16,13 @@ contextBridge.exposeInMainWorld(
   "api", {
     send: (channel, data) => {
       // whitelist channels
-      let validChannels = [TO_MAIN, TO_CURRENT_PAGE, TO_CURRENT_LABEL];
+      let validChannels = [TO_MAIN, TO_CURRENT_PAGE];
       if (validChannels.includes(channel)) {
         ipcRenderer.send(channel, data);
       }
     },
     receive: (channel, func) => {
-      let validChannels = [FROM_MAIN, FROM_CURRENT_PAGE, FROM_CURRENT_LABEL];
+      let validChannels = [FROM_MAIN, FROM_CURRENT_PAGE];
       if (validChannels.includes(channel)) {
         ipcRenderer.on(channel, func);
       }
