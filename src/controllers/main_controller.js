@@ -2,7 +2,14 @@ const { dialog } = require('electron');
 const path = require('path');
 const { app } = require('electron');
 
-const { FROM_MAIN, PROJECT_COLLECTION} = require("../const");
+const {
+  TO_MAIN,
+  FROM_MAIN,
+  TO_GENERAL,
+  FROM_GENERAL,
+  PROJECT_COLLECTION
+} = require("../const");
+
 const config = require('../config');
 
 const Datastore = require('nedb');
@@ -22,7 +29,18 @@ const db = new Datastore({
 
 module.exports = ({win, props, channel}) => {
   const sendResp = (message) => {
-    win.webContents.send(FROM_MAIN, message)
+    const getRespChannel = (channel) => {
+      switch(channel) {
+        case TO_MAIN: 
+          return FROM_MAIN;
+        case TO_GENERAL:
+          return FROM_GENERAL;
+        default:
+          console.log('Some thing error')
+      }
+    }
+
+    win.webContents.send(getRespChannel(channel), message)
   }
 
   const parsePaths = (filePaths) => filePaths.map((filePath) => ({
