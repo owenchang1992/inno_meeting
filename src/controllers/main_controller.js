@@ -11,7 +11,6 @@ const SELECT_FILES = 'SELECT_FILES';
 const FIND_PROJECT = 'FIND_PROJECT';
 const UPDATE_PROJECT = 'UPDATE_PROJECT';
 
-
 const db = new Datastore({
   filename: path.join(
     app.getPath('appData'),
@@ -75,15 +74,12 @@ module.exports = ({win, props}) => {
   }
 
   const findProject = (props) => {
-    require('../models/nedb')[props.type](
-      db,
-      props
-    )
+    require('../models/nedb').findOne(db, props)
       .then((resp) => {
         if (resp !== null) {
           sendResp({
             name: FIND_PROJECT,
-            contents: resp.media
+            contents: resp.tabs
           })
         }
       })
@@ -97,19 +93,13 @@ module.exports = ({win, props}) => {
     case FIND_PROJECT:
       findProject({
         type: 'findOne',
-        collection: PROJECT_COLLECTION,
-        contents: { name: props.projectName }
+        contents: props.contents
       });
       break;
     case UPDATE_PROJECT:
       require('../models/nedb').update(db, {
         type: 'update',
-        collection: PROJECT_COLLECTION,
-        contents: {
-          name: props.projectName,
-          key:  props.projectName,
-          media: props.contents
-        }
+        contents: props.contents
       });
       break;
     default:

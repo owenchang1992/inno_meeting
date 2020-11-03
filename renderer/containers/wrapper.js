@@ -50,7 +50,9 @@ const App = () => {
   const getProject = () => {
     window.api.send(TO_MAIN, {
       name: FIND_PROJECT,
-      projectName: DEFAULT,
+      contents: {
+        name: DEFAULT,
+      },
     });
   };
 
@@ -72,8 +74,11 @@ const App = () => {
   useEffect(() => {
     window.api.send(TO_MAIN, {
       name: UPDATE_PROJECT,
-      projectName: DEFAULT,
-      contents: tabs,
+      contents: {
+        name: DEFAULT,
+        key: DEFAULT,
+        tabs,
+      },
     });
   }, [tabs]);
 
