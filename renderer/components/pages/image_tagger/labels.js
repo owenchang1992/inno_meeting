@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { FIND_ONE } from './constants';
-import { FROM_CURRENT_PAGE, TO_CURRENT_PAGE } from '../../../constants';
+import { FROM_GENERAL, TO_GENERAL } from '../../../constants';
 
 import EditBar from './edit_bar';
 
@@ -58,7 +58,7 @@ export default ({ setTagConfig }) => {
   const saveLabel = (e, selectedLabel) => {
     const saveLabelToDB = (newList) => {
       send2LocalDB(
-        TO_CURRENT_PAGE,
+        TO_GENERAL,
         update(
           LABELS,
           {
@@ -122,8 +122,8 @@ export default ({ setTagConfig }) => {
     };
 
     const getDBLabels = () => {
-      send2LocalDB(TO_CURRENT_PAGE, findOne(LABELS, { key: 'default' }));
-      receive(FROM_CURRENT_PAGE, getLabels);
+      send2LocalDB(TO_GENERAL, findOne(LABELS, { key: 'default' }));
+      receive(FROM_GENERAL, getLabels);
     };
 
     getDBLabels();

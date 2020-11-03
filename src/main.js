@@ -17,7 +17,7 @@ app.setName(config.appName);
 const {
   TO_MAIN,
   FROM_MAIN,
-  TO_CURRENT_PAGE,
+  TO_GENERAL,
 } = require("./const");
 
 /**
@@ -82,7 +82,7 @@ function createWindow () {
     mainController({win, props})
   })
 
-  ipcMain.on(TO_CURRENT_PAGE, (e, props) => {
+  ipcMain.on(TO_GENERAL, (e, props) => {
     controller({win, app, props})
   })
 }

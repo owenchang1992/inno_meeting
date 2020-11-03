@@ -4,7 +4,7 @@ const config = require('../config');
 
 const { app } = require('electron');
 
-const { FROM_CURRENT_PAGE, PAGE_COLLECTION, LABEL_COLLECTION } = require("../const");
+const { FROM_GENERAL, PAGE_COLLECTION, LABEL_COLLECTION } = require("../const");
 
 const db = {};
 db.page = new Datastore({
@@ -38,7 +38,7 @@ module.exports = ({win, props}) => {
 
   require('../models/nedb')[props.name](getDB(props), props)
     .then((resp) => sendResponse(
-      FROM_CURRENT_PAGE,
+      FROM_GENERAL,
       {
         ...props,
         contents: resp,

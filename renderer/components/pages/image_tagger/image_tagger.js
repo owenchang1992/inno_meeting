@@ -29,7 +29,7 @@ import tagListReducer from './tag_reducer';
 import Labels from './labels';
 import TagList from './tag_list';
 
-import { MEDIA_TAGGER, FROM_CURRENT_PAGE, TO_CURRENT_PAGE } from '../../../constants';
+import { MEDIA_TAGGER, FROM_GENERAL, TO_GENERAL } from '../../../constants';
 
 import {
   findOne,
@@ -172,21 +172,21 @@ export default function imageTagger({ tab, closeTab }) {
     };
 
     const getDbTagList = () => {
-      send2LocalDB(TO_CURRENT_PAGE, findOne(PAGES, { path: tab.src }));
-      receive(FROM_CURRENT_PAGE, dbRespHandler);
+      send2LocalDB(TO_GENERAL, findOne(PAGES, { path: tab.src }));
+      receive(FROM_GENERAL, dbRespHandler);
     };
 
     drawImage()
       .then(() => getDbTagList())
       .catch(() => console.log('initial failed'));
 
-    return () => removeListener(FROM_CURRENT_PAGE, dbRespHandler);
+    return () => removeListener(FROM_GENERAL, dbRespHandler);
   }, []);
 
   useEffect(() => {
     if (tagList !== null) {
       send2LocalDB(
-        TO_CURRENT_PAGE,
+        TO_GENERAL,
         update(
           PAGES,
           {
