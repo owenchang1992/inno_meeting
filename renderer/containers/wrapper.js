@@ -7,6 +7,11 @@ import { addNewTab, closeTab } from '../reducers/tab_actions';
 
 import Main from './main_pane';
 import Header from './header';
+import {
+  send2Local,
+  removeListener,
+  receive,
+} from '../request';
 
 import {
   TO_MAIN,
@@ -30,7 +35,7 @@ const App = () => {
   };
 
   const openSelectFileDialog = () => {
-    window.api.send(TO_MAIN, {
+    send2Local(TO_MAIN, {
       name: SELECT_FILES,
       contents: { tabs },
     });
@@ -45,7 +50,7 @@ const App = () => {
   };
 
   const getProject = () => {
-    window.api.send(TO_MAIN, {
+    send2Local(TO_MAIN, {
       name: FIND_PROJECT,
       contents: {
         name: DEFAULT,
@@ -59,17 +64,17 @@ const App = () => {
     getProject();
 
     // Add listener
-    window.api.receive(FROM_MAIN, (e, resp) => {
+    receive(FROM_MAIN, (e, resp) => {
       if (resp.name === SELECT_FILES || resp.name === FIND_PROJECT) {
         addTabs(resp.contents);
       }
     });
 
-    return () => window.api.removeListener(FROM_MAIN, addTabs);
+    return () => removeListener(FROM_MAIN, addTabs);
   }, []);
 
   useEffect(() => {
-    window.api.send(TO_MAIN, {
+    send2Local(TO_MAIN, {
       name: UPDATE_PROJECT,
       contents: {
         name: DEFAULT,
