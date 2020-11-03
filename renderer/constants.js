@@ -6,6 +6,6 @@ export const FROM_MAIN = 'FROM_MAIN';
 export const TO_GENERAL = 'TO_GENERAL';
 export const FROM_GENERAL = 'FROM_GENERAL';
 
-export const FIND_PROJECT = 'FIND_PROJECT';
+export const FIND_ONE = 'FIND_ONE';
 export const SELECT_FILES = 'SELECT_FILES';
-export const UPDATE_PROJECT = 'UPDATE_PROJECT';
+export const UPDATE = 'UPDATE';

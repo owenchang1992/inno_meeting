@@ -17,9 +17,9 @@ import {
   TO_MAIN,
   FROM_MAIN,
   DEFAULT,
-  FIND_PROJECT,
+  FIND_ONE,
   SELECT_FILES,
-  UPDATE_PROJECT,
+  UPDATE,
 } from '../constants';
 
 const App = () => {
@@ -51,7 +51,7 @@ const App = () => {
 
   const getProject = () => {
     send2Local(TO_MAIN, {
-      name: FIND_PROJECT,
+      name: FIND_ONE,
       contents: {
         name: DEFAULT,
       },
@@ -65,7 +65,7 @@ const App = () => {
 
     // Add listener
     receive(FROM_MAIN, (e, resp) => {
-      if (resp.name === SELECT_FILES || resp.name === FIND_PROJECT) {
+      if (resp.name === SELECT_FILES || resp.name === FIND_ONE) {
         addTabs(resp.contents);
       }
     });
@@ -75,7 +75,7 @@ const App = () => {
 
   useEffect(() => {
     send2Local(TO_MAIN, {
-      name: UPDATE_PROJECT,
+      name: UPDATE,
       contents: {
         name: DEFAULT,
         key: DEFAULT,

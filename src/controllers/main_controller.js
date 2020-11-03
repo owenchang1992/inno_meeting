@@ -8,8 +8,8 @@ const config = require('../config');
 const Datastore = require('nedb');
 
 const SELECT_FILES = 'SELECT_FILES';
-const FIND_PROJECT = 'FIND_PROJECT';
-const UPDATE_PROJECT = 'UPDATE_PROJECT';
+const FIND_ONE = 'FIND_ONE';
+const UPDATE = 'UPDATE';
 
 const db = new Datastore({
   filename: path.join(
@@ -75,19 +75,19 @@ module.exports = ({win, props}) => {
     case SELECT_FILES:
       selectFiles(props.contents);
       break;
-    case FIND_PROJECT:
+    case FIND_ONE:
       require('../models/nedb').findOne(db, props)
         .then((resp) => {
           if (resp !== null) {
             sendResp({
-              name: FIND_PROJECT,
+              name: FIND_ONE,
               contents: resp.tabs
             })
           }
         })
         .catch((err) => console.log('findProject', err))
       break;
-    case UPDATE_PROJECT:
+    case UPDATE:
       require('../models/nedb').update(db, props);
       break;
     default:
