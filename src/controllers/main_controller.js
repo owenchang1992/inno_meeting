@@ -60,7 +60,7 @@ module.exports = ({win, props}) => {
     })
       .then(resp => {
         const newList = checkMediaExisting(
-          contents.preMediaList,
+          contents.tabs,
           parsePaths(resp.filePaths)
         )
 
@@ -73,28 +73,21 @@ module.exports = ({win, props}) => {
       .catch((err) => console.log(err));
   }
 
-  const findProject = (props) => {
-    require('../models/nedb').findOne(db, props)
-      .then((resp) => {
-        if (resp !== null) {
-          sendResp({
-            name: FIND_PROJECT,
-            contents: resp.tabs
-          })
-        }
-      })
-      .catch((err) => console.log('findProject', err))
-  }
-
   switch(props.name) {
     case SELECT_FILES:
       selectFiles(props.contents);
       break;
     case FIND_PROJECT:
-      findProject({
-        type: 'findOne',
-        contents: props.contents
-      });
+      require('../models/nedb').findOne(db, props)
+        .then((resp) => {
+          if (resp !== null) {
+            sendResp({
+              name: FIND_PROJECT,
+              contents: resp.tabs
+            })
+          }
+        })
+        .catch((err) => console.log('findProject', err))
       break;
     case UPDATE_PROJECT:
       require('../models/nedb').update(db, {

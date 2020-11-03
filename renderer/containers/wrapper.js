@@ -32,10 +32,7 @@ const App = () => {
   const openSelectFileDialog = () => {
     window.api.send(TO_MAIN, {
       name: SELECT_FILES,
-      projectName: DEFAULT,
-      contents: {
-        preMediaList: tabs,
-      },
+      contents: { tabs },
     });
   };
 
