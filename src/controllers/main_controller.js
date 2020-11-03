@@ -88,9 +88,7 @@ module.exports = ({win, props}) => {
         .catch((err) => console.log('findProject', err))
       break;
     case UPDATE_PROJECT:
-      require('../models/nedb').update(db, {
-        contents: props.contents
-      });
+      require('../models/nedb').update(db, props);
       break;
     default:
       console.log('event not found', props);
