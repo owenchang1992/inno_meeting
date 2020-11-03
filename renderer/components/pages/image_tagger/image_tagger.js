@@ -185,16 +185,18 @@ export default function imageTagger({ tab, closeTab }) {
 
   useEffect(() => {
     if (tagList !== null) {
-      update(
-        PAGES,
-        {
-          key: tab.src,
-          path: tab.src,
-          type: MEDIA_TAGGER,
-          actions: tagList,
-        },
+      send2LocalDB(
+        TO_CURRENT_PAGE,
+        update(
+          PAGES,
+          {
+            key: tab.src,
+            path: tab.src,
+            type: MEDIA_TAGGER,
+            actions: tagList,
+          },
+        ),
       );
-
       drawTags(tagList);
     }
   }, [tagList]);

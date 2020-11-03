@@ -57,12 +57,15 @@ export default ({ setTagConfig }) => {
 
   const saveLabel = (e, selectedLabel) => {
     const saveLabelToDB = (newList) => {
-      update(
-        LABELS,
-        {
-          ...defaultContainter,
-          labels: newList,
-        },
+      send2LocalDB(
+        TO_CURRENT_PAGE,
+        update(
+          LABELS,
+          {
+            ...defaultContainter,
+            labels: newList,
+          },
+        ),
       );
     };
 

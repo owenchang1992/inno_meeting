@@ -1,5 +1,3 @@
-import { TO_CURRENT_PAGE } from './constants';
-
 const FIND_ONE = 'findOne';
 const UPDATE = 'update';
 
@@ -15,16 +13,11 @@ export const findOne = (type, contents) => ({
   contents,
 });
 
-export const update = (type, contents) => {
-  send2LocalDB(
-    TO_CURRENT_PAGE,
-    {
-      type,
-      name: UPDATE,
-      contents,
-    },
-  );
-};
+export const update = (type, contents) => ({
+  type,
+  name: UPDATE,
+  contents,
+});
 
 export const removeListener = (channel, handler) => {
   window.api.removeListener(channel, handler);
