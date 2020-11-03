@@ -29,13 +29,14 @@ import tagListReducer from './tag_reducer';
 import Labels from './labels';
 import TagList from './tag_list';
 
-import { MEDIA_TAGGER, FROM_CURRENT_PAGE } from '../../../constants';
+import { MEDIA_TAGGER, FROM_CURRENT_PAGE, TO_CURRENT_PAGE } from '../../../constants';
 
 import {
   findOne,
   update,
   removeListener,
   receive,
+  send2LocalDB,
 } from '../../../request';
 
 const baseStyle = {
@@ -171,7 +172,7 @@ export default function imageTagger({ tab, closeTab }) {
     };
 
     const getDbTagList = () => {
-      findOne(PAGES, { path: tab.src });
+      send2LocalDB(TO_CURRENT_PAGE, findOne(PAGES, { path: tab.src }));
       receive(FROM_CURRENT_PAGE, dbRespHandler);
     };
 

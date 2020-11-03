@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
 import { FIND_ONE } from './constants';
-import { FROM_CURRENT_PAGE } from '../../../constants';
+import { FROM_CURRENT_PAGE, TO_CURRENT_PAGE } from '../../../constants';
 
 import EditBar from './edit_bar';
 
-import { update, findOne, receive } from '../../../request';
+import {
+  update,
+  findOne,
+  receive,
+  send2LocalDB,
+} from '../../../request';
 
 const LABELS = 'labels';
 
@@ -114,7 +119,7 @@ export default ({ setTagConfig }) => {
     };
 
     const getDBLabels = () => {
-      findOne(LABELS, { key: 'default' });
+      send2LocalDB(TO_CURRENT_PAGE, findOne(LABELS, { key: 'default' }));
       receive(FROM_CURRENT_PAGE, getLabels);
     };
 

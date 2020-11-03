@@ -9,16 +9,11 @@ export const send2LocalDB = (channel, content) => {
   });
 };
 
-export const findOne = (type, contents) => {
-  send2LocalDB(
-    TO_CURRENT_PAGE,
-    {
-      type,
-      name: FIND_ONE,
-      contents,
-    },
-  );
-};
+export const findOne = (type, contents) => ({
+  type,
+  name: FIND_ONE,
+  contents,
+});
 
 export const update = (type, contents) => {
   send2LocalDB(
