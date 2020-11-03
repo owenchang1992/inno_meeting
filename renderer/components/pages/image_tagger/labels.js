@@ -9,7 +9,7 @@ import {
   update,
   findOne,
   receive,
-  send2LocalDB,
+  send2Local,
 } from '../../../request';
 
 const LABELS = 'labels';
@@ -57,7 +57,7 @@ export default ({ setTagConfig }) => {
 
   const saveLabel = (e, selectedLabel) => {
     const saveLabelToDB = (newList) => {
-      send2LocalDB(
+      send2Local(
         TO_GENERAL,
         update(
           LABELS,
@@ -122,7 +122,7 @@ export default ({ setTagConfig }) => {
     };
 
     const getDBLabels = () => {
-      send2LocalDB(TO_GENERAL, findOne(LABELS, { key: 'default' }));
+      send2Local(TO_GENERAL, findOne(LABELS, { key: 'default' }));
       receive(FROM_GENERAL, getLabels);
     };
 

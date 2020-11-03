@@ -1,7 +1,7 @@
 const FIND_ONE = 'findOne';
 const UPDATE = 'update';
 
-export const send2LocalDB = (channel, content) => {
+export const send2Local = (channel, content) => {
   window.api.send(channel, {
     ...content,
   });

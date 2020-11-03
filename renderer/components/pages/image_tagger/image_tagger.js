@@ -36,7 +36,7 @@ import {
   update,
   removeListener,
   receive,
-  send2LocalDB,
+  send2Local,
 } from '../../../request';
 
 const baseStyle = {
@@ -172,7 +172,7 @@ export default function imageTagger({ tab, closeTab }) {
     };
 
     const getDbTagList = () => {
-      send2LocalDB(TO_GENERAL, findOne(PAGES, { path: tab.src }));
+      send2Local(TO_GENERAL, findOne(PAGES, { path: tab.src }));
       receive(FROM_GENERAL, dbRespHandler);
     };
 
@@ -185,7 +185,7 @@ export default function imageTagger({ tab, closeTab }) {
 
   useEffect(() => {
     if (tagList !== null) {
-      send2LocalDB(
+      send2Local(
         TO_GENERAL,
         update(
           PAGES,
