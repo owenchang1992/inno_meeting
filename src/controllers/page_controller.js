@@ -31,22 +31,18 @@ module.exports = ({win, props}) => {
   }
 
   const getDB = (props) => (
-    props.collection === 'pages'
+    props.type === 'pages'
       ? db.page
       : db.label
   )
 
-  switch(props.dest) {
-    case 'local_db':
-      require('../models/nedb')[props.type](getDB(props), props)
-        .then((resp) => sendResponse(
-          FROM_CURRENT_PAGE,
-          {
-            ...props,
-            contents: resp,
-          }
-        ))
-        .catch((err) => { console.log(err) })
-      break;
-  }
+  require('../models/nedb')[props.name](getDB(props), props)
+    .then((resp) => sendResponse(
+      FROM_CURRENT_PAGE,
+      {
+        ...props,
+        contents: resp,
+      }
+    ))
+    .catch((err) => { console.log(err) })
 };

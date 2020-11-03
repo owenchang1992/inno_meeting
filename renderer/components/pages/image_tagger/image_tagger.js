@@ -163,7 +163,7 @@ export default function imageTagger({ tab, closeTab }) {
       });
 
     const dbRespHandler = (e, resp) => {
-      if (resp.collection === PAGES && resp.type === FIND_ONE) {
+      if (resp.type === PAGES && resp.name === FIND_ONE) {
         if (resp.contents) {
           dispatch([GET_TAGS_FROM_DB, resp.contents.actions]);
         } else dispatch([GET_TAGS_FROM_DB, []]);
