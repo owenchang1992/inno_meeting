@@ -66,7 +66,7 @@ const App = () => {
     // Add listener
     receive(FROM_MAIN, (e, resp) => {
       if (resp.name === SELECT_FILES || resp.name === FIND_ONE) {
-        addTabs(resp.contents);
+        addTabs(resp.contents.tabs);
       }
     });
 

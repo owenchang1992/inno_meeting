@@ -20,7 +20,7 @@ const db = new Datastore({
   autoload: true,
 });
 
-module.exports = ({win, props}) => {
+module.exports = ({win, props, channel}) => {
   const sendResp = (message) => {
     win.webContents.send(FROM_MAIN, message)
   }
@@ -50,40 +50,34 @@ module.exports = ({win, props}) => {
     ]
   }
 
-  const selectFiles = (contents) => {
-    // TODO copy the file to temp folder
-    dialog.showOpenDialog({
-      properties: ['openFile', 'multiSelections'],
-      filters: [
-        { name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }
-      ]
-    })
-      .then(resp => {
-        return sendResp({
-          ...resp,
-          name: SELECT_FILES,
-          contents: checkTabsExisting(
-            contents.tabs,
-            parsePaths(resp.filePaths)
-          )
-        })
-      })
-      .catch((err) => console.log(err));
-  }
-
   switch(props.name) {
     case SELECT_FILES:
-      selectFiles(props.contents);
+      dialog.showOpenDialog({
+        properties: ['openFile', 'multiSelections'],
+        filters: [
+          { name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }
+        ]
+      })
+        .then(resp => {
+          return sendResp({
+            ...props,
+            contents: {
+              tabs: checkTabsExisting(
+                props.contents.tabs,
+                parsePaths(resp.filePaths)
+              )
+            }
+          })
+        })
+        .catch((err) => console.log(err));
       break;
     case FIND_ONE:
       require('../models/nedb').findOne(db, props)
         .then((resp) => {
-          if (resp !== null) {
-            sendResp({
-              name: FIND_ONE,
-              contents: resp.tabs
-            })
-          }
+          sendResp({
+            ...props,
+            contents: resp
+          })
         })
         .catch((err) => console.log('findProject', err))
       break;
