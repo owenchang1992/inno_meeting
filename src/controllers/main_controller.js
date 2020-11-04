@@ -3,10 +3,7 @@ const path = require('path');
 const { app } = require('electron');
 
 const {
-  TO_MAIN,
   FROM_MAIN,
-  TO_GENERAL,
-  FROM_GENERAL,
   PROJECT_COLLECTION
 } = require("../const");
 
