@@ -27,20 +27,11 @@ const db = new Datastore({
   autoload: true,
 });
 
-module.exports = ({win, props, channel}) => {
-  const sendResp = (message) => {
-    const getRespChannel = (channel) => {
-      switch(channel) {
-        case TO_MAIN: 
-          return FROM_MAIN;
-        case TO_GENERAL:
-          return FROM_GENERAL;
-        default:
-          console.log('Some thing error')
-      }
-    }
 
-    win.webContents.send(getRespChannel(channel), message)
+
+module.exports = ({win, props}) => {
+  const sendResp = (message) => {
+    win.webContents.send(FROM_MAIN, message)
   }
 
   const parsePaths = (filePaths) => filePaths.map((filePath) => ({

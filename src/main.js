@@ -81,8 +81,7 @@ function createWindow () {
   ipcMain.on(TO_MAIN, (e, props) => {
     mainController({
       win,
-      props,
-      channel: TO_MAIN
+      props
     })
   })
 
