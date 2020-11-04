@@ -1,5 +1,4 @@
 import React, { useReducer, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
 
 import tabReducer from '../reducers/tab_reducer';
@@ -23,7 +22,6 @@ import {
 } from '../constants';
 
 const App = () => {
-  const history = useHistory();
   const [tabs, dispatch] = useReducer(tabReducer, []);
 
   const addTab = (tab) => {
@@ -44,9 +42,6 @@ const App = () => {
   const addTabs = (newTabs) => {
     // Add tab to list
     newTabs.forEach((newTab) => addTab(newTab));
-
-    // Add tab to routing list
-    history.push(newTabs[newTabs.length - 1].routingPath);
   };
 
   const getProject = () => {
