@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const Header = ({ openSelectFileDialog }) => {
+const Header = ({ showOpenDialog }) => {
   const history = useHistory();
 
   const toHomePage = () => {
@@ -17,7 +17,7 @@ const Header = ({ openSelectFileDialog }) => {
           <button
             type="button"
             className="btn btn-default"
-            onClick={openSelectFileDialog}
+            onClick={showOpenDialog}
           >
             <span className="icon icon-archive" />
           </button>

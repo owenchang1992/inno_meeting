@@ -34,7 +34,7 @@ const App = () => {
     dispatch(closeTab(removedTab));
   };
 
-  const openSelectFileDialog = () => {
+  const showOpenDialog = () => {
     send2Local(TO_MAIN, {
       name: SELECT_FILES,
       contents: { tabs },
@@ -86,7 +86,7 @@ const App = () => {
 
   return (
     <div className="window">
-      <Header openSelectFileDialog={openSelectFileDialog} />
+      <Header showOpenDialog={showOpenDialog} />
       <div className="window-content">
         <Main tabs={tabs} closeTab={onCloseTab} />
       </div>
