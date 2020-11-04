@@ -20,6 +20,7 @@ import {
   FIND_ONE,
   SELECT_FILES,
   UPDATE,
+  EXPORT_PROJECT,
 } from '../constants';
 
 const App = () => {
@@ -38,6 +39,16 @@ const App = () => {
     send2Local(TO_MAIN, {
       name: SELECT_FILES,
       contents: { tabs },
+    });
+  };
+
+  const showSaveDialog = () => {
+    send2Local(TO_MAIN, {
+      name: EXPORT_PROJECT,
+      contents: {
+        name: DEFAULT,
+        key: DEFAULT,
+      },
     });
   };
 
@@ -86,7 +97,10 @@ const App = () => {
 
   return (
     <div className="window">
-      <Header showOpenDialog={showOpenDialog} />
+      <Header
+        showOpenDialog={showOpenDialog}
+        showSaveDialog={showSaveDialog}
+      />
       <div className="window-content">
         <Main tabs={tabs} closeTab={onCloseTab} />
       </div>
