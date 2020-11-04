@@ -47,7 +47,7 @@ const baseStyle = {
 
 const containerStyle = {
   width: '100%',
-  height: 'calc(100% - 22px)',
+  height: 'calc(100% - 27px)',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
