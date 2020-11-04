@@ -14,6 +14,7 @@ const Datastore = require('nedb');
 const SELECT_FILES = 'SELECT_FILES';
 const FIND_ONE = 'FIND_ONE';
 const UPDATE = 'UPDATE';
+const EXPORT_PROJECT = 'EXPORT_PROJECT';
 
 const db = new Datastore({
   filename: path.join(
@@ -23,8 +24,6 @@ const db = new Datastore({
   ),
   autoload: true,
 });
-
-
 
 module.exports = ({win, props}) => {
   const sendResp = (message) => {
@@ -89,6 +88,14 @@ module.exports = ({win, props}) => {
       break;
     case UPDATE:
       require('../models/nedb').update(db, props);
+      break;
+    case EXPORT_PROJECT:
+      dialog.showSaveDialog({
+        title: 'Export'
+      })
+        .then((resp) => {
+          console.log(resp);
+        })
       break;
     default:
       console.log('event not found', props);
