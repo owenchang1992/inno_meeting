@@ -1,5 +1,6 @@
 const { dialog } = require('electron');
 const path = require('path');
+const CryptoJS = require("crypto-js");
 const { app } = require('electron');
 
 const {
@@ -38,7 +39,7 @@ module.exports = ({win, props}) => {
   const parsePaths = (filePaths) => filePaths.map((filePath) => ({
     src: filePath,
     name: path.basename(filePath),
-    routingPath: filePath.replace('C:', '').replace(/\\/g, '/'),
+    routingPath: `/${CryptoJS.SHA256(filePath).toString(CryptoJS.enc.Hex)}`,
   }));
 
   const checkTabsExisting = (mainList, comparedList) => {
