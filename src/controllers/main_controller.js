@@ -7,6 +7,11 @@ const {
   PROJECT_COLLECTION
 } = require("../const");
 
+const {
+  copyFiles,
+  createFolder
+} = require("../models/project_handler");
+
 const config = require('../config');
 
 const Datastore = require('nedb');
@@ -64,15 +69,17 @@ module.exports = ({win, props}) => {
         ]
       })
         .then(resp => {
-          return sendResp({
-            ...props,
-            contents: {
-              tabs: checkTabsExisting(
-                props.contents.tabs,
-                parsePaths(resp.filePaths)
-              )
-            }
-          })
+          if (!resp.canceled) {
+            return sendResp({
+              ...props,
+              contents: {
+                tabs: checkTabsExisting(
+                  props.contents.tabs,
+                  parsePaths(resp.filePaths)
+                )
+              }
+            })
+          }
         })
         .catch((err) => console.log(err));
       break;
@@ -90,11 +97,16 @@ module.exports = ({win, props}) => {
       require('../models/nedb').update(db, props);
       break;
     case EXPORT_PROJECT:
-      dialog.showSaveDialog({
-        title: 'Export'
-      })
+      Promise.all([
+        dialog.showSaveDialog({ title: 'Export Project' }),
+        require('../models/nedb').findOne(db, props)
+      ])
         .then((resp) => {
-          console.log(resp);
+          if (!resp[0].canceled) {
+            return createFolder(resp[0].filePath)
+              .then(() => copyFiles(resp[1].tabs, resp[0].filePath))
+              .catch((err) => console.log('Export error', err))
+          }
         })
       break;
     default:
