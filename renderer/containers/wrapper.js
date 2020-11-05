@@ -47,7 +47,6 @@ const App = () => {
       name: EXPORT_PROJECT,
       contents: {
         name: DEFAULT,
-        key: DEFAULT,
       },
     });
   };
