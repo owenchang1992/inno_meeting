@@ -172,7 +172,7 @@ export default function imageTagger({ tab, closeTab }) {
     };
 
     const getDbTagList = () => {
-      send2Local(TO_GENERAL, findOne(PAGES, { path: tab.src }));
+      send2Local(TO_GENERAL, findOne(PAGES, { key: tab.routingPath }));
       receive(FROM_GENERAL, dbRespHandler);
     };
 
@@ -190,7 +190,7 @@ export default function imageTagger({ tab, closeTab }) {
         update(
           PAGES,
           {
-            key: tab.src,
+            key: tab.routingPath,
             path: tab.src,
             type: MEDIA_TAGGER,
             actions: tagList,
