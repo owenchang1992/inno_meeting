@@ -69,6 +69,18 @@ module.exports = ({win, props}) => {
       .catch((err) => console.log('Export error', err))
   }
 
+  const exportProject = (project, dest) => (
+    Promise.all(
+      [
+        copyMedia(project.tabs, dest),
+        writeFile(
+          path.join(dest, EXPORT_PROJECT_DB), 
+          JSON.stringify(project)
+        ),
+      ]
+    )
+  ) 
+
   switch(props.name) {
     case SELECT_FILES:
       dialog.showOpenDialog({
@@ -112,11 +124,7 @@ module.exports = ({win, props}) => {
       ])
         .then((resp) => {
           if (!resp[0].canceled) {
-            return copyMedia(resp[1].tabs, resp[0].filePath)
-              .then(() => writeFile(
-                path.join(resp[0].filePath, EXPORT_PROJECT_DB), 
-                JSON.stringify(resp[1])
-              ))
+            return exportProject(resp[1], resp[0].filePath)
           }
         })
         .catch((err) => console.log('Export Error', err))
