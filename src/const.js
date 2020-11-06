@@ -6,4 +6,5 @@ module.exports = {
   PAGE_COLLECTION: 'pages.db',
   PROJECT_COLLECTION: 'projects.db',
   LABEL_COLLECTION: 'labels.db',
+  EXPORT_PROJECT_DB: "project.json"
 }

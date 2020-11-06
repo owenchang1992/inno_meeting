@@ -5,12 +5,14 @@ const { app } = require('electron');
 
 const {
   FROM_MAIN,
-  PROJECT_COLLECTION
+  PROJECT_COLLECTION,
+  EXPORT_PROJECT_DB,
 } = require("../const");
 
 const {
   copyFiles,
-  createFolder
+  createFolder,
+  writeFile
 } = require("../models/project_handler");
 
 const config = require('../config');
@@ -61,6 +63,12 @@ module.exports = ({win, props}) => {
     ]
   }
 
+  const copyMedia = (fileList, dest) => {
+    return createFolder(dest)
+      .then(() => copyFiles(fileList, dest))
+      .catch((err) => console.log('Export error', err))
+  }
+
   switch(props.name) {
     case SELECT_FILES:
       dialog.showOpenDialog({
@@ -104,11 +112,14 @@ module.exports = ({win, props}) => {
       ])
         .then((resp) => {
           if (!resp[0].canceled) {
-            return createFolder(resp[0].filePath)
-              .then(() => copyFiles(resp[1].tabs, resp[0].filePath))
-              .catch((err) => console.log('Export error', err))
+            return copyMedia(resp[1].tabs, resp[0].filePath)
+              .then(() => writeFile(
+                path.join(resp[0].filePath, EXPORT_PROJECT_DB), 
+                JSON.stringify(resp[1])
+              ))
           }
         })
+        .catch((err) => console.log('Export Error', err))
       break;
     default:
       console.log('event not found', props);

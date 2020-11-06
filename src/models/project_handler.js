@@ -20,7 +20,12 @@ const createFolder = (path) => {
   return fsPromises.mkdir(path, { recursive: true });
 }
 
+const writeFile = (file, data) => {
+  return fsPromises.writeFile(file, data);
+}
+
 module.exports = {
   copyFiles,
-  createFolder
+  createFolder,
+  writeFile
 }
