@@ -2,11 +2,19 @@ const { dialog } = require('electron');
 const path = require('path');
 const CryptoJS = require("crypto-js");
 const { app } = require('electron');
+const {
+  promises: fsPromises,
+  constants: {
+    COPYFILE_EXCL
+  }
+} = require('fs');
 
 const {
   FROM_MAIN,
   PROJECT_COLLECTION,
   EXPORT_PROJECT_DB,
+  PAGE_COLLECTION,
+  LABEL_COLLECTION,
 } = require("../const");
 
 const {
@@ -73,10 +81,33 @@ module.exports = ({win, props}) => {
     Promise.all(
       [
         copyMedia(project.tabs, dest),
-        writeFile(
-          path.join(dest, EXPORT_PROJECT_DB), 
-          JSON.stringify(project)
+        fsPromises.copyFile(
+          path.join(
+            app.getPath('appData'),
+            config.dbPath,
+            PROJECT_COLLECTION,
+          ), 
+          path.join(dest, PROJECT_COLLECTION),
+          COPYFILE_EXCL
         ),
+        fsPromises.copyFile(
+          path.join(
+            app.getPath('appData'),
+            config.dbPath,
+            PAGE_COLLECTION,
+          ), 
+          path.join(dest, PAGE_COLLECTION),
+          COPYFILE_EXCL
+        ),
+        fsPromises.copyFile(
+          path.join(
+            app.getPath('appData'),
+            config.dbPath,
+            LABEL_COLLECTION,
+          ), 
+          path.join(dest, LABEL_COLLECTION),
+          COPYFILE_EXCL
+        )
       ]
     )
   ) 
@@ -120,7 +151,7 @@ module.exports = ({win, props}) => {
     case EXPORT_PROJECT:
       Promise.all([
         dialog.showSaveDialog({ title: 'Export Project' }),
-        require('../models/nedb').findOne(db, props)
+        require('../models/nedb').findOne(db, props),
       ])
         .then((resp) => {
           if (!resp[0].canceled) {
