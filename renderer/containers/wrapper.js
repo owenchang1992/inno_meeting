@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
-import TabStore from '../tabs_store';
+import BucketStore from '../bucket_store';
 
 import tabReducer from '../reducers/tab_reducer';
 import { addNewTab, closeTab } from '../reducers/tab_actions';
@@ -96,9 +96,7 @@ const App = () => {
   }, [tabs]);
 
   return (
-    <TabStore.Provider
-      value={tabs}
-    >
+    <BucketStore.Provider value={{ name: 'bucketName' }}>
       <div className="window">
         <Header
           showOpenDialog={showOpenDialog}
@@ -108,7 +106,7 @@ const App = () => {
           <Main tabs={tabs} closeTab={onCloseTab} />
         </div>
       </div>
-    </TabStore.Provider>
+    </BucketStore.Provider>
   );
 };
 
