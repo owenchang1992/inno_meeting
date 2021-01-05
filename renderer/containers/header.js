@@ -1,46 +1,47 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
-const Header = ({ showOpenDialog, showSaveDialog }) => (
-  <div className="toolbar toolbar-header">
-    {/* <h1 className="title">Title</h1> */}
+import BucketStore from '../bucket_store';
 
-    <div className="toolbar-actions">
-      <div className="btn-group">
-        <button
-          type="button"
+const Header = ({ showOpenDialog, showSaveDialog }) => {
+  const bucketName = useContext(BucketStore);
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: '4px 2%',
+        alignItems: 'center',
+        backgroundColor: '#f5f5f4',
+      }}
+    >
+      <ButtonGroup aria-label="outlined button group">
+        <Button
           className="btn btn-default"
           onClick={showOpenDialog}
         >
-          <span className="icon icon-archive" />
-        </button>
-        <button
-          type="button"
+          <AddPhotoAlternateIcon className="icon" />
+        </Button>
+        <Button
           className="btn btn-default"
           onClick={showSaveDialog}
         >
           <span className="icon icon-export" />
-        </button>
-        {/* <button type="button" className="btn btn-default">
-          <span className="icon icon-folder" />
-        </button> */}
-        {/* <button type="button" className="btn btn-default">
-          <span className="icon icon-popup" />
-        </button>
-        <button type="button" className="btn btn-default">
-          <span className="icon icon-shuffle" />
-        </button> */}
-      </div>
-
-      {/* <button type="button" className="btn btn-default">
-        <span className="icon icon-home icon-text" />
-        Filters
-      </button> */}
-      {/*
-      <button type="button" className="btn btn-default btn-dropdown pull-right">
-        <span className="icon icon-cog" />
-      </button> */}
+        </Button>
+        <Button
+          className="btn btn-default"
+          onClick={() => {}}
+        >
+          <PersonAddIcon className="icon" />
+        </Button>
+      </ButtonGroup>
+      {bucketName.name}
     </div>
-  </div>
-);
+  );
+};
 
 export default Header;
