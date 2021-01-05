@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
+import TabStore from '../tabs_store';
 
 import tabReducer from '../reducers/tab_reducer';
 import { addNewTab, closeTab } from '../reducers/tab_actions';
@@ -95,15 +96,19 @@ const App = () => {
   }, [tabs]);
 
   return (
-    <div className="window">
-      <Header
-        showOpenDialog={showOpenDialog}
-        showSaveDialog={showSaveDialog}
-      />
-      <div className="window-content">
-        <Main tabs={tabs} closeTab={onCloseTab} />
+    <TabStore.Provider
+      value={tabs}
+    >
+      <div className="window">
+        <Header
+          showOpenDialog={showOpenDialog}
+          showSaveDialog={showSaveDialog}
+        />
+        <div className="window-content">
+          <Main tabs={tabs} closeTab={onCloseTab} />
+        </div>
       </div>
-    </div>
+    </TabStore.Provider>
   );
 };
 
