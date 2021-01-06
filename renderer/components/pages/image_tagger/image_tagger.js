@@ -4,6 +4,7 @@ import React, {
   useState,
   useReducer,
   useCallback,
+  useContext,
 } from 'react';
 
 import { useHistory } from 'react-router-dom';
@@ -25,6 +26,7 @@ import {
 } from './utils';
 
 import tagListReducer from './tag_reducer';
+import BucketStore from '../../../bucket_store';
 
 import Labels from './labels';
 import TagList from './tag_list';
@@ -67,6 +69,7 @@ export default function imageTagger({ tab, closeTab }) {
   const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const dpi = window.devicePixelRatio;
+  const bucket = useContext(BucketStore);
 
   const drawTags = (tags) => {
     if (content.type === 'canvas') {
@@ -194,6 +197,7 @@ export default function imageTagger({ tab, closeTab }) {
             path: tab.src,
             type: MEDIA_TAGGER,
             actions: tagList,
+            bucketName: bucket.name,
           },
         ),
       );
