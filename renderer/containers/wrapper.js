@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
 import BucketStore from '../bucket_store';
@@ -27,6 +27,7 @@ import {
 const App = () => {
   const history = useHistory();
   const [tabs, dispatch] = useReducer(tabReducer, []);
+  const [bucketState, setBucket] = useState('bucketName1');
 
   const addTab = (tab) => {
     dispatch(addNewTab(tab));
@@ -96,7 +97,12 @@ const App = () => {
   }, [tabs]);
 
   return (
-    <BucketStore.Provider value={{ name: 'bucketName' }}>
+    <BucketStore.Provider
+      value={{
+        name: bucketState,
+        setBucket,
+      }}
+    >
       <div className="window">
         <Header
           showOpenDialog={showOpenDialog}

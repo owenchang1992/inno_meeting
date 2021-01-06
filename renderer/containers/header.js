@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
@@ -7,7 +8,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import BucketStore from '../bucket_store';
 
 const Header = ({ showOpenDialog, showSaveDialog }) => {
-  const bucketName = useContext(BucketStore);
+  const bucket = useContext(BucketStore);
 
   return (
     <div
@@ -34,12 +35,12 @@ const Header = ({ showOpenDialog, showSaveDialog }) => {
         </Button>
         <Button
           className="btn btn-default"
-          onClick={() => {}}
+          onClick={() => { bucket.setBucket(moment(new Date()).format(`YYYY-MM-DD ${1}`)); }}
         >
           <PersonAddIcon className="icon" />
         </Button>
       </ButtonGroup>
-      {bucketName.name}
+      {bucket.name}
     </div>
   );
 };
