@@ -1,9 +1,11 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
 import LabelStore from '../label_store';
 
 import tabReducer from '../reducers/tab_reducer';
+import labelReducer from '../reducers/label_reducers';
+
 import { addNewTab, closeTab } from '../reducers/tab_actions';
 
 import Main from './main_pane';
@@ -27,7 +29,7 @@ import {
 const App = () => {
   const history = useHistory();
   const [tabs, dispatch] = useReducer(tabReducer, []);
-  const [bucketState, setBucket] = useState('bucketName1');
+  const [labels, ldispatch] = useReducer(labelReducer, 'fddd');
 
   const addTab = (tab) => {
     dispatch(addNewTab(tab));
@@ -99,8 +101,8 @@ const App = () => {
   return (
     <LabelStore.Provider
       value={{
-        name: bucketState,
-        setBucket,
+        list: labels,
+        ldispatch,
       }}
     >
       <div className="window">

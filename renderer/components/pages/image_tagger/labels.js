@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { FIND_ONE } from './constants';
 import { FROM_GENERAL, TO_GENERAL } from '../../../constants';
 
+import LabelStore from '../../../label_store';
 import EditBar from './edit_bar';
 
 import {
@@ -47,6 +48,8 @@ export default ({ setTagConfig }) => {
   const [labelList, setLabelList] = useState(defaultContainter.labels); // get container labels
   const [currentInput, setCurrentInput] = useState('');
   const [editedLabel, setEditedLabel] = useState(null);
+  const nLabelList = useContext(LabelStore);
+  console.log(nLabelList);
 
   const updateCurrentLabel = (selectedLabel) => {
     if (editedLabel === null) {
