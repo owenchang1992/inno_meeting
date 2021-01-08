@@ -29,7 +29,7 @@ import {
 const App = () => {
   const history = useHistory();
   const [tabs, dispatch] = useReducer(tabReducer, []);
-  const [labels, ldispatch] = useReducer(labelReducer, 'fddd');
+  const [labels, ldispatch] = useReducer(labelReducer, []);
 
   const addTab = (tab) => {
     dispatch(addNewTab(tab));
@@ -101,7 +101,7 @@ const App = () => {
   return (
     <LabelStore.Provider
       value={{
-        list: labels,
+        labels,
         ldispatch,
       }}
     >

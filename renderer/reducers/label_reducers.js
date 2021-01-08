@@ -1,11 +1,9 @@
-import { ADD_LABEL, CLOSE_LABEL } from './constants';
+import { ADD_LABEL } from './constants';
 
 export default (state, action) => {
   switch (action.type) {
     case ADD_LABEL:
-      return state;
-    case CLOSE_LABEL:
-      return state;
+      return [...state, action.payload];
     default:
       return state;
   }

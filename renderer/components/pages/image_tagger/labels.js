@@ -45,7 +45,7 @@ const PENCIL = 'pencil';
 export default ({ setTagConfig }) => {
   const [enteredLabel, setEnteredLabel] = useState(null);
   const [focusedLabel, setFocusLabel] = useState(defaultContainter.labels[0]);
-  const [labelList, setLabelList] = useState(defaultContainter.labels); // get container labels
+  // const [labelList, setLabelList] = useState(defaultContainter.labels); // get container labels
   const [currentInput, setCurrentInput] = useState('');
   const [editedLabel, setEditedLabel] = useState(null);
   const nLabelList = useContext(LabelStore);
@@ -73,13 +73,13 @@ export default ({ setTagConfig }) => {
     };
 
     const getNewLabelList = () => {
-      const index = labelList.findIndex((label) => (label.name === selectedLabel.name));
-      labelList.splice(index, 1, {
+      const index = nLabelList.labels.findIndex((label) => (label.name === selectedLabel.name));
+      nLabelList.labels.splice(index, 1, {
         ...selectedLabel,
         name: currentInput,
       });
 
-      return [...labelList];
+      return [...nLabelList.labels];
     };
 
     if (e.keyCode === 13) {
@@ -87,7 +87,7 @@ export default ({ setTagConfig }) => {
         setTagConfig({ ...selectedLabel, name: currentInput });
         const newLabelList = getNewLabelList();
         saveLabelToDB(newLabelList);
-        setLabelList(newLabelList);
+        nLabelList.ldispatch(newLabelList);
       }
       setEditedLabel(null);
     }
@@ -117,7 +117,7 @@ export default ({ setTagConfig }) => {
     const getLabels = (e, resp) => {
       if (resp.contents !== null) {
         if (resp.type === LABELS && resp.name === FIND_ONE) {
-          setLabelList(resp.contents.labels);
+          nLabelList.ldispatch(resp.contents.labels);
           setFocusLabel(resp.contents.labels[0]);
           setTagConfig(resp.contents.labels[0]);
         }
@@ -138,7 +138,7 @@ export default ({ setTagConfig }) => {
         Labels
       </h5>
       {
-        labelList.map((label) => (
+        nLabelList.labels.map((label) => (
           <div
             key={label.name}
             role="button"
