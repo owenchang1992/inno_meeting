@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
-import BucketStore from '../bucket_store';
+import LabelStore from '../label_store';
 
 import tabReducer from '../reducers/tab_reducer';
 import { addNewTab, closeTab } from '../reducers/tab_actions';
@@ -97,7 +97,7 @@ const App = () => {
   }, [tabs]);
 
   return (
-    <BucketStore.Provider
+    <LabelStore.Provider
       value={{
         name: bucketState,
         setBucket,
@@ -112,7 +112,7 @@ const App = () => {
           <Main tabs={tabs} closeTab={onCloseTab} />
         </div>
       </div>
-    </BucketStore.Provider>
+    </LabelStore.Provider>
   );
 };
 
