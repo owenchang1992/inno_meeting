@@ -22,7 +22,6 @@ export default ({ setTagConfig }) => {
   const [currentInput, setCurrentInput] = useState('');
   const [editedLabel, setEditedLabel] = useState(null);
   const nLabelList = useContext(LabelStore);
-  console.log(nLabelList);
 
   const updateCurrentLabel = (selectedLabel) => {
     if (editedLabel === null) {
@@ -48,7 +47,7 @@ export default ({ setTagConfig }) => {
       const index = nLabelList.labels.findIndex((label) => (label.name === selectedLabel.name));
       nLabelList.labels.splice(index, 1, {
         ...selectedLabel,
-        name: currentInput,
+        title: currentInput,
       });
 
       return [...nLabelList.labels];
@@ -56,7 +55,7 @@ export default ({ setTagConfig }) => {
 
     if (e.keyCode === 13) {
       if (editedLabel !== null && currentInput.length !== 0) {
-        setTagConfig({ ...selectedLabel, name: currentInput });
+        setTagConfig({ ...selectedLabel, title: currentInput });
         const newLabelList = getNewLabelList();
         saveLabelToDB(newLabelList);
         nLabelList.ldispatch(newLabelList);
@@ -66,7 +65,7 @@ export default ({ setTagConfig }) => {
   };
 
   const editLabel = (e, selectedLabel) => {
-    setCurrentInput(selectedLabel.name);
+    setCurrentInput(selectedLabel.title);
     if (e.target.className.includes(PENCIL)) {
       setEditedLabel(selectedLabel.name);
     } else if (e.button === 2) setEditedLabel(selectedLabel.name);
