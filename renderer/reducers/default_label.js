@@ -1,5 +1,6 @@
 export default [
   {
+    key: 'red',
     name: 'red',
     type: 'normal',
     title: 'Red',
@@ -9,6 +10,7 @@ export default [
     describe: 'Default',
   },
   {
+    key: 'orange',
     name: 'orange',
     type: 'normal',
     title: 'Orange',
@@ -18,6 +20,7 @@ export default [
     describe: 'Default',
   },
   {
+    key: 'green',
     name: 'green',
     type: 'normal',
     title: 'Green',
@@ -27,6 +30,7 @@ export default [
     describe: 'Default',
   },
   {
+    key: 'blue',
     name: 'blue',
     type: 'normal',
     title: 'Blue',
