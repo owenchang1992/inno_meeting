@@ -1,0 +1,38 @@
+export default [
+  {
+    name: 'red',
+    type: 'normal',
+    title: 'Red',
+    required: false,
+    unique: false,
+    color: '#fc605b',
+    describe: 'Default',
+  },
+  {
+    name: 'orange',
+    type: 'normal',
+    title: 'Orange',
+    required: false,
+    unique: false,
+    color: '#fdbc40',
+    describe: 'Default',
+  },
+  {
+    name: 'green',
+    type: 'normal',
+    title: 'Green',
+    required: false,
+    unique: false,
+    color: '#34c84a',
+    describe: 'Default',
+  },
+  {
+    name: 'blue',
+    type: 'normal',
+    title: 'Blue',
+    required: false,
+    unique: false,
+    color: '#57acf5',
+    describe: 'Default',
+  },
+];

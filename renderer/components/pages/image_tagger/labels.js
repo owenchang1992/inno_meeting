@@ -14,38 +14,11 @@ import {
 } from '../../../request';
 
 const LABELS = 'labels';
-
-const defaultContainter = {
-  name: 'Default',
-  key: 'default',
-  type: 'container',
-  description: '',
-  labels: [
-    {
-      name: 'Red',
-      color: '#fc605b',
-    },
-    {
-      name: 'Orange',
-      color: '#fdbc40',
-    },
-    {
-      name: 'Green',
-      color: '#34c84a',
-    },
-    {
-      name: 'Blue',
-      color: '#57acf5',
-    },
-  ],
-};
-
 const PENCIL = 'pencil';
 
 export default ({ setTagConfig }) => {
   const [enteredLabel, setEnteredLabel] = useState(null);
-  const [focusedLabel, setFocusLabel] = useState(defaultContainter.labels[0]);
-  // const [labelList, setLabelList] = useState(defaultContainter.labels); // get container labels
+  const [focusedLabel, setFocusLabel] = useState([]);
   const [currentInput, setCurrentInput] = useState('');
   const [editedLabel, setEditedLabel] = useState(null);
   const nLabelList = useContext(LabelStore);
@@ -65,7 +38,6 @@ export default ({ setTagConfig }) => {
         update(
           LABELS,
           {
-            ...defaultContainter,
             labels: newList,
           },
         ),
@@ -138,7 +110,7 @@ export default ({ setTagConfig }) => {
         Labels
       </h5>
       {
-        nLabelList.labels.map((label) => (
+        nLabelList.labels ? nLabelList.labels.map((label) => (
           <div
             key={label.name}
             role="button"
@@ -170,14 +142,14 @@ export default ({ setTagConfig }) => {
                     value={currentInput}
                     onChange={(e) => setCurrentInput(e.target.value)}
                     type="text"
-                    placeholder={label.name}
+                    placeholder={label.title}
                   />
                 )
-                : <strong>{label.name}</strong>
+                : <strong>{label.title}</strong>
             }
             { getEditBar(label) }
           </div>
-        ))
+        )) : null
       }
     </div>
   );

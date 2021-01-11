@@ -5,6 +5,7 @@ import LabelStore from '../label_store';
 
 import tabReducer from '../reducers/tab_reducer';
 import labelReducer from '../reducers/label_reducers';
+import defaultabel from '../reducers/default_label';
 
 import { addNewTab, closeTab } from '../reducers/tab_actions';
 
@@ -29,7 +30,7 @@ import {
 const App = () => {
   const history = useHistory();
   const [tabs, dispatch] = useReducer(tabReducer, []);
-  const [labels, ldispatch] = useReducer(labelReducer, []);
+  const [labels, ldispatch] = useReducer(labelReducer, defaultabel);
 
   const addTab = (tab) => {
     dispatch(addNewTab(tab));
