@@ -13,6 +13,7 @@ import {
 } from '../../../request';
 
 import { updatelabels } from '../../../reducers/label_actions';
+import defaultabel from '../../../reducers/default_label';
 
 const LABELS = 'labels';
 const PENCIL = 'pencil';
@@ -73,18 +74,26 @@ export default ({ setTagConfig }) => {
   };
 
   useEffect(() => {
+    setTagConfig(focusedLabel);
+  }, [focusedLabel]);
+
+  useEffect(() => {
     const getLabels = (e, resp) => {
-      if (resp.contents !== null) {
-        if (resp.type === LABELS && resp.name === FIND_ONE) {
-          // nLabelList.ldispatch(resp.contents.labels);
-          setFocusLabel(resp.contents.labels[0]);
-          setTagConfig(resp.contents.labels[0]);
+      if (resp.type === LABELS) {
+        if (resp.name === FIND_ONE) {
+          if (resp.contents !== null) {
+            setFocusLabel(resp.contents.labels[0]);
+            nLabelList.ldispatch(updatelabels(resp.contents.labels));
+          } else {
+            setFocusLabel(defaultabel[0]);
+            nLabelList.ldispatch(updatelabels(defaultabel));
+          }
         }
-      } else setTagConfig(focusedLabel);
+      }
     };
 
     const getDBLabels = () => {
-      send2Local(TO_GENERAL, findOne(LABELS, { key: 'default' }));
+      send2Local(TO_GENERAL, findOne(LABELS, { }));
       receive(FROM_GENERAL, getLabels);
     };
 
@@ -97,7 +106,7 @@ export default ({ setTagConfig }) => {
         Labels
       </h5>
       {
-        nLabelList.labels ? nLabelList.labels.map((label) => (
+        nLabelList.labels.length !== 0 ? nLabelList.labels.map((label) => (
           <div
             key={label.name}
             role="button"
