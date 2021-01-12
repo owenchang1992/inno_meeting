@@ -59,7 +59,7 @@ export default ({
                 className="icon icon-record"
                 style={{ color: label.color, marginRight: '5px' }}
               />
-              <strong>{label.name}</strong>
+              <strong>{label.title}</strong>
               {getEditBar(tag)}
             </div>
           );
