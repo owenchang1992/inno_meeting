@@ -11,6 +11,3 @@ export const DRAW_RECTANGLE = 'DRAW_RECTANGLE';
 // Collection
 export const PAGES = 'pages';
 export const LABELS = 'labels';
-
-// DB response
-export const FIND_ONE = 'findOne';

@@ -9,16 +9,26 @@ module.exports = (() => {
   }
 
   const update = (db, props) => {
-    return new Promise((resolve, reject) => {
-      db.update({key: props.contents.key}, props.contents, {}, (err, numReplace) => {
-        if (err) reject(err);
-        resolve(numReplace);
+    const dbUpdate = (item) => {
+      return new Promise((resolve, reject) => {   
+        db.update({key: item.key}, item, {}, (err, numReplace) => {
+          if (err) reject(err);
+          resolve(numReplace);
+        })
       })
-    })
-      .then((resp) => {
-        if (resp === 0) return insert(db, props);
-        return resp;
-      })
+        .then((resp) => {
+          if (resp === 0) return insert(db, { contents: item });
+          return resp;
+        })
+    };
+
+    if (Array.isArray(props.contents)) {
+      return Promise.all(props.contents.map((item) => {
+        dbUpdate(item);
+      }))
+    } else {
+      return dbUpdate(props.contents);
+    }
   }
 
   const findOne = (db, props) => {
@@ -30,9 +40,19 @@ module.exports = (() => {
     })
   }
 
+  const find = (db, props) => {
+    return new Promise((resolve, reject) => {
+      db.find(props.contents, (err, docs) => {
+        if(err) reject(err);
+        resolve(docs);
+      })
+    });
+  }
+
   return {
     insert,
     findOne,
     update,
+    find,
   }
 })()

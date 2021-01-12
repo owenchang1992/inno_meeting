@@ -92,6 +92,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    console.log(labels);
     if (labels.length !== 0) {
       send2Local(
         TO_GENERAL,

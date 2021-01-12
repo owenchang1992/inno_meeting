@@ -13,7 +13,6 @@ import {
   DELETE_TAG,
   SHOW_TAG,
   HIDE_TAG,
-  FIND_ONE,
   PAGES,
 } from './constants';
 
@@ -30,7 +29,11 @@ import tagListReducer from './tag_reducer';
 import Labels from './labels';
 import TagList from './tag_list';
 
-import { MEDIA_TAGGER, FROM_GENERAL, TO_GENERAL } from '../../../constants';
+import {
+  MEDIA_TAGGER,
+  FROM_GENERAL,
+  TO_GENERAL,
+} from '../../../constants';
 
 import {
   findOne,
@@ -38,6 +41,7 @@ import {
   removeListener,
   receive,
   send2Local,
+  FIND_ONE,
 } from '../../../request';
 
 const baseStyle = {

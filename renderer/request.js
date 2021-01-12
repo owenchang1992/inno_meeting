@@ -1,5 +1,6 @@
-const FIND_ONE = 'findOne';
-const UPDATE = 'update';
+export const FIND_ONE = 'findOne';
+export const UPDATE = 'update';
+export const FIND = 'find';
 
 export const send2Local = (channel, content) => {
   window.api.send(channel, {
@@ -10,6 +11,12 @@ export const send2Local = (channel, content) => {
 export const findOne = (type, contents) => ({
   type,
   name: FIND_ONE,
+  contents,
+});
+
+export const find = (type, contents) => ({
+  type,
+  name: FIND,
   contents,
 });
 

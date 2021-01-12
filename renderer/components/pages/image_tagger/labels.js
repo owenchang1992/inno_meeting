@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { FIND_ONE } from './constants';
 import { FROM_GENERAL, TO_GENERAL } from '../../../constants';
 
 import LabelStore from '../../../label_store';
 import EditBar from './edit_bar';
 
 import {
-  findOne,
+  find,
   receive,
   send2Local,
+  FIND,
 } from '../../../request';
 
 import { updatelabels } from '../../../reducers/label_actions';
@@ -80,10 +80,10 @@ export default ({ setTagConfig }) => {
   useEffect(() => {
     const getLabels = (e, resp) => {
       if (resp.type === LABELS) {
-        if (resp.name === FIND_ONE) {
-          if (resp.contents !== null) {
-            setFocusLabel(resp.contents.labels[0]);
-            nLabelList.ldispatch(updatelabels(resp.contents.labels));
+        if (resp.name === FIND) {
+          if (resp.contents !== null && resp.contents.length !== 0) {
+            setFocusLabel(resp.contents[0]);
+            nLabelList.ldispatch(updatelabels(resp.contents));
           } else {
             setFocusLabel(defaultabel[0]);
             nLabelList.ldispatch(updatelabels(defaultabel));
@@ -93,7 +93,7 @@ export default ({ setTagConfig }) => {
     };
 
     const getDBLabels = () => {
-      send2Local(TO_GENERAL, findOne(LABELS, { }));
+      send2Local(TO_GENERAL, find(LABELS, {}));
       receive(FROM_GENERAL, getLabels);
     };
 
