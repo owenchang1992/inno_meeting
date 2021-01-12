@@ -12,6 +12,8 @@ import {
   send2Local,
 } from '../../../request';
 
+import { updatelabels } from '../../../reducers/label_actions';
+
 const LABELS = 'labels';
 const PENCIL = 'pencil';
 
@@ -44,7 +46,7 @@ export default ({ setTagConfig }) => {
       if (editedLabel !== null && currentInput.length !== 0) {
         setTagConfig({ ...selectedLabel, title: currentInput });
         const newLabelList = getNewLabelList();
-        nLabelList.ldispatch(newLabelList);
+        nLabelList.ldispatch(updatelabels(newLabelList));
       }
       setEditedLabel(null);
     }
@@ -74,7 +76,7 @@ export default ({ setTagConfig }) => {
     const getLabels = (e, resp) => {
       if (resp.contents !== null) {
         if (resp.type === LABELS && resp.name === FIND_ONE) {
-          nLabelList.ldispatch(resp.contents.labels);
+          // nLabelList.ldispatch(resp.contents.labels);
           setFocusLabel(resp.contents.labels[0]);
           setTagConfig(resp.contents.labels[0]);
         }

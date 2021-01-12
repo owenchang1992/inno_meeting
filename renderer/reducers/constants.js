@@ -1,4 +1,4 @@
 export const ADD_TAB = 'ADD_TAB';
 export const CLOSE_TAB = 'CLOSE_TAB';
-export const ADD_LABEL = 'ADD_LABEL';
-export const CLOSE_LABEL = 'CLOSE_LABEL';
+export const UPDATE_LABELS = 'UPDATE_LABELS';
+export const ADD_NEW_LABELS = 'ADD_NEW_LABELS';

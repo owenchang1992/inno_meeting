@@ -1,11 +1,11 @@
-import { ADD_LABEL, CLOSE_LABEL } from './constants';
+import { UPDATE_LABELS, ADD_NEW_LABELS } from './constants';
 
-export const addNewLabel = (label) => ({
-  type: ADD_LABEL,
-  payload: label,
+export const updatelabels = (labels) => ({
+  type: UPDATE_LABELS,
+  payload: labels,
 });
 
-export const closeLabel = (label) => ({
-  type: CLOSE_LABEL,
-  payload: label,
+export const addNewlabel = (labels) => ({
+  type: ADD_NEW_LABELS,
+  payload: labels,
 });
