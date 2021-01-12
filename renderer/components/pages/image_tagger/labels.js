@@ -17,10 +17,10 @@ const PENCIL = 'pencil';
 
 export default ({ setTagConfig }) => {
   const [enteredLabel, setEnteredLabel] = useState(null);
-  const [focusedLabel, setFocusLabel] = useState([]);
+  const nLabelList = useContext(LabelStore);
+  const [focusedLabel, setFocusLabel] = useState(nLabelList.labels[0]);
   const [currentInput, setCurrentInput] = useState('');
   const [editedLabel, setEditedLabel] = useState(null);
-  const nLabelList = useContext(LabelStore);
 
   const updateCurrentLabel = (selectedLabel) => {
     if (editedLabel === null) {
