@@ -11,7 +11,9 @@ import { addNewTab, closeTab } from '../reducers/tab_actions';
 
 import Main from './main_pane';
 import Header from './header';
+
 import {
+  update,
   send2Local,
   removeListener,
   receive,
@@ -25,6 +27,8 @@ import {
   SELECT_FILES,
   UPDATE,
   EXPORT_PROJECT,
+  LABELS,
+  TO_GENERAL,
 } from '../constants';
 
 const App = () => {
@@ -87,6 +91,16 @@ const App = () => {
 
     return () => removeListener(FROM_MAIN, addTabs);
   }, []);
+
+  useEffect(() => {
+    send2Local(
+      TO_GENERAL,
+      update(
+        LABELS,
+        { labels },
+      ),
+    );
+  }, [labels]);
 
   useEffect(() => {
     send2Local(TO_MAIN, {

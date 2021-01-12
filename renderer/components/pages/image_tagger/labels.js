@@ -7,7 +7,6 @@ import LabelStore from '../../../label_store';
 import EditBar from './edit_bar';
 
 import {
-  update,
   findOne,
   receive,
   send2Local,
@@ -31,18 +30,6 @@ export default ({ setTagConfig }) => {
   };
 
   const saveLabel = (e, selectedLabel) => {
-    const saveLabelToDB = (newList) => {
-      send2Local(
-        TO_GENERAL,
-        update(
-          LABELS,
-          {
-            labels: newList,
-          },
-        ),
-      );
-    };
-
     const getNewLabelList = () => {
       const index = nLabelList.labels.findIndex((label) => (label.name === selectedLabel.name));
       nLabelList.labels.splice(index, 1, {
@@ -57,7 +44,6 @@ export default ({ setTagConfig }) => {
       if (editedLabel !== null && currentInput.length !== 0) {
         setTagConfig({ ...selectedLabel, title: currentInput });
         const newLabelList = getNewLabelList();
-        saveLabelToDB(newLabelList);
         nLabelList.ldispatch(newLabelList);
       }
       setEditedLabel(null);
