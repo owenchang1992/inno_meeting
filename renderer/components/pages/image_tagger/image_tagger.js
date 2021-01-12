@@ -236,7 +236,7 @@ export default function imageTagger({ tab, closeTab }) {
               width: Math.round((mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX),
               height: Math.round((mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY),
               color: tagConfig.color,
-              label: tagConfig,
+              label: tagConfig.key,
             }, dispatch);
           }
         } else if (checkPoint(currentMousePoint)) {

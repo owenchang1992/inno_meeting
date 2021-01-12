@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import EditBar from './edit_bar';
+import LabelStore from '../../../label_store';
 
 export default ({
   tagList,
@@ -8,6 +9,7 @@ export default ({
   removeTag,
 }) => {
   const [focusedTag, setFocusTag] = useState(null);
+  const nLabelList = useContext(LabelStore);
 
   const onTagPressed = (e, tag) => {
     if (e.target.className.includes('trash')) removeTag(tag);
@@ -25,6 +27,17 @@ export default ({
     toggleTags(tag);
   };
 
+  const getLabel = (labelKey) => {
+    let targetlabel = null;
+
+    nLabelList.labels.forEach((label) => {
+      if (label.key === labelKey) {
+        targetlabel = label;
+      }
+    });
+    return targetlabel;
+  };
+
   return (
     <>
       <h5 className="nav-group-title">
@@ -32,7 +45,8 @@ export default ({
       </h5>
       {
         tagList !== null ? tagList.map((tag) => {
-          const { label, key } = tag;
+          const { key } = tag;
+          const label = getLabel(tag.label);
 
           return (
             <div
