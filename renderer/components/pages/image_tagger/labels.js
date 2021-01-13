@@ -20,8 +20,8 @@ const PENCIL = 'pencil';
 
 export default ({ setTagConfig }) => {
   const [enteredLabel, setEnteredLabel] = useState(null);
-  const nLabelList = useContext(LabelStore);
-  const [focusedLabel, setFocusLabel] = useState(nLabelList.labels[0]);
+  const { labels, ldispatch } = useContext(LabelStore);
+  const [focusedLabel, setFocusLabel] = useState(labels[0]);
   const [currentInput, setCurrentInput] = useState('');
   const [editedLabel, setEditedLabel] = useState(null);
 
@@ -34,20 +34,20 @@ export default ({ setTagConfig }) => {
 
   const saveLabel = (e, selectedLabel) => {
     const getNewLabelList = () => {
-      const index = nLabelList.labels.findIndex((label) => (label.name === selectedLabel.name));
-      nLabelList.labels.splice(index, 1, {
+      const index = labels.findIndex((label) => (label.name === selectedLabel.name));
+      labels.splice(index, 1, {
         ...selectedLabel,
         title: currentInput,
       });
 
-      return [...nLabelList.labels];
+      return [...labels];
     };
 
     if (e.keyCode === 13) {
       if (editedLabel !== null && currentInput.length !== 0) {
         setTagConfig({ ...selectedLabel, title: currentInput });
         const newLabelList = getNewLabelList();
-        nLabelList.ldispatch(updatelabels(newLabelList));
+        ldispatch(updatelabels(newLabelList));
       }
       setEditedLabel(null);
     }
@@ -85,10 +85,10 @@ export default ({ setTagConfig }) => {
         if (resp.name === FIND) {
           if (resp.contents !== null && resp.contents.length !== 0) {
             setFocusLabel(resp.contents[0]);
-            nLabelList.ldispatch(updatelabels(resp.contents));
+            ldispatch(updatelabels(resp.contents));
           } else {
             setFocusLabel(defaultabel[0]);
-            nLabelList.ldispatch(updatelabels(defaultabel));
+            ldispatch(updatelabels(defaultabel));
           }
         }
       }
@@ -108,7 +108,7 @@ export default ({ setTagConfig }) => {
         Labels
       </h5>
       {
-        nLabelList.labels.length !== 0 ? nLabelList.labels
+        labels.length !== 0 ? labels
           .filter(normalLabelFilter)
           .map((label) => (
             <div
