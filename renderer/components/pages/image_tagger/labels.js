@@ -73,6 +73,8 @@ export default ({ setTagConfig }) => {
     return null;
   };
 
+  const normalLabelFilter = (label) => label.type === 'normal';
+
   useEffect(() => {
     setTagConfig(focusedLabel);
   }, [focusedLabel]);
@@ -106,46 +108,48 @@ export default ({ setTagConfig }) => {
         Labels
       </h5>
       {
-        nLabelList.labels.length !== 0 ? nLabelList.labels.map((label) => (
-          <div
-            key={label.name}
-            role="button"
-            style={{
-              position: 'relative',
-              display: 'flex',
-              padding: '3px 10px',
-              borderRadius: '5px',
-              marginTop: '5px',
-              alignItems: 'center',
-            }}
-            onClick={() => updateCurrentLabel(label)}
-            onMouseDown={(e) => editLabel(e, label)}
-            onMouseEnter={() => setEnteredLabel(label)}
-            onMouseLeave={() => setEnteredLabel(null)}
-            onKeyDown={(e) => saveLabel(e, label)}
-            tabIndex={0}
-          >
-            <span
-              className={`icon ${focusedLabel.name !== label.name ? 'icon-record' : 'icon-play'}`}
-              style={{ color: label.color, marginRight: '5px' }}
-            />
-            {
-              editedLabel === label.name
-                ? (
-                  <input
-                    className="form-control"
-                    style={{ padding: '3px 7px' }}
-                    value={currentInput}
-                    onChange={(e) => setCurrentInput(e.target.value)}
-                    type="text"
-                    placeholder={label.title}
-                  />
-                )
-                : <strong>{label.title}</strong>
-            }
-            { getEditBar(label) }
-          </div>
-        )) : null
+        nLabelList.labels.length !== 0 ? nLabelList.labels
+          .filter(normalLabelFilter)
+          .map((label) => (
+            <div
+              key={label.name}
+              role="button"
+              style={{
+                position: 'relative',
+                display: 'flex',
+                padding: '3px 10px',
+                borderRadius: '5px',
+                marginTop: '5px',
+                alignItems: 'center',
+              }}
+              onClick={() => updateCurrentLabel(label)}
+              onMouseDown={(e) => editLabel(e, label)}
+              onMouseEnter={() => setEnteredLabel(label)}
+              onMouseLeave={() => setEnteredLabel(null)}
+              onKeyDown={(e) => saveLabel(e, label)}
+              tabIndex={0}
+            >
+              <span
+                className={`icon ${focusedLabel.name !== label.name ? 'icon-record' : 'icon-play'}`}
+                style={{ color: label.color, marginRight: '5px' }}
+              />
+              {
+                editedLabel === label.name
+                  ? (
+                    <input
+                      className="form-control"
+                      style={{ padding: '3px 7px' }}
+                      value={currentInput}
+                      onChange={(e) => setCurrentInput(e.target.value)}
+                      type="text"
+                      placeholder={label.title}
+                    />
+                  )
+                  : <strong>{label.title}</strong>
+              }
+              { getEditBar(label) }
+            </div>
+          )) : null
       }
     </div>
   );
