@@ -5,6 +5,7 @@ import LabelStore from '../label_store';
 
 import tabReducer from '../reducers/tab_reducer';
 import labelReducer from '../reducers/label_reducers';
+import { updatelabels } from '../reducers/label_actions';
 
 import { addNewTab, closeTab } from '../reducers/tab_actions';
 
@@ -16,6 +17,8 @@ import {
   send2Local,
   removeListener,
   receive,
+  FIND,
+  find,
 } from '../request';
 
 import {
@@ -28,6 +31,7 @@ import {
   EXPORT_PROJECT,
   LABELS,
   TO_GENERAL,
+  FROM_GENERAL,
 } from '../constants';
 
 const App = () => {
@@ -87,6 +91,23 @@ const App = () => {
         addTabs(resp.contents.tabs);
       }
     });
+
+    const getLabels = (e, resp) => {
+      if (resp.contents !== null) {
+        if (resp.type === LABELS) {
+          if (resp.name === FIND) {
+            ldispatch(updatelabels(resp.contents));
+          }
+        }
+      }
+    };
+
+    const getDBLabels = () => {
+      send2Local(TO_GENERAL, find(LABELS, {}));
+      receive(FROM_GENERAL, getLabels);
+    };
+
+    getDBLabels();
 
     return () => removeListener(FROM_MAIN, addTabs);
   }, []);

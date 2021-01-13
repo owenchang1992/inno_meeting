@@ -1,21 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { FROM_GENERAL, TO_GENERAL } from '../../../constants';
-
 import LabelStore from '../../../label_store';
 import EditBar from './edit_bar';
-
-import {
-  find,
-  receive,
-  send2Local,
-  FIND,
-} from '../../../request';
 
 import { updatelabels } from '../../../reducers/label_actions';
 import defaultabel from '../../../reducers/default_label';
 
-const LABELS = 'labels';
 const PENCIL = 'pencil';
 
 export default ({ setTagConfig }) => {
@@ -80,26 +70,13 @@ export default ({ setTagConfig }) => {
   }, [focusedLabel]);
 
   useEffect(() => {
-    const getLabels = (e, resp) => {
-      if (resp.type === LABELS) {
-        if (resp.name === FIND) {
-          if (resp.contents !== null && resp.contents.length !== 0) {
-            setFocusLabel(resp.contents[0]);
-            ldispatch(updatelabels(resp.contents));
-          } else {
-            setFocusLabel(defaultabel[0]);
-            ldispatch(updatelabels(defaultabel));
-          }
-        }
-      }
-    };
-
-    const getDBLabels = () => {
-      send2Local(TO_GENERAL, find(LABELS, {}));
-      receive(FROM_GENERAL, getLabels);
-    };
-
-    getDBLabels();
+    if (labels.filter(normalLabelFilter).length !== 0) {
+      setFocusLabel(labels[0]);
+    } else {
+      // TODO: Add label
+      setFocusLabel(defaultabel[0]);
+      ldispatch(updatelabels(defaultabel));
+    }
   }, []);
 
   return (
