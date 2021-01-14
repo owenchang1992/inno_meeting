@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import LabelStore from '../../../label_store';
 import EditBar from './edit_bar';
 
-import { updateLabel, addNewlabel } from '../../../reducers/label_actions';
+import { updateLabel, addNewTaggingLabel } from '../../../reducers/label_actions';
 import defaultabel from '../../../reducers/default_label';
 
 const PENCIL = 'pencil';
@@ -68,7 +68,7 @@ export default ({ setTagConfig }) => {
       setFocusLabel(labels[0]);
     } else {
       setFocusLabel(defaultabel[0]);
-      ldispatch(addNewlabel(defaultabel));
+      ldispatch(addNewTaggingLabel(defaultabel));
     }
   }, []);
 

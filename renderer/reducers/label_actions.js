@@ -1,3 +1,4 @@
+import CryptoJS from 'crypto-js';
 import { UPDATE_LABEL, ADD_NEW_LABEL, INITIALIZE_LABEL } from './constants';
 
 export const initializeLabel = (labels) => ({
@@ -13,7 +14,17 @@ export const updateLabel = (label, contents) => ({
   },
 });
 
-export const addNewlabel = (label) => ({
+const createTaggingLabel = (label) => ({
+  key: `${CryptoJS.SHA256(label.title).toString(CryptoJS.enc.Hex)}`,
+  type: 'tagging',
+  required: false,
+  unique: false,
+  ...label,
+});
+
+export const addNewTaggingLabel = (label) => ({
   type: ADD_NEW_LABEL,
-  payload: label,
+  payload: Array.isArray(label)
+    ? label.map((labelItem) => createTaggingLabel(labelItem))
+    : createTaggingLabel(label),
 });
