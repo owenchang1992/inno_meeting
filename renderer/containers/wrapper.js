@@ -5,7 +5,7 @@ import LabelStore from '../label_store';
 
 import tabReducer from '../reducers/tab_reducer';
 import labelReducer from '../reducers/label_reducers';
-import { updatelabels } from '../reducers/label_actions';
+import { initializeLabel } from '../reducers/label_actions';
 
 import { addNewTab, closeTab } from '../reducers/tab_actions';
 
@@ -96,7 +96,7 @@ const App = () => {
       if (resp.contents !== null) {
         if (resp.type === LABELS) {
           if (resp.name === FIND) {
-            ldispatch(updatelabels(resp.contents));
+            ldispatch(initializeLabel(resp.contents));
           }
         }
       }

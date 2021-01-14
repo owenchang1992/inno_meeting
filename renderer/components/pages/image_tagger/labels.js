@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import LabelStore from '../../../label_store';
 import EditBar from './edit_bar';
 
-import { updatelabels } from '../../../reducers/label_actions';
+import { updateLabel, addNewlabel } from '../../../reducers/label_actions';
 import defaultabel from '../../../reducers/default_label';
 
 const PENCIL = 'pencil';
@@ -23,21 +23,11 @@ export default ({ setTagConfig }) => {
   };
 
   const saveLabel = (e, selectedLabel) => {
-    const getNewLabelList = () => {
-      const index = labels.findIndex((label) => (label.name === selectedLabel.name));
-      labels.splice(index, 1, {
-        ...selectedLabel,
-        title: currentInput,
-      });
-
-      return [...labels];
-    };
-
     if (e.keyCode === 13) {
       if (editedLabel !== null && currentInput.length !== 0) {
-        setTagConfig({ ...selectedLabel, title: currentInput });
-        const newLabelList = getNewLabelList();
-        ldispatch(updatelabels(newLabelList));
+        const newLabel = updateLabel(selectedLabel, { title: currentInput });
+        setTagConfig(newLabel);
+        ldispatch(newLabel);
       }
       setEditedLabel(null);
     }
@@ -73,9 +63,8 @@ export default ({ setTagConfig }) => {
     if (labels.filter(normalLabelFilter).length !== 0) {
       setFocusLabel(labels[0]);
     } else {
-      // TODO: Add label
       setFocusLabel(defaultabel[0]);
-      ldispatch(updatelabels(defaultabel));
+      ldispatch(addNewlabel(defaultabel));
     }
   }, []);
 
