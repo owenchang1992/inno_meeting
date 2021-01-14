@@ -22,9 +22,24 @@ const createTaggingLabel = (label) => ({
   ...label,
 });
 
+const createBucketLabel = (label) => ({
+  key: `${CryptoJS.SHA256(label.title).toString(CryptoJS.enc.Hex)}`,
+  type: 'bucket',
+  required: true,
+  unique: true,
+  ...label,
+});
+
 export const addNewTaggingLabel = (label) => ({
   type: ADD_NEW_LABEL,
   payload: Array.isArray(label)
     ? label.map((labelItem) => createTaggingLabel(labelItem))
     : createTaggingLabel(label),
+});
+
+export const addNewBucketLabel = (label) => ({
+  type: ADD_NEW_LABEL,
+  payload: Array.isArray(label)
+    ? label.map((labelItem) => createBucketLabel(labelItem))
+    : createBucketLabel(label),
 });

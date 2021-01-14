@@ -1,12 +1,21 @@
-import React from 'react';
-// import moment from 'moment';
+import React, { useContext } from 'react';
+import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import contextStore from '../label_store';
+import { addNewBucketLabel } from '../reducers/label_actions';
 
 const Header = ({ showOpenDialog, showSaveDialog }) => {
-  console.log('Header');
+  const { ldispatch, projectName } = useContext(contextStore);
+
+  const createBucket = () => {
+    ldispatch(addNewBucketLabel({
+      title: moment(new Date()).format(`YYYY-MM-DD ${1}`),
+      project: projectName,
+    }));
+  };
 
   return (
     <div
@@ -33,7 +42,7 @@ const Header = ({ showOpenDialog, showSaveDialog }) => {
         </Button>
         <Button
           className="btn btn-default"
-          // onClick={() => { bucket.setBucket(moment(new Date()).format(`YYYY-MM-DD ${1}`)); }}
+          onClick={createBucket}
         >
           <PersonAddIcon className="icon" />
         </Button>
