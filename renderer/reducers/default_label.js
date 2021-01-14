@@ -7,6 +7,7 @@ export default [
     required: false,
     unique: false,
     color: '#fc605b',
+    project: 'default',
     describe: 'Default',
   },
   {
@@ -17,6 +18,7 @@ export default [
     required: false,
     unique: false,
     color: '#fdbc40',
+    project: 'default',
     describe: 'Default',
   },
   {
@@ -27,6 +29,7 @@ export default [
     required: false,
     unique: false,
     color: '#34c84a',
+    project: 'default',
     describe: 'Default',
   },
   {
@@ -37,6 +40,7 @@ export default [
     required: false,
     unique: false,
     color: '#57acf5',
+    project: 'default',
     describe: 'Default',
   },
 ];
