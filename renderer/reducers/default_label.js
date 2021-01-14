@@ -2,7 +2,7 @@ export default [
   {
     key: 'red',
     name: 'red',
-    type: 'normal',
+    type: 'tagging',
     title: 'Red',
     required: false,
     unique: false,
@@ -13,7 +13,7 @@ export default [
   {
     key: 'orange',
     name: 'orange',
-    type: 'normal',
+    type: 'tagging',
     title: 'Orange',
     required: false,
     unique: false,
@@ -24,7 +24,7 @@ export default [
   {
     key: 'green',
     name: 'green',
-    type: 'normal',
+    type: 'tagging',
     title: 'Green',
     required: false,
     unique: false,
@@ -35,7 +35,7 @@ export default [
   {
     key: 'blue',
     name: 'blue',
-    type: 'normal',
+    type: 'tagging',
     title: 'Blue',
     required: false,
     unique: false,

@@ -10,7 +10,7 @@ const PENCIL = 'pencil';
 
 export default ({ setTagConfig }) => {
   const [enteredLabel, setEnteredLabel] = useState(null);
-  const { labels, ldispatch } = useContext(LabelStore);
+  const { labels, ldispatch, projectName } = useContext(LabelStore);
   const [focusedLabel, setFocusLabel] = useState(labels[0]);
   const [currentInput, setCurrentInput] = useState('');
   const [editedLabel, setEditedLabel] = useState(null);
@@ -53,14 +53,18 @@ export default ({ setTagConfig }) => {
     return null;
   };
 
-  const normalLabelFilter = (label) => label.type === 'normal';
+  const taggingLabelFilter = (label) => label.type === 'tagging';
+
+  const projectFilter = (label) => (
+    label.project === 'default' || label.project === projectName
+  );
 
   useEffect(() => {
     setTagConfig(focusedLabel);
   }, [focusedLabel]);
 
   useEffect(() => {
-    if (labels.filter(normalLabelFilter).length !== 0) {
+    if (labels.filter(taggingLabelFilter).length !== 0) {
       setFocusLabel(labels[0]);
     } else {
       setFocusLabel(defaultabel[0]);
@@ -75,7 +79,8 @@ export default ({ setTagConfig }) => {
       </h5>
       {
         labels.length !== 0 ? labels
-          .filter(normalLabelFilter)
+          .filter(taggingLabelFilter)
+          .filter(projectFilter)
           .map((label) => (
             <div
               key={label.key}

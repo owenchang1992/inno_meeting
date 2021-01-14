@@ -24,7 +24,7 @@ import {
 import {
   TO_MAIN,
   FROM_MAIN,
-  DEFAULT,
+  PROJECT_NAME,
   FIND_ONE,
   SELECT_FILES,
   UPDATE,
@@ -58,7 +58,7 @@ const App = () => {
     send2Local(TO_MAIN, {
       name: EXPORT_PROJECT,
       contents: {
-        name: DEFAULT,
+        name: PROJECT_NAME,
       },
     });
   };
@@ -75,7 +75,7 @@ const App = () => {
     send2Local(TO_MAIN, {
       name: FIND_ONE,
       contents: {
-        name: DEFAULT,
+        name: PROJECT_NAME,
       },
     });
   };
@@ -129,8 +129,8 @@ const App = () => {
     send2Local(TO_MAIN, {
       name: UPDATE,
       contents: {
-        name: DEFAULT,
-        key: DEFAULT,
+        name: PROJECT_NAME,
+        key: PROJECT_NAME,
         tabs,
       },
     });
@@ -139,6 +139,7 @@ const App = () => {
   return (
     <LabelStore.Provider
       value={{
+        projectName: PROJECT_NAME,
         labels,
         ldispatch,
       }}

@@ -1,5 +1,5 @@
 export const MEDIA_TAGGER = 'MEDIA_TAGGER';
-export const DEFAULT = 'DEFAULT';
+export const PROJECT_NAME = 'test';
 
 export const TO_MAIN = 'TO_MAIN';
 export const FROM_MAIN = 'FROM_MAIN';
