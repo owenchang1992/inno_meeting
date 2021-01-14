@@ -4,11 +4,11 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import contextStore from '../label_store';
+import ContextStore from '../context_store';
 import { addNewBucketLabel } from '../reducers/label_actions';
 
 const Header = ({ showOpenDialog, showSaveDialog }) => {
-  const { ldispatch, projectName } = useContext(contextStore);
+  const { ldispatch, projectName } = useContext(ContextStore);
 
   const createBucket = () => {
     ldispatch(addNewBucketLabel({

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import LabelStore from '../../../label_store';
+import ContextStore from '../../../context_store';
 import EditBar from './edit_bar';
 
 import { updateLabel, addNewTaggingLabel } from '../../../reducers/label_actions';
@@ -10,7 +10,7 @@ const PENCIL = 'pencil';
 
 export default ({ setTagConfig }) => {
   const [enteredLabel, setEnteredLabel] = useState(null);
-  const { labels, ldispatch, projectName } = useContext(LabelStore);
+  const { labels, ldispatch, projectName } = useContext(ContextStore);
   const [focusedLabel, setFocusLabel] = useState(labels[0]);
   const [currentInput, setCurrentInput] = useState('');
   const [editedLabel, setEditedLabel] = useState(null);

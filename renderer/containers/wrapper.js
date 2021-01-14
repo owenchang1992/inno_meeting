@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
-import LabelStore from '../label_store';
+import ContextStore from '../context_store';
 
 import tabReducer from '../reducers/tab_reducer';
 import labelReducer from '../reducers/label_reducers';
@@ -137,7 +137,7 @@ const App = () => {
   }, [tabs]);
 
   return (
-    <LabelStore.Provider
+    <ContextStore.Provider
       value={{
         projectName: PROJECT_NAME,
         labels,
@@ -153,7 +153,7 @@ const App = () => {
           <Main tabs={tabs} closeTab={onCloseTab} />
         </div>
       </div>
-    </LabelStore.Provider>
+    </ContextStore.Provider>
   );
 };
 

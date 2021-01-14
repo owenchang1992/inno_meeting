@@ -9,7 +9,7 @@ import React, {
 
 import { useHistory } from 'react-router-dom';
 
-import LabelStore from '../../../label_store';
+import ContextStore from '../../../context_store';
 
 import {
   GET_TAGS_FROM_DB,
@@ -64,7 +64,7 @@ const containerStyle = {
 const initialPoint = { left: -1, top: -1 };
 
 export default function imageTagger({ tab, closeTab }) {
-  const { projectName } = useContext(LabelStore);
+  const { projectName } = useContext(ContextStore);
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);

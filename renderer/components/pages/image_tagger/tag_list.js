@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 
 import EditBar from './edit_bar';
-import LabelStore from '../../../label_store';
+import ContextStore from '../../../context_store';
 
 export default ({
   tagList,
@@ -9,7 +9,7 @@ export default ({
   removeTag,
 }) => {
   const [focusedTag, setFocusTag] = useState(null);
-  const nLabelList = useContext(LabelStore);
+  const nLabelList = useContext(ContextStore);
 
   const onTagPressed = (e, tag) => {
     if (e.target.className.includes('trash')) removeTag(tag);
