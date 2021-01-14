@@ -36,16 +36,16 @@ export default ({ setTagConfig }) => {
   const editLabel = (e, selectedLabel) => {
     setCurrentInput(selectedLabel.title);
     if (e.target.className.includes(PENCIL)) {
-      setEditedLabel(selectedLabel.name);
-    } else if (e.button === 2) setEditedLabel(selectedLabel.name);
-    else if (editedLabel !== selectedLabel.name) {
+      setEditedLabel(selectedLabel.key);
+    } else if (e.button === 2) setEditedLabel(selectedLabel.key);
+    else if (editedLabel !== selectedLabel.key) {
       setEditedLabel(null);
     }
   };
 
   const getEditBar = (label) => {
     if (enteredLabel && editedLabel === null) {
-      return enteredLabel.name === label.name
+      return enteredLabel.key === label.key
         ? <EditBar name={PENCIL} />
         : null;
     }
@@ -78,7 +78,7 @@ export default ({ setTagConfig }) => {
           .filter(normalLabelFilter)
           .map((label) => (
             <div
-              key={label.name}
+              key={label.key}
               role="button"
               style={{
                 position: 'relative',
@@ -96,11 +96,11 @@ export default ({ setTagConfig }) => {
               tabIndex={0}
             >
               <span
-                className={`icon ${focusedLabel.name !== label.name ? 'icon-record' : 'icon-play'}`}
+                className={`icon ${focusedLabel.key !== label.key ? 'icon-record' : 'icon-play'}`}
                 style={{ color: label.color, marginRight: '5px' }}
               />
               {
-                editedLabel === label.name
+                editedLabel === label.key
                   ? (
                     <input
                       className="form-control"
