@@ -4,9 +4,12 @@ import React, {
   useState,
   useReducer,
   useCallback,
+  useContext,
 } from 'react';
 
 import { useHistory } from 'react-router-dom';
+
+import LabelStore from '../../../label_store';
 
 import {
   GET_TAGS_FROM_DB,
@@ -24,7 +27,6 @@ import {
 } from './utils';
 
 import tagListReducer from './tag_reducer';
-// import LabelStore from '../../../label_store';
 
 import Labels from './labels';
 import TagList from './tag_list';
@@ -62,6 +64,7 @@ const containerStyle = {
 const initialPoint = { left: -1, top: -1 };
 
 export default function imageTagger({ tab, closeTab }) {
+  const { projectName } = useContext(LabelStore);
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
@@ -198,6 +201,7 @@ export default function imageTagger({ tab, closeTab }) {
             key: tab.routingPath,
             path: tab.src,
             type: MEDIA_TAGGER,
+            project: projectName,
             actions: tagList,
           },
         ),
@@ -235,7 +239,6 @@ export default function imageTagger({ tab, closeTab }) {
               top: Math.round(mouseDownPoint.top * scale().scaleY),
               width: Math.round((mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX),
               height: Math.round((mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY),
-              color: tagConfig.color,
               label: tagConfig.key,
             }, dispatch);
           }
