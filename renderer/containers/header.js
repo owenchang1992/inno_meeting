@@ -10,45 +10,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import ContextStore from '../context_store';
 import { addNewBucketLabel } from '../reducers/label_actions';
 
-const CreateDialog = ({
-  open,
-  handleClose,
-  inputContent,
-  setInputContent,
-  handleConfirm,
-}) => (
-  <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-    <DialogContent>
-      <TextField
-        autoFocus
-        margin="dense"
-        id="name"
-        label="Add New"
-        variant="outlined"
-        value={inputContent}
-        onChange={(e) => setInputContent(e.target.value)}
-        fullWidth
-      />
-    </DialogContent>
-    <DialogActions style={{ display: 'flex', justifyContent: 'center' }}>
-      <Button onClick={handleClose} size="small" color="primary">
-        Cancel
-      </Button>
-      <Button onClick={handleConfirm} size="small" color="primary">
-        confirm
-      </Button>
-    </DialogActions>
-  </Dialog>
-);
-
-const Header = ({ showOpenDialog, showSaveDialog }) => {
-  const [open, setOpen] = React.useState(false);
+const CreateDialog = ({ open, handleClose }) => {
   const [inputContent, setInputContent] = React.useState('');
   const { setSelectLabel, projectName, ldispatch } = useContext(ContextStore);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const handleConfirm = () => {
     const newLabel = addNewBucketLabel({
@@ -56,10 +20,43 @@ const Header = ({ showOpenDialog, showSaveDialog }) => {
       project: projectName,
     });
 
-    setSelectLabel(newLabel);
+    setSelectLabel(newLabel.payload);
     ldispatch(newLabel);
 
-    setOpen(false);
+    handleClose();
+  };
+
+  return (
+    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <DialogContent>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Add New"
+          variant="outlined"
+          value={inputContent}
+          onChange={(e) => setInputContent(e.target.value)}
+          fullWidth
+        />
+      </DialogContent>
+      <DialogActions style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button onClick={handleClose} size="small" color="primary">
+          Cancel
+        </Button>
+        <Button onClick={handleConfirm} size="small" color="primary">
+          confirm
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+const Header = ({ showOpenDialog, showSaveDialog }) => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
   const handleClose = () => {
@@ -98,9 +95,6 @@ const Header = ({ showOpenDialog, showSaveDialog }) => {
         <CreateDialog
           open={open}
           handleClose={handleClose}
-          inputContent={inputContent}
-          handleConfirm={handleConfirm}
-          setInputContent={setInputContent}
         />
       </ButtonGroup>
     </div>
