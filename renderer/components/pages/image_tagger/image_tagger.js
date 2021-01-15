@@ -80,7 +80,7 @@ export default function imageTagger({ tab, closeTab }) {
     if (content.type === 'canvas') {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
-      drawInstructions(context, snapshot, tags);
+      drawInstructions(context, snapshot, tags, tagConfig);
     }
   };
 
@@ -239,6 +239,7 @@ export default function imageTagger({ tab, closeTab }) {
               top: Math.round(mouseDownPoint.top * scale().scaleY),
               width: Math.round((mouseUpPoint.left - mouseDownPoint.left) * scale().scaleX),
               height: Math.round((mouseUpPoint.top - mouseDownPoint.top) * scale().scaleY),
+              color: tagConfig.color,
               label: tagConfig.key,
             }, dispatch);
           }
