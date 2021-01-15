@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import ContextStore from '../context_store';
 
 const SideBarItem = ({ tab, handleClick, focusTabName }) => {
   const getTab = () => (
@@ -33,6 +34,7 @@ const SideBarItem = ({ tab, handleClick, focusTabName }) => {
 };
 
 const SideBar = ({ tabs, closeTab }) => {
+  const { selectLabel } = useContext(ContextStore);
   const history = useHistory();
 
   const handleClick = (e, tab) => {
@@ -62,6 +64,9 @@ const SideBar = ({ tabs, closeTab }) => {
 
   return (
     <div className="pane-sm sidebar">
+      <h5 className="nav-group-title">
+        {selectLabel ? selectLabel.title : null}
+      </h5>
       <ul className="list-group">
         {getList()}
       </ul>
