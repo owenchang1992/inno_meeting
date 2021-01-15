@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
 import ContextStore from '../context_store';
@@ -38,6 +38,7 @@ const App = () => {
   const history = useHistory();
   const [tabs, dispatch] = useReducer(tabReducer, []);
   const [labels, ldispatch] = useReducer(labelReducer, []);
+  const [selectLabel, setSelectLabel] = useState(null);
 
   const addTab = (tab) => {
     dispatch(addNewTab(tab));
@@ -140,6 +141,8 @@ const App = () => {
     <ContextStore.Provider
       value={{
         projectName: PROJECT_NAME,
+        selectLabel,
+        setSelectLabel,
         labels,
         ldispatch,
       }}
