@@ -67,8 +67,9 @@ export default ({ setTagConfig }) => {
     if (labels.filter(taggingLabelFilter).length !== 0) {
       setFocusLabel(labels[0]);
     } else {
-      setFocusLabel(defaultabel[0]);
-      ldispatch(addNewTaggingLabel(defaultabel));
+      const action = addNewTaggingLabel(defaultabel);
+      setFocusLabel(action.payload[0]);
+      ldispatch(action);
     }
   }, []);
 
