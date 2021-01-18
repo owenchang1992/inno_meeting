@@ -30,6 +30,7 @@ import tagListReducer from './tag_reducer';
 
 import Labels from './labels';
 import TagList from './tag_list';
+import CreateDialog from '../create_dialog';
 
 import {
   MEDIA_TAGGER,
@@ -64,7 +65,7 @@ const containerStyle = {
 const initialPoint = { left: -1, top: -1 };
 
 export default function imageTagger({ tab, closeTab }) {
-  const { projectName } = useContext(ContextStore);
+  const { projectName, selectLabel } = useContext(ContextStore);
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
@@ -74,6 +75,7 @@ export default function imageTagger({ tab, closeTab }) {
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
   const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
+  const [open, setOpen] = useState(false);
   const dpi = window.devicePixelRatio;
 
   const drawTags = (tags) => {
@@ -191,22 +193,35 @@ export default function imageTagger({ tab, closeTab }) {
     return () => removeListener(FROM_GENERAL, dbRespHandler);
   }, []);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     if (tagList !== null) {
-      send2Local(
-        TO_GENERAL,
-        update(
-          PAGES,
-          {
-            key: tab.routingPath,
-            path: tab.src,
-            type: MEDIA_TAGGER,
-            project: projectName,
-            actions: tagList,
-          },
-        ),
-      );
-      drawTags(tagList);
+      if (!selectLabel) {
+        handleClickOpen();
+      } else {
+        send2Local(
+          TO_GENERAL,
+          update(
+            PAGES,
+            {
+              key: tab.routingPath,
+              path: tab.src,
+              type: MEDIA_TAGGER,
+              project: projectName,
+              actions: tagList,
+              bucket: selectLabel.key,
+            },
+          ),
+        );
+        drawTags(tagList);
+      }
     }
   }, [tagList]);
 
@@ -278,6 +293,10 @@ export default function imageTagger({ tab, closeTab }) {
           </div>
         ) : null, [tagList, content])
       }
+      <CreateDialog
+        open={open}
+        handleClose={handleClose}
+      />
     </div>
   );
 }
