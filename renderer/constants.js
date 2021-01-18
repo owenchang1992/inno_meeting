@@ -12,3 +12,4 @@ export const UPDATE = 'UPDATE';
 export const EXPORT_PROJECT = 'EXPORT_PROJECT';
 
 export const LABELS = 'labels';
+export const PAGES = 'pages';

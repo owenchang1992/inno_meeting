@@ -32,6 +32,7 @@ import {
   LABELS,
   TO_GENERAL,
   FROM_GENERAL,
+  PAGES,
 } from '../constants';
 
 const App = () => {
@@ -73,12 +74,7 @@ const App = () => {
   };
 
   const getProject = () => {
-    send2Local(TO_MAIN, {
-      name: FIND_ONE,
-      contents: {
-        name: PROJECT_NAME,
-      },
-    });
+    send2Local(TO_GENERAL, find(PAGES, {}));
   };
 
   // Initial Project
@@ -87,7 +83,8 @@ const App = () => {
     getProject();
 
     // Add listener
-    receive(FROM_MAIN, (e, resp) => {
+    receive(FROM_GENERAL, (e, resp) => {
+      console.log(resp);
       if (resp.name === SELECT_FILES || resp.name === FIND_ONE) {
         addTabs(resp.contents.tabs);
       }
