@@ -1,10 +1,17 @@
 const Datastore = require('nedb');
 const path = require('path');
 const config = require('../config');
+const { dialog } = require('electron');
 
 const { app } = require('electron');
 
-const { FROM_GENERAL, PAGE_COLLECTION, LABEL_COLLECTION } = require("../const");
+const {
+  FROM_GENERAL,
+  PAGE_COLLECTION,
+  LABEL_COLLECTION,
+} = require("../const");
+
+const SELECT_FILES = 'SELECT_FILES';
 
 const db = {};
 db.page = new Datastore({
@@ -27,7 +34,7 @@ db.label = new Datastore({
 
 module.exports = ({win, props}) => {
   const sendResponse = (channel, msg) => {
-    win.webContents.send(channel, msg)
+    win.webContents.send(channel, msg);
   }
 
   const getDB = (props) => (
@@ -36,13 +43,38 @@ module.exports = ({win, props}) => {
       : db.label
   )
 
-  require('../models/nedb')[props.name](getDB(props), props)
-    .then((resp) => sendResponse(
-      FROM_GENERAL,
-      {
-        ...props,
-        contents: resp,
-      }
-    ))
-    .catch((err) => { console.log(err) })
+  const selectFiles = (props) => {
+    return dialog.showOpenDialog({
+      properties: ['openFile', 'multiSelections'],
+      filters: [
+        { name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }
+      ]
+    })
+      .then(resp => {
+        if (!resp.canceled) {
+          return sendResponse(
+            FROM_GENERAL, 
+            {
+              ...props,
+              contents: resp.filePaths
+            }
+          )
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  if (props.name === SELECT_FILES) {
+    selectFiles(props);
+  } else {
+    require('../models/nedb')[props.name](getDB(props), props)
+      .then((resp) => sendResponse(
+        FROM_GENERAL,
+        {
+          ...props,
+          contents: resp,
+        }
+      ))
+      .catch((err) => { console.log(err) })
+  }
 };

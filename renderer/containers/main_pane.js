@@ -12,7 +12,7 @@ const MainContent = ({ tabs, closeTab }) => (
       {
         tabs.map((tab) => (
           <Route
-            path={tab.routingPath}
+            path={tab.key}
             render={(props) => (
               <>
                 <SideBar tabs={tabs} closeTab={closeTab} />

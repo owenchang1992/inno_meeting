@@ -7,7 +7,7 @@ import tabReducer from '../reducers/tab_reducer';
 import labelReducer from '../reducers/label_reducers';
 import { initializeLabel } from '../reducers/label_actions';
 
-import { addNewTab, closeTab } from '../reducers/tab_actions';
+import { addNewPage, closeTab, pageCreater } from '../reducers/tab_actions';
 
 import Main from './main_pane';
 import Header from './header';
@@ -15,7 +15,6 @@ import Header from './header';
 import {
   update,
   send2Local,
-  removeListener,
   receive,
   FIND,
   find,
@@ -23,12 +22,10 @@ import {
 
 import {
   TO_MAIN,
-  FROM_MAIN,
   PROJECT_NAME,
-  FIND_ONE,
   SELECT_FILES,
   UPDATE,
-  EXPORT_PROJECT,
+  // EXPORT_PROJECT,
   LABELS,
   TO_GENERAL,
   FROM_GENERAL,
@@ -37,12 +34,20 @@ import {
 
 const App = () => {
   const history = useHistory();
-  const [tabs, dispatch] = useReducer(tabReducer, []);
+  const [pages, dispatch] = useReducer(tabReducer, []);
   const [labels, ldispatch] = useReducer(labelReducer, []);
   const [selectLabel, setSelectLabel] = useState(null);
 
-  const addTab = (tab) => {
-    dispatch(addNewTab(tab));
+  const addPage = (src) => {
+    let newPage;
+    if (Array.isArray(src)) {
+      newPage = src.map((srcItem) => pageCreater(srcItem, PROJECT_NAME, selectLabel));
+      history.push(newPage[0].key);
+    } else {
+      newPage = pageCreater(src, PROJECT_NAME, selectLabel);
+    }
+
+    dispatch(addNewPage(newPage));
   };
 
   const onCloseTab = (removedTab) => {
@@ -50,28 +55,20 @@ const App = () => {
   };
 
   const showOpenDialog = () => {
-    send2Local(TO_MAIN, {
+    send2Local(TO_GENERAL, {
+      type: PAGES,
       name: SELECT_FILES,
-      contents: { tabs },
     });
   };
 
-  const showSaveDialog = () => {
-    send2Local(TO_MAIN, {
-      name: EXPORT_PROJECT,
-      contents: {
-        name: PROJECT_NAME,
-      },
-    });
-  };
-
-  const addTabs = (newTabs) => {
-    // Add tab to list
-    newTabs.forEach((newTab) => addTab(newTab));
-
-    // Add tab to routing list
-    history.push(newTabs[0].routingPath);
-  };
+  // const showSaveDialog = () => {
+  //   send2Local(TO_MAIN, {
+  //     name: EXPORT_PROJECT,
+  //     contents: {
+  //       name: PROJECT_NAME,
+  //     },
+  //   });
+  // };
 
   const getProject = () => {
     send2Local(TO_GENERAL, find(PAGES, {}));
@@ -85,8 +82,11 @@ const App = () => {
     // Add listener
     receive(FROM_GENERAL, (e, resp) => {
       console.log(resp);
-      if (resp.name === SELECT_FILES || resp.name === FIND_ONE) {
-        addTabs(resp.contents.tabs);
+      if (resp.name === SELECT_FILES) {
+        addPage(resp.contents);
+      } else if (resp.name === FIND && resp.type === PAGES) {
+        // TODO: ADD Initial page
+        // addPage(resp.contents);
       }
     });
 
@@ -106,12 +106,9 @@ const App = () => {
     };
 
     getDBLabels();
-
-    return () => removeListener(FROM_MAIN, addTabs);
   }, []);
 
   useEffect(() => {
-    console.log(labels);
     if (labels.length !== 0) {
       send2Local(
         TO_GENERAL,
@@ -129,10 +126,9 @@ const App = () => {
       contents: {
         name: PROJECT_NAME,
         key: PROJECT_NAME,
-        tabs,
       },
     });
-  }, [tabs]);
+  }, []);
 
   return (
     <ContextStore.Provider
@@ -147,10 +143,10 @@ const App = () => {
       <div className="window">
         <Header
           showOpenDialog={showOpenDialog}
-          showSaveDialog={showSaveDialog}
+          // showSaveDialog={showSaveDialog}
         />
         <div className="window-content">
-          <Main tabs={tabs} closeTab={onCloseTab} />
+          <Main tabs={pages} closeTab={onCloseTab} />
         </div>
       </div>
     </ContextStore.Provider>

@@ -41,7 +41,7 @@ import {
 import {
   findOne,
   update,
-  removeListener,
+  // removeListener,
   receive,
   send2Local,
   FIND_ONE,
@@ -77,6 +77,7 @@ export default function imageTagger({ tab, closeTab }) {
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const [open, setOpen] = useState(false);
   const dpi = window.devicePixelRatio;
+  console.log(tab);
 
   const drawTags = (tags) => {
     if (content.type === 'canvas') {
@@ -182,7 +183,7 @@ export default function imageTagger({ tab, closeTab }) {
     };
 
     const getDbTagList = () => {
-      send2Local(TO_GENERAL, findOne(PAGES, { key: tab.routingPath }));
+      send2Local(TO_GENERAL, findOne(PAGES, { key: tab.key }));
       receive(FROM_GENERAL, dbRespHandler);
     };
 
@@ -190,7 +191,7 @@ export default function imageTagger({ tab, closeTab }) {
       .then(() => getDbTagList())
       .catch(() => console.log('initial failed'));
 
-    return () => removeListener(FROM_GENERAL, dbRespHandler);
+    // return () => removeListener(FROM_GENERAL, dbRespHandler);
   }, []);
 
   const handleClickOpen = () => {
@@ -211,8 +212,8 @@ export default function imageTagger({ tab, closeTab }) {
           update(
             PAGES,
             {
-              key: tab.routingPath,
-              path: tab.src,
+              key: tab.key,
+              src: tab.src,
               type: MEDIA_TAGGER,
               project: projectName,
               actions: tagList,

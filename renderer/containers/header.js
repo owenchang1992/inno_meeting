@@ -5,7 +5,7 @@ import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import CreateDialog from '../components/pages/create_dialog';
 
-const Header = ({ showOpenDialog, showSaveDialog }) => {
+const Header = ({ showOpenDialog }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -41,7 +41,7 @@ const Header = ({ showOpenDialog, showSaveDialog }) => {
         </Button>
         <Button
           className="btn btn-default"
-          onClick={showSaveDialog}
+          // onClick={showSaveDialog}
         >
           <span className="icon icon-export" />
         </Button>

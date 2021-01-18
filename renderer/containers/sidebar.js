@@ -36,6 +36,7 @@ const SideBarItem = ({ tab, handleClick, focusTabName }) => {
 const SideBar = ({ tabs, closeTab }) => {
   const { selectLabel } = useContext(ContextStore);
   const history = useHistory();
+  console.log(tabs);
 
   const handleClick = (e, tab) => {
     if (e.target.className.indexOf('icon-cancel-circled') !== -1) {
@@ -48,9 +49,16 @@ const SideBar = ({ tabs, closeTab }) => {
     }
   };
 
+  const filterPageByBucket = (page) => {
+    if (!selectLabel) {
+      return false;
+    }
+    return page.bucket === selectLabel.key;
+  };
+
   const getList = () => {
     if (tabs) {
-      return tabs.map((tab) => (
+      return tabs.filter(filterPageByBucket).map((tab) => (
         <SideBarItem
           tab={tab}
           handleClick={handleClick}
