@@ -41,10 +41,10 @@ const App = () => {
   const addPage = (src) => {
     let newPage;
     if (Array.isArray(src)) {
-      newPage = src.map((srcItem) => pageCreater(srcItem, PROJECT_NAME, selectLabel));
+      newPage = src.map((srcItem) => pageCreater(srcItem, PROJECT_NAME));
       history.push(newPage[0].key);
     } else {
-      newPage = pageCreater(src, PROJECT_NAME, selectLabel);
+      newPage = pageCreater(src, PROJECT_NAME);
     }
 
     dispatch(addNewPage(newPage));

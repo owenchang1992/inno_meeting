@@ -49,16 +49,20 @@ const SideBar = ({ tabs, closeTab }) => {
     }
   };
 
-  const filterPageByBucket = (page) => {
-    if (!selectLabel) {
-      return false;
-    }
-    return page.bucket === selectLabel.key;
-  };
+  // const filterPageByBucket = (page) => {
+  //   if (!selectLabel) {
+  //     return false;
+  //   }
+
+  //   console.log(page, selectLabel);
+  //   return page.bucket === selectLabel.key;
+  // };
+
+  // .filter(filterPageByBucket)
 
   const getList = () => {
     if (tabs) {
-      return tabs.filter(filterPageByBucket).map((tab) => (
+      return tabs.map((tab) => (
         <SideBarItem
           tab={tab}
           handleClick={handleClick}

@@ -77,7 +77,7 @@ export default function imageTagger({ tab, closeTab }) {
   const [mouseUpPoint, setMouseUpPoint] = useState(initialPoint);
   const [open, setOpen] = useState(false);
   const dpi = window.devicePixelRatio;
-  console.log(tab);
+  // console.log(tab);
 
   const drawTags = (tags) => {
     if (content.type === 'canvas') {
