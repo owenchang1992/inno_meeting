@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
 
@@ -26,6 +26,7 @@ import {
 const App = () => {
   const history = useHistory();
   const [tabs, dispatch] = useReducer(tabReducer, []);
+  const [sideBarTab, setSideBarTab] = useState([]);
 
   const addTab = (tab) => {
     dispatch(addNewTab(tab));
@@ -75,7 +76,11 @@ const App = () => {
 
     // Add listener
     receive(FROM_MAIN, (e, resp) => {
-      if (resp.name === SELECT_FILES || resp.name === FIND_ONE) {
+      if (resp.name === SELECT_FILES) {
+        console.log(resp);
+        addTabs(resp.contents.tabs);
+        setSideBarTab(resp.contents.tabs);
+      } else if (resp.name === FIND_ONE) {
         addTabs(resp.contents.tabs);
       }
     });
@@ -101,7 +106,7 @@ const App = () => {
         showSaveDialog={showSaveDialog}
       />
       <div className="window-content">
-        <Main tabs={tabs} closeTab={onCloseTab} />
+        <Main tabs={tabs} sideBarTab={sideBarTab} closeTab={onCloseTab} />
       </div>
     </div>
   );

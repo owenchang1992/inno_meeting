@@ -5,7 +5,7 @@ import PageLoader from '../components/page_loader';
 import Home from '../components/pages/home/home';
 import SideBar from './sidebar';
 
-const MainContent = ({ tabs, closeTab }) => (
+const MainContent = ({ tabs, closeTab, sideBarTab }) => (
   <div className="pane">
     <div className="pane-group">
       <Route path="/" exact component={() => <Home />} />
@@ -15,7 +15,7 @@ const MainContent = ({ tabs, closeTab }) => (
             path={tab.routingPath}
             render={(props) => (
               <>
-                <SideBar tabs={tabs} closeTab={closeTab} />
+                <SideBar tabs={sideBarTab} closeTab={closeTab} />
                 <div className="pane">
                   <PageLoader
                     {...props}

@@ -60,15 +60,13 @@ module.exports = ({win, props}) => {
         );
   
         if (index === -1) accumulator.push(item);
+        else { accumulator.push(mainList[index]) }
         return accumulator;
       },
       []
     )
 
-    return [
-      ...mainList,
-      ...newList,
-    ]
+    return newList;
   }
 
   const copyMedia = (fileList, dest) => {
@@ -124,6 +122,7 @@ module.exports = ({win, props}) => {
           if (!resp.canceled) {
             return sendResp({
               ...props,
+              preTabs: props.contents,
               contents: {
                 tabs: checkTabsExisting(
                   props.contents.tabs,
