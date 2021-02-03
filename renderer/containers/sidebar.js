@@ -32,7 +32,7 @@ const SideBarItem = ({ tab, handleClick, focusTabName }) => {
   );
 };
 
-const SideBar = ({ tabs, closeTab }) => {
+const SideBar = ({ tabs, selectedTab, closeTab }) => {
   const history = useHistory();
 
   const handleClick = (e, tab) => {
@@ -46,9 +46,20 @@ const SideBar = ({ tabs, closeTab }) => {
     }
   };
 
+  const selectedTabFilter = (tab) => {
+    const index = selectedTab.findIndex((selectedItem) => (
+      selectedItem.routingPath === tab.routingPath
+    ));
+    if (index !== -1) {
+      return true;
+    }
+
+    return false;
+  };
+
   const getList = () => {
     if (tabs) {
-      return tabs.map((tab) => (
+      return tabs.filter(selectedTabFilter).map((tab) => (
         <SideBarItem
           tab={tab}
           handleClick={handleClick}

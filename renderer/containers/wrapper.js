@@ -26,7 +26,7 @@ import {
 const App = () => {
   const history = useHistory();
   const [tabs, dispatch] = useReducer(tabReducer, []);
-  const [sideBarTab, setSideBarTab] = useState([]);
+  const [selectedTab, setSelectedTab] = useState([]);
 
   const addTab = (tab) => {
     dispatch(addNewTab(tab));
@@ -79,7 +79,7 @@ const App = () => {
       if (resp.name === SELECT_FILES) {
         console.log(resp);
         addTabs(resp.contents.tabs);
-        setSideBarTab(resp.contents.tabs);
+        setSelectedTab(resp.contents.tabs);
       } else if (resp.name === FIND_ONE) {
         addTabs(resp.contents.tabs);
       }
@@ -106,7 +106,7 @@ const App = () => {
         showSaveDialog={showSaveDialog}
       />
       <div className="window-content">
-        <Main tabs={tabs} sideBarTab={sideBarTab} closeTab={onCloseTab} />
+        <Main tabs={tabs} selectedTab={selectedTab} closeTab={onCloseTab} />
       </div>
     </div>
   );
