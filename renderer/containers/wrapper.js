@@ -55,9 +55,6 @@ const App = () => {
   const addTabs = (newTabs) => {
     // Add tab to list
     newTabs.forEach((newTab) => addTab(newTab));
-
-    // Add tab to routing list
-    history.push(newTabs[0].routingPath);
   };
 
   const getProject = () => {
@@ -80,6 +77,7 @@ const App = () => {
         console.log(resp);
         addTabs(resp.contents.tabs);
         setSelectedTab(resp.contents.tabs);
+        history.push(resp.contents.tabs[0].routingPath);
       } else if (resp.name === FIND_ONE) {
         addTabs(resp.contents.tabs);
       }
