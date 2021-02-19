@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import ContextStore from '../context_store';
 
 const SideBarItem = ({ tab, handleClick, focusTabName }) => {
   const getTab = () => (
-    tab.routingPath === focusTabName
+    tab.key === focusTabName
       ? 'active'
       : ''
   );
@@ -34,9 +33,7 @@ const SideBarItem = ({ tab, handleClick, focusTabName }) => {
 };
 
 const SideBar = ({ tabs, closeTab }) => {
-  const { selectLabel } = useContext(ContextStore);
   const history = useHistory();
-  console.log(tabs);
 
   const handleClick = (e, tab) => {
     if (e.target.className.indexOf('icon-cancel-circled') !== -1) {
@@ -44,21 +41,10 @@ const SideBar = ({ tabs, closeTab }) => {
       if (tab.routingPath === history.location.pathname) {
         history.goBack();
       }
-    } else if (history.location.pathname !== tab.routingPath) {
-      history.push(tab.routingPath);
+    } else if (history.location.pathname !== tab.key) {
+      history.push(tab.key);
     }
   };
-
-  // const filterPageByBucket = (page) => {
-  //   if (!selectLabel) {
-  //     return false;
-  //   }
-
-  //   console.log(page, selectLabel);
-  //   return page.bucket === selectLabel.key;
-  // };
-
-  // .filter(filterPageByBucket)
 
   const getList = () => {
     if (tabs) {
@@ -76,9 +62,6 @@ const SideBar = ({ tabs, closeTab }) => {
 
   return (
     <div className="pane-sm sidebar">
-      <h5 className="nav-group-title">
-        {selectLabel ? selectLabel.title : null}
-      </h5>
       <ul className="list-group">
         {getList()}
       </ul>
