@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
 import ContextStore from '../context_store';
@@ -25,7 +25,6 @@ import {
   PROJECT_NAME,
   SELECT_FILES,
   UPDATE,
-  // EXPORT_PROJECT,
   LABELS,
   TO_GENERAL,
   FROM_GENERAL,
@@ -36,7 +35,6 @@ const App = () => {
   const history = useHistory();
   const [pages, dispatch] = useReducer(tabReducer, []);
   const [labels, ldispatch] = useReducer(labelReducer, []);
-  const [selectLabel, setSelectLabel] = useState(null);
 
   const addPage = (src) => {
     let newPage;
@@ -134,8 +132,6 @@ const App = () => {
     <ContextStore.Provider
       value={{
         projectName: PROJECT_NAME,
-        selectLabel,
-        setSelectLabel,
         labels,
         ldispatch,
       }}
