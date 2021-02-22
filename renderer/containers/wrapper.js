@@ -36,16 +36,27 @@ const App = () => {
   const [pages, dispatch] = useReducer(tabReducer, []);
   const [labels, ldispatch] = useReducer(labelReducer, []);
 
-  const addPage = (src) => {
-    let newPage;
-    if (Array.isArray(src)) {
-      newPage = src.map((srcItem) => pageCreater(srcItem, PROJECT_NAME));
-      history.push(newPage[0].key);
-    } else {
-      newPage = pageCreater(src, PROJECT_NAME);
-    }
+  const initPage = (dbPage) => {
+    history.push(dbPage[0].key);
+    dbPage.forEach((page) => {
+      console.log(page);
+      dispatch(addNewPage(page));
+    });
+  };
 
-    dispatch(addNewPage(newPage));
+  const addPage = (src) => {
+    if (Array.isArray(src)) {
+      history.push(
+        src.map((srcItem) => {
+          const newPage = pageCreater(srcItem, PROJECT_NAME);
+          console.log(newPage);
+          dispatch(addNewPage(newPage));
+          return newPage;
+        })[0].key,
+      );
+    } else {
+      dispatch(addNewPage(pageCreater(src, PROJECT_NAME)));
+    }
   };
 
   const onCloseTab = (removedTab) => {
@@ -58,15 +69,6 @@ const App = () => {
       name: SELECT_FILES,
     });
   };
-
-  // const showSaveDialog = () => {
-  //   send2Local(TO_MAIN, {
-  //     name: EXPORT_PROJECT,
-  //     contents: {
-  //       name: PROJECT_NAME,
-  //     },
-  //   });
-  // };
 
   const getProject = () => {
     send2Local(TO_GENERAL, find(PAGES, {}));
@@ -84,7 +86,7 @@ const App = () => {
         addPage(resp.contents);
       } else if (resp.name === FIND && resp.type === PAGES) {
         // TODO: ADD Initial page
-        // addPage(resp.contents);
+        initPage(resp.contents);
       }
     });
 
@@ -137,10 +139,7 @@ const App = () => {
       }}
     >
       <div className="window">
-        <Header
-          showOpenDialog={showOpenDialog}
-          // showSaveDialog={showSaveDialog}
-        />
+        <Header showOpenDialog={showOpenDialog} />
         <div className="window-content">
           <Main tabs={pages} closeTab={onCloseTab} />
         </div>

@@ -200,6 +200,7 @@ export default function imageTagger({ tab, closeTab }) {
           {
             key: tab.key,
             src: tab.src,
+            name: tab.name,
             type: MEDIA_TAGGER,
             project: projectName,
             actions: tagList,
