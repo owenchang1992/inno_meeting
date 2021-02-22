@@ -4,12 +4,12 @@ import React, {
   useState,
   useReducer,
   useCallback,
-  useContext,
+  // useContext,
 } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import ContextStore from '../../../context_store';
+// import ContextStore from '../../../context_store';
 
 import {
   GET_TAGS_FROM_DB,
@@ -32,7 +32,6 @@ import Labels from './labels';
 import TagList from './tag_list';
 
 import {
-  MEDIA_TAGGER,
   FROM_GENERAL,
   TO_GENERAL,
 } from '../../../constants';
@@ -64,7 +63,7 @@ const containerStyle = {
 const initialPoint = { left: -1, top: -1 };
 
 export default function imageTagger({ tab, closeTab }) {
-  const { projectName } = useContext(ContextStore);
+  // const { projectName } = useContext(ContextStore);
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
@@ -198,11 +197,7 @@ export default function imageTagger({ tab, closeTab }) {
         update(
           PAGES,
           {
-            key: tab.key,
-            src: tab.src,
-            name: tab.name,
-            type: MEDIA_TAGGER,
-            project: projectName,
+            ...tab,
             actions: tagList,
           },
         ),
