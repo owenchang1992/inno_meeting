@@ -13,7 +13,7 @@ export const pageCreater = (src, projectName) => ({
   actions: [],
 });
 
-export const addNewPage = (page) => ({
+export const addPage = (page) => ({
   type: ADD_PAGE,
   payload: page,
 });

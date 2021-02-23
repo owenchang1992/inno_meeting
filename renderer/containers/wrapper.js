@@ -7,7 +7,7 @@ import tabReducer from '../reducers/tab_reducer';
 import labelReducer from '../reducers/label_reducers';
 import { initializeLabel } from '../reducers/label_actions';
 
-import { addNewPage, closeTab, pageCreater } from '../reducers/tab_actions';
+import { addPage, closeTab, pageCreater } from '../reducers/tab_actions';
 
 import Main from './main_pane';
 import Header from './header';
@@ -40,22 +40,22 @@ const App = () => {
     history.push(dbPage[0].key);
     dbPage.forEach((page) => {
       console.log(page);
-      dispatch(addNewPage(page));
+      dispatch(addPage(page));
     });
   };
 
-  const addPage = (src) => {
+  const addNewPage = (src) => {
     if (Array.isArray(src)) {
       history.push(
         src.map((srcItem) => {
           const newPage = pageCreater(srcItem, PROJECT_NAME);
           console.log(newPage);
-          dispatch(addNewPage(newPage));
+          dispatch(addPage(newPage));
           return newPage;
         })[0].key,
       );
     } else {
-      dispatch(addNewPage(pageCreater(src, PROJECT_NAME)));
+      dispatch(addPage(pageCreater(src, PROJECT_NAME)));
     }
   };
 
@@ -83,7 +83,7 @@ const App = () => {
     receive(FROM_GENERAL, (e, resp) => {
       console.log(resp);
       if (resp.name === SELECT_FILES) {
-        addPage(resp.contents);
+        addNewPage(resp.contents);
       } else if (resp.name === FIND && resp.type === PAGES) {
         // TODO: ADD Initial page
         initPage(resp.contents);
