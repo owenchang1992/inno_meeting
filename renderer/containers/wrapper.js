@@ -3,11 +3,11 @@ import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
 import ContextStore from '../context_store';
 
-import tabReducer from '../reducers/tab_reducer';
+import pageReducer from '../reducers/page_reducer';
 import labelReducer from '../reducers/label_reducers';
 import { initializeLabel } from '../reducers/label_actions';
 
-import { addPage, closeTab, pageCreater } from '../reducers/tab_actions';
+import { addPage, closePage, pageCreater } from '../reducers/page_actions';
 
 import Main from './main_pane';
 import Header from './header';
@@ -33,7 +33,7 @@ import {
 
 const App = () => {
   const history = useHistory();
-  const [pages, dispatch] = useReducer(tabReducer, []);
+  const [pages, dispatch] = useReducer(pageReducer, []);
   const [labels, ldispatch] = useReducer(labelReducer, []);
 
   const initPage = (dbPage) => {
@@ -60,7 +60,7 @@ const App = () => {
   };
 
   const onCloseTab = (removedTab) => {
-    dispatch(closeTab(removedTab));
+    dispatch(closePage(removedTab));
   };
 
   const showOpenDialog = () => {
