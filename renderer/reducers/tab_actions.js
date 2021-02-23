@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
 import path from 'path';
-import { ADD_PAGE, CLOSE_TAB } from './constants';
+import { ADD_PAGE, CLOSE_PAGE } from './constants';
 
 const IMAGE = 'image';
 
@@ -19,6 +19,6 @@ export const addPage = (page) => ({
 });
 
 export const closeTab = (tab) => ({
-  type: CLOSE_TAB,
+  type: CLOSE_PAGE,
   payload: tab,
 });

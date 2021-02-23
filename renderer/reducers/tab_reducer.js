@@ -1,4 +1,4 @@
-import { ADD_PAGE, CLOSE_TAB } from './constants';
+import { ADD_PAGE, CLOSE_PAGE } from './constants';
 
 const findTabIndex = (tabList, foundTab) => (
   tabList.findIndex((tab) => foundTab.routingPath === tab.routingPath)
@@ -19,7 +19,7 @@ export default (state, action) => {
     case ADD_PAGE:
       // console.log([...state, ...action.payload]);
       return tabExist(action.payload, state) !== -1 ? state : [...state, action.payload];
-    case CLOSE_TAB:
+    case CLOSE_PAGE:
       return removeTabFromState(state, action.payload);
     default:
       return state;
