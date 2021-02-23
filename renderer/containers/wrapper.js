@@ -109,7 +109,14 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (labels.length !== 0) {
+    const checkUpdateCtn = (labelList) => {
+      for (let label = 0; label < labelList.length; label += 1) {
+        if (!label) return false;
+      }
+      return true;
+    };
+
+    if (labels.length !== 0 && checkUpdateCtn(labels)) {
       send2Local(
         TO_GENERAL,
         update(
