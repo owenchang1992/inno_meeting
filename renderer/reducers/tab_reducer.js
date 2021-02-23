@@ -1,26 +1,25 @@
 import { ADD_PAGE, CLOSE_PAGE } from './constants';
 
-const findTabIndex = (tabList, foundTab) => (
-  tabList.findIndex((tab) => foundTab.routingPath === tab.routingPath)
+const findPageIndex = (pageList, foundPage) => (
+  pageList.findIndex((page) => foundPage.routingPath === page.routingPath)
 );
 
-const removeTabFromState = (tabs, removedTab) => {
-  const rmTabIndex = findTabIndex(tabs, removedTab);
-  tabs.splice(rmTabIndex, 1);
-  return [...tabs];
+const removePageFromState = (pages, removedPage) => {
+  const rmPageIndex = findPageIndex(pages, removedPage);
+  pages.splice(rmPageIndex, 1);
+  return [...pages];
 };
 
-const tabExist = (newTab, tabList) => (
-  tabList.findIndex((tab) => newTab.key === tab.key)
+const pageExist = (newPage, pageList) => (
+  pageList.findIndex((page) => newPage.key === page.key)
 );
 
 export default (state, action) => {
   switch (action.type) {
     case ADD_PAGE:
-      // console.log([...state, ...action.payload]);
-      return tabExist(action.payload, state) !== -1 ? state : [...state, action.payload];
+      return pageExist(action.payload, state) !== -1 ? state : [...state, action.payload];
     case CLOSE_PAGE:
-      return removeTabFromState(state, action.payload);
+      return removePageFromState(state, action.payload);
     default:
       return state;
   }

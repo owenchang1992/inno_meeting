@@ -18,7 +18,7 @@ export const addPage = (page) => ({
   payload: page,
 });
 
-export const closeTab = (tab) => ({
+export const closeTab = (page) => ({
   type: CLOSE_PAGE,
-  payload: tab,
+  payload: page,
 });
