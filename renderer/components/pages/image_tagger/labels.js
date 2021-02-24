@@ -25,9 +25,7 @@ export default ({ setTagConfig }) => {
   const saveLabel = (e, selectedLabel) => {
     if (e.keyCode === 13) {
       if (editedLabel !== null && currentInput.length !== 0) {
-        const newLabel = updateLabel(selectedLabel, { title: currentInput });
-        setTagConfig(newLabel);
-        ldispatch(newLabel);
+        ldispatch(updateLabel(selectedLabel, { title: currentInput }));
       }
       setEditedLabel(null);
     }
