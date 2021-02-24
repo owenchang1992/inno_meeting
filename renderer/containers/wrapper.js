@@ -110,8 +110,8 @@ const App = () => {
 
   useEffect(() => {
     const checkUpdateCtn = (labelList) => {
-      for (let label = 0; label < labelList.length; label += 1) {
-        if (!label) return false;
+      for (let i = 0; i < labelList.length; i += 1) {
+        if (!labelList[i]) return false;
       }
       return true;
     };
