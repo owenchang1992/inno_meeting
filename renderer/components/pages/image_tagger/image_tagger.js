@@ -4,12 +4,12 @@ import React, {
   useState,
   useReducer,
   useCallback,
-  // useContext,
+  useContext,
 } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-// import ContextStore from '../../../context_store';
+import ContextStore from '../../../context_store';
 
 import {
   GET_TAGS_FROM_DB,
@@ -62,8 +62,8 @@ const containerStyle = {
 
 const initialPoint = { left: -1, top: -1 };
 
-export default function imageTagger({ tab, closeTab }) {
-  // const { projectName } = useContext(ContextStore);
+export default function imageTagger({ page }) {
+  const { pageDispatch, closePage } = useContext(ContextStore);
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
@@ -136,7 +136,7 @@ export default function imageTagger({ tab, closeTab }) {
       />
     );
 
-    const drawImage = () => loadImage(tab.src)
+    const drawImage = () => loadImage(page.src)
       .then((img) => {
         setContent(
           createCanvas(
@@ -166,7 +166,7 @@ export default function imageTagger({ tab, closeTab }) {
         console.log(err);
         setTimeout(() => {
           routeHistory.goBack();
-          closeTab(tab);
+          pageDispatch(closePage(page));
         }, 1000);
       });
 
@@ -179,7 +179,7 @@ export default function imageTagger({ tab, closeTab }) {
     };
 
     const getDbTagList = () => {
-      send2Local(TO_GENERAL, findOne(PAGES, { key: tab.key }));
+      send2Local(TO_GENERAL, findOne(PAGES, { key: page.key }));
       receive(FROM_GENERAL, dbRespHandler);
     };
 
@@ -197,7 +197,7 @@ export default function imageTagger({ tab, closeTab }) {
         update(
           PAGES,
           {
-            ...tab,
+            ...page,
             actions: tagList,
           },
         ),
@@ -263,7 +263,7 @@ export default function imageTagger({ tab, closeTab }) {
         useCallback(content.type === 'canvas' ? (
           <div style={{ height: '100%', width: '10em' }}>
             <h3 style={{ marginLeft: '10px' }}>
-              {tab.name}
+              {page.name}
             </h3>
             <Labels setTagConfig={setTagConfig} />
             <TagList

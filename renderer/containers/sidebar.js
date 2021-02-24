@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const SideBarItem = ({ tab, handleClick, focusTabName }) => {
+import ContextStore from '../context_store';
+
+const SideBarItem = ({ page, handleClick, focusTabName }) => {
   const getTab = () => (
-    tab.key === focusTabName
+    page.key === focusTabName
       ? 'active'
       : ''
   );
@@ -13,7 +15,7 @@ const SideBarItem = ({ tab, handleClick, focusTabName }) => {
       <div
         className="tab-body"
         role="button"
-        onClick={(e) => handleClick(e, tab)}
+        onClick={(e) => handleClick(e, page)}
         onKeyDown={() => {}}
         tabIndex={0}
         style={{ padding: '10px' }}
@@ -26,31 +28,32 @@ const SideBarItem = ({ tab, handleClick, focusTabName }) => {
           className="icon icon-cancel-circled pull-right"
           style={{ marginLeft: '10px' }}
         />
-        <strong>{tab.name}</strong>
+        <strong>{page.name}</strong>
       </div>
     </li>
   );
 };
 
-const SideBar = ({ tabs, closeTab }) => {
+const SideBar = ({ pages }) => {
   const history = useHistory();
+  const { pageDispatch, closePage } = useContext(ContextStore);
 
-  const handleClick = (e, tab) => {
+  const handleClick = (e, page) => {
     if (e.target.className.indexOf('icon-cancel-circled') !== -1) {
-      closeTab(tab);
-      if (tab.routingPath === history.location.pathname) {
+      pageDispatch(closePage(page));
+      if (page.routingPath === history.location.pathname) {
         history.goBack();
       }
-    } else if (history.location.pathname !== tab.key) {
-      history.push(tab.key);
+    } else if (history.location.pathname !== page.key) {
+      history.push(page.key);
     }
   };
 
   const getList = () => {
-    if (tabs) {
-      return tabs.map((tab) => (
+    if (pages) {
+      return pages.map((page) => (
         <SideBarItem
-          tab={tab}
+          page={page}
           handleClick={handleClick}
           focusTabName={history.location.pathname}
         />

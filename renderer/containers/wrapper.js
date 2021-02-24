@@ -59,8 +59,8 @@ const App = () => {
     }
   };
 
-  const onCloseTab = (removedTab) => {
-    dispatch(closePage(removedTab));
+  const onClosePage = (removedPage) => {
+    dispatch(closePage(removedPage));
   };
 
   const showOpenDialog = () => {
@@ -143,12 +143,14 @@ const App = () => {
         projectName: PROJECT_NAME,
         labels,
         ldispatch,
+        pageDispatch: dispatch,
+        closePage,
       }}
     >
       <div className="window">
         <Header showOpenDialog={showOpenDialog} />
         <div className="window-content">
-          <Main tabs={pages} closeTab={onCloseTab} />
+          <Main pages={pages} closeTab={onClosePage} />
         </div>
       </div>
     </ContextStore.Provider>
