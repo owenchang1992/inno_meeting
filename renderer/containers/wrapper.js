@@ -18,6 +18,7 @@ import {
   receive,
   FIND,
   find,
+  remove,
 } from '../request';
 
 import {
@@ -59,8 +60,10 @@ const App = () => {
     }
   };
 
-  const onClosePage = (removedPage) => {
+  const removePage = (removedPage) => {
     dispatch(closePage(removedPage));
+    console.log(removedPage);
+    send2Local(TO_GENERAL, remove(PAGES, { key: removedPage.key }));
   };
 
   const showOpenDialog = () => {
@@ -81,7 +84,6 @@ const App = () => {
 
     // Add listener
     receive(FROM_GENERAL, (e, resp) => {
-      console.log(resp);
       if (resp.name === SELECT_FILES) {
         addNewPage(resp.contents);
       } else if (resp.name === FIND && resp.type === PAGES) {
@@ -143,14 +145,13 @@ const App = () => {
         projectName: PROJECT_NAME,
         labels,
         ldispatch,
-        pageDispatch: dispatch,
-        closePage,
+        removePage,
       }}
     >
       <div className="window">
         <Header showOpenDialog={showOpenDialog} />
         <div className="window-content">
-          <Main pages={pages} closeTab={onClosePage} />
+          <Main pages={pages} />
         </div>
       </div>
     </ContextStore.Provider>

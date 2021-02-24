@@ -63,7 +63,7 @@ const containerStyle = {
 const initialPoint = { left: -1, top: -1 };
 
 export default function imageTagger({ page }) {
-  const { pageDispatch, closePage } = useContext(ContextStore);
+  const { removePage } = useContext(ContextStore);
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
@@ -166,7 +166,7 @@ export default function imageTagger({ page }) {
         console.log(err);
         setTimeout(() => {
           routeHistory.goBack();
-          pageDispatch(closePage(page));
+          removePage(page);
         }, 1000);
       });
 

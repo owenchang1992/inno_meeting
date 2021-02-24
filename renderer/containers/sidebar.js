@@ -36,11 +36,11 @@ const SideBarItem = ({ page, handleClick, focusTabName }) => {
 
 const SideBar = ({ pages }) => {
   const history = useHistory();
-  const { pageDispatch, closePage } = useContext(ContextStore);
+  const { removePage } = useContext(ContextStore);
 
   const handleClick = (e, page) => {
     if (e.target.className.indexOf('icon-cancel-circled') !== -1) {
-      pageDispatch(closePage(page));
+      removePage(page);
       if (page.routingPath === history.location.pathname) {
         history.goBack();
       }
