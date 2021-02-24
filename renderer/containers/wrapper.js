@@ -7,7 +7,12 @@ import pageReducer from '../reducers/page_reducer';
 import labelReducer from '../reducers/label_reducers';
 import { initializeLabel } from '../reducers/label_actions';
 
-import { addPage, closePage, pageCreater } from '../reducers/page_actions';
+import {
+  addPage,
+  closePage,
+  pageCreater,
+  updatePage,
+} from '../reducers/page_actions';
 
 import Main from './main_pane';
 import Header from './header';
@@ -60,9 +65,13 @@ const App = () => {
     }
   };
 
+  const onUpdatePage = (targetPage) => {
+    dispatch(updatePage(targetPage));
+    send2Local(TO_GENERAL, update(PAGES, targetPage));
+  };
+
   const removePage = (removedPage) => {
     dispatch(closePage(removedPage));
-    console.log(removedPage);
     send2Local(TO_GENERAL, remove(PAGES, { key: removedPage.key }));
   };
 
@@ -146,6 +155,7 @@ const App = () => {
         labels,
         ldispatch,
         removePage,
+        onUpdatePage,
       }}
     >
       <div className="window">

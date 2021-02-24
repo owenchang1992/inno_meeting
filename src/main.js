@@ -87,6 +87,7 @@ function createWindow () {
   })
 
   ipcMain.on(TO_GENERAL, (e, props) => {
+    // console.log(props);
     controller({win, app, props})
   })
 }

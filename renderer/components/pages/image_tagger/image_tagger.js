@@ -38,7 +38,6 @@ import {
 
 import {
   findOne,
-  update,
   removeListener,
   receive,
   send2Local,
@@ -63,7 +62,7 @@ const containerStyle = {
 const initialPoint = { left: -1, top: -1 };
 
 export default function imageTagger({ page }) {
-  const { removePage } = useContext(ContextStore);
+  const { removePage, onUpdatePage } = useContext(ContextStore);
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
@@ -192,16 +191,10 @@ export default function imageTagger({ page }) {
 
   useEffect(() => {
     if (tagList !== null) {
-      send2Local(
-        TO_GENERAL,
-        update(
-          PAGES,
-          {
-            ...page,
-            actions: tagList,
-          },
-        ),
-      );
+      onUpdatePage({
+        ...page,
+        actions: tagList,
+      });
       drawTags(tagList);
     }
   }, [tagList]);
