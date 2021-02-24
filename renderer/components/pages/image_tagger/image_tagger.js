@@ -39,7 +39,7 @@ import {
 import {
   findOne,
   update,
-  // removeListener,
+  removeListener,
   receive,
   send2Local,
   FIND_ONE,
@@ -187,7 +187,7 @@ export default function imageTagger({ page }) {
       .then(() => getDbTagList())
       .catch(() => console.log('initial failed'));
 
-    // return () => removeListener(FROM_GENERAL, dbRespHandler);
+    return () => removeListener(FROM_GENERAL, dbRespHandler);
   }, []);
 
   useEffect(() => {
