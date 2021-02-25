@@ -41,9 +41,6 @@ const SideBar = ({ pages }) => {
   const handleClick = (e, page) => {
     if (e.target.className.indexOf('icon-cancel-circled') !== -1) {
       removePage(page);
-      if (page.routingPath === history.location.pathname) {
-        history.goBack();
-      }
     } else if (history.location.pathname !== page.key) {
       history.push(page.key);
     }

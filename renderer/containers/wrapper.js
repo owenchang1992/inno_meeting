@@ -57,6 +57,7 @@ const App = () => {
           const newPage = pageCreater(srcItem, PROJECT_NAME);
           console.log(newPage);
           dispatch(addPage(newPage));
+          send2Local(TO_GENERAL, update(PAGES, newPage));
           return newPage;
         })[0].key,
       );
@@ -71,6 +72,10 @@ const App = () => {
   };
 
   const removePage = (removedPage) => {
+    if (removedPage.key === history.location.pathname) {
+      console.log(history);
+      history.goBack();
+    }
     dispatch(closePage(removedPage));
     send2Local(TO_GENERAL, remove(PAGES, { key: removedPage.key }));
   };
