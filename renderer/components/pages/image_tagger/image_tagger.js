@@ -12,11 +12,11 @@ import { useHistory } from 'react-router-dom';
 import ContextStore from '../../../context_store';
 
 import {
-  GET_TAGS_FROM_DB,
+  // GET_TAGS_FROM_DB,
   DELETE_TAG,
   SHOW_TAG,
   HIDE_TAG,
-  PAGES,
+  // PAGES,
 } from './constants';
 
 import {
@@ -31,18 +31,18 @@ import tagListReducer from './tag_reducer';
 import Labels from './labels';
 import TagList from './tag_list';
 
-import {
-  FROM_GENERAL,
-  TO_GENERAL,
-} from '../../../constants';
+// import {
+//   FROM_GENERAL,
+//   TO_GENERAL,
+// } from '../../../constants';
 
-import {
-  findOne,
-  removeListener,
-  receive,
-  send2Local,
-  FIND_ONE,
-} from '../../../request';
+// import {
+//   findOne,
+//   removeListener,
+//   receive,
+//   send2Local,
+//   FIND_ONE,
+// } from '../../../request';
 
 const baseStyle = {
   borderRadius: '4px',
@@ -62,12 +62,12 @@ const containerStyle = {
 const initialPoint = { left: -1, top: -1 };
 
 export default function imageTagger({ page }) {
-  const { removePage, onUpdatePage } = useContext(ContextStore);
+  const { onUpdatePage } = useContext(ContextStore);
   const canvasRef = useRef(null);
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
   const [tagConfig, setTagConfig] = useState({});
-  const [tagList, dispatch] = useReducer(tagListReducer, null);
+  const [tagList, dispatch] = useReducer(tagListReducer, page.actions);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
   const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
@@ -75,9 +75,10 @@ export default function imageTagger({ page }) {
   const dpi = window.devicePixelRatio;
 
   const drawTags = (tags) => {
-    if (content.type === 'canvas') {
+    if (content.type === 'canvas' && snapshot !== null) {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
+      console.log(context, snapshot, tags, tagConfig);
       drawInstructions(context, snapshot, tags, tagConfig);
     }
   };
@@ -165,28 +166,25 @@ export default function imageTagger({ page }) {
         console.log(err);
         setTimeout(() => {
           routeHistory.goBack();
-          removePage(page);
         }, 1000);
       });
 
-    const dbRespHandler = (e, resp) => {
-      if (resp.type === PAGES && resp.name === FIND_ONE) {
-        if (resp.contents) {
-          dispatch([GET_TAGS_FROM_DB, resp.contents.actions]);
-        } else dispatch([GET_TAGS_FROM_DB, []]);
-      }
-    };
+    // const dbRespHandler = (e, resp) => {
+    //   if (resp.type === PAGES && resp.name === FIND_ONE) {
+    //     if (resp.contents) {
+    //       dispatch([GET_TAGS_FROM_DB, resp.contents.actions]);
+    //     } else dispatch([GET_TAGS_FROM_DB, []]);
+    //   }
+    // };
 
-    const getDbTagList = () => {
-      send2Local(TO_GENERAL, findOne(PAGES, { key: page.key }));
-      receive(FROM_GENERAL, dbRespHandler);
-    };
+    // const getDbTagList = () => {
+    //   send2Local(TO_GENERAL, findOne(PAGES, { key: page.key }));
+    //   receive(FROM_GENERAL, dbRespHandler);
+    // };
 
-    drawImage()
-      .then(() => getDbTagList())
-      .catch(() => console.log('initial failed'));
+    drawImage();
 
-    return () => removeListener(FROM_GENERAL, dbRespHandler);
+    // return () => removeListener(FROM_GENERAL, dbRespHandler);
   }, []);
 
   useEffect(() => {
@@ -198,6 +196,10 @@ export default function imageTagger({ page }) {
       drawTags(tagList);
     }
   }, [tagList]);
+
+  useEffect(() => {
+    drawTags(tagList);
+  }, [snapshot]);
 
   // handle mouse events
   useEffect(() => {

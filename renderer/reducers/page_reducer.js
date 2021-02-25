@@ -1,4 +1,4 @@
-import { ADD_PAGE, CLOSE_PAGE } from './constants';
+import { ADD_PAGE, CLOSE_PAGE, UPDATE_PAGE } from './constants';
 
 const findPageIndex = (targetPage, pageList) => (
   pageList.findIndex((page) => targetPage.key === page.key)
@@ -17,10 +17,20 @@ const onAddPage = (state, action) => {
   return [...state, action.payload];
 };
 
+const onUpdate = (pages, updatedPage) => {
+  const pageIndex = findPageIndex(updatedPage, pages);
+  if (pageIndex !== -1) {
+    pages.splice(pageIndex, 1, updatedPage);
+  }
+  return [...pages];
+};
+
 export default (state, action) => {
   switch (action.type) {
     case ADD_PAGE:
       return onAddPage(state, action);
+    case UPDATE_PAGE:
+      return onUpdate(state, action.payload);
     case CLOSE_PAGE:
       return removePageFromState(state, action.payload);
     default:
