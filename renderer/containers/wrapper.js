@@ -73,7 +73,6 @@ const App = () => {
 
   const removePage = (removedPage) => {
     if (removedPage.key === history.location.pathname) {
-      console.log(history);
       history.goBack();
     }
     dispatch(closePage(removedPage));
