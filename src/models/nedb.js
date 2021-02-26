@@ -50,7 +50,6 @@ module.exports = (() => {
   }
 
   const remove = (db, props) => {
-    console.log(props);
     return new Promise((resolve, reject) => {
       db.remove(props.contents, {}, (err, docs) => {
         if(err) reject(err);
