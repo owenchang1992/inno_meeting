@@ -1,0 +1,2 @@
+export const WORKING_FOLDER = 'WORKING_FOLDER';
+export const TAGGED_IMAGE = 'TAGGED_IMAGE';

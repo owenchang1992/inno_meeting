@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import getFilter from '../filters/getFilter';
+import { WORKING_FOLDER } from '../filters/constants';
 
 import ContextStore from '../context_store';
 
@@ -48,7 +50,7 @@ const SideBar = ({ pages }) => {
 
   const getList = () => {
     if (pages) {
-      return pages.map((page) => (
+      return getFilter(WORKING_FOLDER, pages, '/Users/zhangjinzhe/Downloads').map((page) => (
         <SideBarItem
           page={page}
           handleClick={handleClick}
