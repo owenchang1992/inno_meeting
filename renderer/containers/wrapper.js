@@ -29,10 +29,12 @@ import {
 
 import {
   TO_MAIN,
+  FROM_MAIN,
   PROJECT_NAME,
   SELECT_FILES,
   UPDATE,
   LABELS,
+  FIND_ONE,
   TO_GENERAL,
   FROM_GENERAL,
   PAGES,
@@ -146,6 +148,10 @@ const App = () => {
   }, [labels]);
 
   useEffect(() => {
+    const getProjectConfig = (e, resp) => {
+      setWorkingPath(resp.contents.workingPath);
+    };
+
     if (workingPath.length !== 0) {
       send2Local(TO_MAIN, {
         name: UPDATE,
@@ -155,6 +161,13 @@ const App = () => {
           workingPath,
         },
       });
+    } else {
+      send2Local(TO_MAIN, {
+        name: FIND_ONE,
+        contents: { key: PROJECT_NAME },
+      });
+
+      receive(FROM_MAIN, getProjectConfig);
     }
   }, [workingPath]);
 
