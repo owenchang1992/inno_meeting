@@ -38,7 +38,7 @@ const SideBarItem = ({ page, handleClick, focusTabName }) => {
 
 const SideBar = ({ pages }) => {
   const history = useHistory();
-  const { removePage, workingFolder } = useContext(ContextStore);
+  const { removePage, workingPath } = useContext(ContextStore);
 
   const handleClick = (e, page) => {
     if (e.target.className.indexOf('icon-cancel-circled') !== -1) {
@@ -50,7 +50,7 @@ const SideBar = ({ pages }) => {
 
   const getList = () => {
     if (pages) {
-      return getFilter(WORKING_FOLDER, pages, workingFolder).map((page) => (
+      return getFilter(WORKING_FOLDER, pages, workingPath).map((page) => (
         <SideBarItem
           page={page}
           handleClick={handleClick}

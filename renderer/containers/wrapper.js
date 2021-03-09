@@ -42,7 +42,7 @@ const App = () => {
   const history = useHistory();
   const [pages, dispatch] = useReducer(pageReducer, []);
   const [labels, ldispatch] = useReducer(labelReducer, []);
-  const [workingFolder, setWorkingFolder] = useState('');
+  const [workingPath, setWorkingPath] = useState('');
 
   const initPage = (dbPage) => {
     history.push(dbPage[0].key);
@@ -101,7 +101,7 @@ const App = () => {
     receive(FROM_GENERAL, (e, resp) => {
       if (resp.name === SELECT_FILES) {
         addNewPage(resp.contents);
-        setWorkingFolder(path.dirname(resp.contents[0]));
+        setWorkingPath(path.dirname(resp.contents[0]));
       } else if (resp.name === FIND && resp.type === PAGES) {
         // TODO: ADD Initial page
         initPage(resp.contents);
@@ -146,14 +146,17 @@ const App = () => {
   }, [labels]);
 
   useEffect(() => {
-    send2Local(TO_MAIN, {
-      name: UPDATE,
-      contents: {
-        name: PROJECT_NAME,
-        key: PROJECT_NAME,
-      },
-    });
-  }, []);
+    if (workingPath.length !== 0) {
+      send2Local(TO_MAIN, {
+        name: UPDATE,
+        contents: {
+          name: PROJECT_NAME,
+          key: PROJECT_NAME,
+          workingPath,
+        },
+      });
+    }
+  }, [workingPath]);
 
   return (
     <ContextStore.Provider
@@ -163,8 +166,8 @@ const App = () => {
         ldispatch,
         removePage,
         onUpdatePage,
-        workingFolder,
-        setWorkingFolder,
+        workingPath,
+        setWorkingPath,
       }}
     >
       <div className="window">
