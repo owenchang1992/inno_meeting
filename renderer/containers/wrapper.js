@@ -1,6 +1,7 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
+import path from 'path';
 import ContextStore from '../context_store';
 
 import pageReducer from '../reducers/page_reducer';
@@ -41,6 +42,7 @@ const App = () => {
   const history = useHistory();
   const [pages, dispatch] = useReducer(pageReducer, []);
   const [labels, ldispatch] = useReducer(labelReducer, []);
+  const [workingFolder, setWorkingFolder] = useState('');
 
   const initPage = (dbPage) => {
     history.push(dbPage[0].key);
@@ -99,6 +101,7 @@ const App = () => {
     receive(FROM_GENERAL, (e, resp) => {
       if (resp.name === SELECT_FILES) {
         addNewPage(resp.contents);
+        setWorkingFolder(path.dirname(resp.contents[0]));
       } else if (resp.name === FIND && resp.type === PAGES) {
         // TODO: ADD Initial page
         initPage(resp.contents);
@@ -160,6 +163,8 @@ const App = () => {
         ldispatch,
         removePage,
         onUpdatePage,
+        workingFolder,
+        setWorkingFolder,
       }}
     >
       <div className="window">
