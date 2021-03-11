@@ -113,28 +113,6 @@ module.exports = ({win, props}) => {
   ) 
 
   switch(props.name) {
-    case SELECT_FILES:
-      dialog.showOpenDialog({
-        properties: ['openFile', 'multiSelections'],
-        filters: [
-          { name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }
-        ]
-      })
-        .then(resp => {
-          if (!resp.canceled) {
-            return sendResp({
-              ...props,
-              contents: {
-                tabs: checkTabsExisting(
-                  props.contents.tabs,
-                  parsePaths(resp.filePaths)
-                )
-              }
-            })
-          }
-        })
-        .catch((err) => console.log(err));
-      break;
     case FIND_ONE:
       require('../models/nedb').findOne(db, props)
         .then((resp) => {
