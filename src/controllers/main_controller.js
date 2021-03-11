@@ -1,36 +1,17 @@
-const { dialog } = require('electron');
 const path = require('path');
-const CryptoJS = require("crypto-js");
 const { app } = require('electron');
-const {
-  promises: fsPromises,
-  constants: {
-    COPYFILE_EXCL
-  }
-} = require('fs');
 
 const {
   FROM_MAIN,
   PROJECT_COLLECTION,
-  EXPORT_PROJECT_DB,
-  PAGE_COLLECTION,
-  LABEL_COLLECTION,
 } = require("../const");
-
-const {
-  copyFiles,
-  createFolder,
-  writeFile
-} = require("../models/project_handler");
 
 const config = require('../config');
 
 const Datastore = require('nedb');
 
-const SELECT_FILES = 'SELECT_FILES';
 const FIND_ONE = 'FIND_ONE';
 const UPDATE = 'UPDATE';
-const EXPORT_PROJECT = 'EXPORT_PROJECT';
 
 const db = new Datastore({
   filename: path.join(
@@ -46,72 +27,6 @@ module.exports = ({win, props}) => {
     win.webContents.send(FROM_MAIN, message)
   }
 
-  const parsePaths = (filePaths) => filePaths.map((filePath) => ({
-    src: filePath,
-    name: path.basename(filePath),
-    routingPath: `/${CryptoJS.SHA256(filePath).toString(CryptoJS.enc.Hex)}`,
-  }));
-
-  const checkTabsExisting = (mainList, comparedList) => {
-    const newList = comparedList.reduce(
-      (accumulator, item) => {
-        const index = mainList.findIndex(
-          (main) => (main.src === item.src),
-        );
-  
-        if (index === -1) accumulator.push(item);
-        return accumulator;
-      },
-      []
-    )
-
-    return [
-      ...mainList,
-      ...newList,
-    ]
-  }
-
-  const copyMedia = (fileList, dest) => {
-    return createFolder(dest)
-      .then(() => copyFiles(fileList, dest))
-      .catch((err) => console.log('Export error', err))
-  }
-
-  const exportProject = (project, dest) => (
-    Promise.all(
-      [
-        copyMedia(project.tabs, dest),
-        fsPromises.copyFile(
-          path.join(
-            app.getPath('appData'),
-            config.dbPath,
-            PROJECT_COLLECTION,
-          ), 
-          path.join(dest, PROJECT_COLLECTION),
-          COPYFILE_EXCL
-        ),
-        fsPromises.copyFile(
-          path.join(
-            app.getPath('appData'),
-            config.dbPath,
-            PAGE_COLLECTION,
-          ), 
-          path.join(dest, PAGE_COLLECTION),
-          COPYFILE_EXCL
-        ),
-        fsPromises.copyFile(
-          path.join(
-            app.getPath('appData'),
-            config.dbPath,
-            LABEL_COLLECTION,
-          ), 
-          path.join(dest, LABEL_COLLECTION),
-          COPYFILE_EXCL
-        )
-      ]
-    )
-  ) 
-
   switch(props.name) {
     case FIND_ONE:
       require('../models/nedb').findOne(db, props)
@@ -125,18 +40,6 @@ module.exports = ({win, props}) => {
       break;
     case UPDATE:
       require('../models/nedb').update(db, props);
-      break;
-    case EXPORT_PROJECT:
-      Promise.all([
-        dialog.showSaveDialog({ title: 'Export Project' }),
-        require('../models/nedb').findOne(db, props),
-      ])
-        .then((resp) => {
-          if (!resp[0].canceled) {
-            return exportProject(resp[1], resp[0].filePath)
-          }
-        })
-        .catch((err) => console.log('Export Error', err))
       break;
     default:
       console.log('event not found', props);
