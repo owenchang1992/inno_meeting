@@ -27,5 +27,6 @@ const writeFile = (file, data) => {
 module.exports = {
   copyFiles,
   createFolder,
-  writeFile
+  writeFile,
+  copyFile: (src, dist) => fsPromises.copyFile(src, dist, COPYFILE_EXCL)
 }

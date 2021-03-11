@@ -2,6 +2,7 @@ const Datastore = require('nedb');
 const path = require('path');
 const config = require('../config');
 const { dialog } = require('electron');
+const fs_handler = require('../models/fs_handler');
 
 const { app } = require('electron');
 
@@ -46,9 +47,7 @@ module.exports = ({win, props}) => {
   const selectFiles = (props) => {
     return dialog.showOpenDialog({
       properties: ['openFile', 'multiSelections'],
-      filters: [
-        { name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }
-      ]
+      filters: [{ name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }]
     })
       .then(resp => {
         if (!resp.canceled) {
@@ -58,7 +57,7 @@ module.exports = ({win, props}) => {
               ...props,
               contents: resp.filePaths
             }
-          )
+          );
         }
       })
       .catch((err) => console.log(err));
@@ -68,13 +67,30 @@ module.exports = ({win, props}) => {
     selectFiles(props);
   } else {
     require('../models/nedb')[props.name](getDB(props), props)
-      .then((resp) => sendResponse(
-        FROM_GENERAL,
-        {
-          ...props,
-          contents: resp,
+      .then((resp) => {
+        if (props.type === 'pages' && props.name === 'update' && resp.src) {
+          if (resp.src.length !== 0) {
+            const mediaStorePath = path.join(
+              app.getPath('appData'),
+              config.appPath,
+              'media_store'
+            )
+            return fs_handler.createFolder(mediaStorePath)
+              .then(() => fs_handler.copyFile(
+                resp.src,
+                path.join( mediaStorePath, resp.name))
+              )
+          };
         }
-      ))
+
+        sendResponse(
+          FROM_GENERAL,
+          {
+            ...props,
+            contents: resp,
+          }
+        );
+      })
       .catch((err) => { console.log(err) })
   }
 };
