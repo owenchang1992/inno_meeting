@@ -7,13 +7,18 @@ const {
 
 const path = require('path');
 
-const copyFiles = (fileList, dest) => {
-  return Promise.all(
-    fileList.map((file) => (
-      fsPromises.copyFile(file.src, path.join(dest, file.name), COPYFILE_EXCL)
-    ))
-  )
-  .catch((err) => console.log('some thing error'))
+const copyFiles = (source, dest) => {
+  return createFolder(dest)
+    .then(() => {
+      if(Array.isArray(source)) {
+        return Promise.all(source.map((src) => (
+          fsPromises.copyFile(src, path.join(dest, path.basename(src)), COPYFILE_EXCL)
+        )))
+      } else {
+        return fsPromises.copyFile(source, path.join(dest, path.basename(source)), COPYFILE_EXCL)
+      }
+    })
+    .catch((err) => console.log('some thing error', err))
 }
 
 const createFolder = (path) => {
@@ -28,5 +33,4 @@ module.exports = {
   copyFiles,
   createFolder,
   writeFile,
-  copyFile: (src, dist) => fsPromises.copyFile(src, dist, COPYFILE_EXCL)
 }

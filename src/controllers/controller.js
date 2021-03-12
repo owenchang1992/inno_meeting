@@ -68,19 +68,18 @@ module.exports = ({win, props}) => {
   } else {
     require('../models/nedb')[props.name](getDB(props), props)
       .then((resp) => {
+        const mediaStorePath = path.join(
+          app.getPath('appData'),
+          config.appPath,
+          'media_store'
+        );
+
         if (props.type === 'pages' && props.name === 'update' && resp.src) {
           if (resp.src.length !== 0) {
-            const mediaStorePath = path.join(
-              app.getPath('appData'),
-              config.appPath,
-              'media_store'
-            )
-            return fs_handler.createFolder(mediaStorePath)
-              .then(() => fs_handler.copyFile(
-                resp.src,
-                path.join( mediaStorePath, resp.name))
-              )
+            return fs_handler.copyFiles(resp.src, mediaStorePath);
           };
+        } else if (props.type === 'pages' && props.name === 'find') {
+          return fs_handler.copyFiles(resp.map((page) => page.src), mediaStorePath);
         }
 
         sendResponse(
