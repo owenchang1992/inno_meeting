@@ -21,16 +21,55 @@ const copyFiles = (source, dest) => {
     .catch((err) => console.log('some thing error', err))
 }
 
-const createFolder = (path) => {
-  return fsPromises.mkdir(path, { recursive: true });
-}
+const createFolder = (path) => fsPromises.mkdir(path, { recursive: true });
 
-const writeFile = (file, data) => {
-  return fsPromises.writeFile(file, data);
-}
+const writeFile = (file, data) => fsPromises.writeFile(file, data);
+
+const syncMediaStore = (pageList, storePath) => fsPromises.readdir(storePath)
+  .then((files) => {
+    const bothHave = [];
+    const shouldBeRemoved = [];
+    const shouldBeCopied = [];
+
+    const getIntersection = (pageList, files) => {
+      pageList.forEach((page) => {
+        if (files.findIndex((name) => name === page.name) !== -1) {
+          bothHave.push(page.name);
+        }
+      })
+    }
+
+    const syncStore = (bothHave, files) => {
+      files.forEach((fileName) => {
+        if (bothHave.findIndex((name) => fileName === name) === -1) {
+          shouldBeRemoved.push(fileName);
+        } 
+      });
+
+      shouldBeRemoved.forEach((fileName) => {
+        fsPromises.unlink(path.join(storePath, fileName));
+      })
+    }
+
+    const saveToStore = (bothHave, pageList) => {
+      pageList.map((page) => {
+        if (bothHave.findIndex((name) => page.name === name) === -1) {
+          shouldBeCopied.push(page);
+        }
+      });
+  
+      copyFiles(shouldBeCopied.map((page) => page.src), storePath);
+    }
+
+    getIntersection(pageList, files);
+    syncStore(bothHave, files);
+    saveToStore(bothHave, pageList);
+  })
+  .catch((err) => console.log(err))
 
 module.exports = {
   copyFiles,
   createFolder,
   writeFile,
+  syncMediaStore,
 }

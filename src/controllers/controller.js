@@ -2,7 +2,7 @@ const Datastore = require('nedb');
 const path = require('path');
 const config = require('../config');
 const { dialog } = require('electron');
-const fs_handler = require('../models/fs_handler');
+const { syncMediaStore, copyFiles } = require('../models/fs_handler');
 
 const { app } = require('electron');
 
@@ -71,16 +71,8 @@ module.exports = ({win, props}) => {
         const mediaStorePath = path.join(
           app.getPath('appData'),
           config.appPath,
-          'media_store'
+          'media_store',
         );
-
-        if (props.type === 'pages' && props.name === 'update' && resp.src) {
-          if (resp.src.length !== 0) {
-            return fs_handler.copyFiles(resp.src, mediaStorePath);
-          };
-        } else if (props.type === 'pages' && props.name === 'find') {
-          return fs_handler.copyFiles(resp.map((page) => page.src), mediaStorePath);
-        }
 
         sendResponse(
           FROM_GENERAL,
@@ -89,6 +81,14 @@ module.exports = ({win, props}) => {
             contents: resp,
           }
         );
+
+        if (props.type === 'pages' && props.name === 'update' && resp.src) {
+          if (resp.src.length !== 0) {
+            copyFiles(resp.src, mediaStorePath);
+          };
+        } else if (props.type === 'pages' && props.name === 'find') {
+          syncMediaStore(resp, mediaStorePath);
+        }
       })
       .catch((err) => { console.log(err) })
   }
