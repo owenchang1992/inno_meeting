@@ -63,33 +63,34 @@ module.exports = ({win, props}) => {
       .catch((err) => console.log(err));
   }
 
-  if (props.name === SELECT_FILES) {
-    selectFiles(props);
-  } else {
-    require('../models/nedb')[props.name](getDB(props), props)
-      .then((resp) => {
-        const mediaStorePath = path.join(
-          app.getPath('appData'),
-          config.appPath,
-          'media_store',
-        );
+  switch(props.name) {
+    case SELECT_FILES:
+      return selectFiles(props);
+    default:
+      require('../models/nedb')[props.name](getDB(props), props)
+        .then((resp) => {
+          const mediaStorePath = path.join(
+            app.getPath('appData'),
+            config.appPath,
+            'media_store',
+          );
 
-        sendResponse(
-          FROM_GENERAL,
-          {
-            ...props,
-            contents: resp,
+          sendResponse(
+            FROM_GENERAL,
+            {
+              ...props,
+              contents: resp,
+            }
+          );
+
+          if (props.type === 'pages' && props.name === 'update' && resp.src) {
+            if (resp.src.length !== 0) {
+              copyFiles(resp.src, mediaStorePath);
+            };
+          } else if (props.type === 'pages' && props.name === 'find') {
+            syncMediaStore(resp, mediaStorePath);
           }
-        );
-
-        if (props.type === 'pages' && props.name === 'update' && resp.src) {
-          if (resp.src.length !== 0) {
-            copyFiles(resp.src, mediaStorePath);
-          };
-        } else if (props.type === 'pages' && props.name === 'find') {
-          syncMediaStore(resp, mediaStorePath);
-        }
-      })
-      .catch((err) => { console.log(err) })
+        })
+        .catch((err) => { console.log(err) })
   }
 };
