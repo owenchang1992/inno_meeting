@@ -3,8 +3,13 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
+import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 
-const Header = ({ showOpenDialog, exportProject }) => (
+const Header = ({
+  showOpenDialog,
+  exportProject,
+  selectFolder,
+}) => (
   <div
     style={{
       display: 'flex',
@@ -20,6 +25,12 @@ const Header = ({ showOpenDialog, exportProject }) => (
         onClick={showOpenDialog}
       >
         <AddPhotoAlternateIcon className="icon" />
+      </Button>
+      <Button
+        className="btn btn-default"
+        onClick={selectFolder}
+      >
+        <FolderOpenIcon className="icon" />
       </Button>
       <Button
         className="btn btn-default"

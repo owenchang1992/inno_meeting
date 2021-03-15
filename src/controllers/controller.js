@@ -19,6 +19,7 @@ const {
 
 const SELECT_FILES = 'SELECT_FILES';
 const EXPORT_PROJECT = 'EXPORT_PROJECT';
+const SELECT_FOLDER = 'SELECT_FOLDER';
 
 const db = {};
 db.page = new Datastore({
@@ -69,6 +70,26 @@ module.exports = ({win, props}) => {
       .catch((err) => console.log(err));
   }
 
+  const selectFolder = (props) => {
+    return dialog.showOpenDialog({
+      properties: ['openDirectory'],
+      filters: [{ name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }]
+    })
+      .then(resp => {
+        console.log('selectFolder', resp);
+        // if (!resp.canceled) {
+        //   return sendResponse(
+        //     FROM_GENERAL, 
+        //     {
+        //       ...props,
+        //       contents: resp.filePaths
+        //     }
+        //   );
+        // }
+      })
+      .catch((err) => console.log(err));
+  }
+
   const exportProject = async () => {
     try {
       let dest = await dialog.showSaveDialog({
@@ -97,6 +118,8 @@ module.exports = ({win, props}) => {
   switch(props.name) {
     case SELECT_FILES:
       return selectFiles(props);
+    case SELECT_FOLDER:
+      return selectFolder();
     case EXPORT_PROJECT:
       return exportProject();
     default:

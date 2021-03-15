@@ -38,6 +38,7 @@ import {
   TO_GENERAL,
   FROM_GENERAL,
   EXPORT_PROJECT,
+  SELECT_FOLDER,
   PAGES,
 } from '../constants';
 
@@ -88,6 +89,13 @@ const App = () => {
     send2Local(TO_GENERAL, {
       type: PAGES,
       name: SELECT_FILES,
+    });
+  };
+
+  const selectFolder = () => {
+    send2Local(TO_GENERAL, {
+      type: PAGES,
+      name: SELECT_FOLDER,
     });
   };
 
@@ -195,6 +203,7 @@ const App = () => {
         <Header
           showOpenDialog={showOpenDialog}
           exportProject={exportProject}
+          selectFolder={selectFolder}
         />
         <div className="window-content">
           <Main pages={pages} />
