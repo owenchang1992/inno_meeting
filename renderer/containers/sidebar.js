@@ -63,7 +63,7 @@ const SideBar = ({ pages }) => {
   };
 
   return (
-    <div className="pane-sm sidebar">
+    <div className="pane-sm sidebar" style={{ overflowY: 'scroll' }}>
       <ul className="list-group">
         {getList()}
       </ul>
