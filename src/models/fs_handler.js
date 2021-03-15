@@ -54,7 +54,6 @@ const syncMediaStore = (pageList, storePath) => fsPromises.readdir(storePath)
         } 
       });
 
-      // console.log('shouldBeRemoved', shouldBeRemoved);
       shouldBeRemoved.forEach((fileName) => {
         if (fileName.indexOf('json') === -1) {
           fsPromises.unlink(path.join(storePath, fileName));

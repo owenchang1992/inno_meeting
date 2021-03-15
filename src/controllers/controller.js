@@ -96,8 +96,7 @@ module.exports = ({win, props}) => {
             }).map((name) => {
               return path.join(resp.filePaths[0], name)
             })
-            
-            console.log(props);
+
             return sendResponse(
               FROM_GENERAL, 
               {
@@ -120,11 +119,13 @@ module.exports = ({win, props}) => {
 
       if (dest.canceled === false) {
         let dbPage = await require('../models/nedb').find(db.page, {})
+        let taggedPages = await dbPage.filter((page) => page.actions.length > 0);
+
         await createFolder(dest.filePath);
-        await syncMediaStore(dbPage, dest.filePath);
+        await syncMediaStore(taggedPages, dest.filePath);
         let dblabel = await require('../models/nedb').find(db.label, {});
     
-        writeFile(path.join(dest.filePath, 'pages.json'), JSON.stringify(dbPage));
+        writeFile(path.join(dest.filePath, 'pages.json'), JSON.stringify(taggedPages));
         writeFile(path.join(dest.filePath, 'labels.json'), JSON.stringify(dblabel));
       }
     } catch (error) {
