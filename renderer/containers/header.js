@@ -1,12 +1,12 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
+// import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 
 const Header = ({
-  showOpenDialog,
+  // showOpenDialog,
   exportProject,
   selectFolder,
 }) => (
@@ -20,12 +20,12 @@ const Header = ({
     }}
   >
     <ButtonGroup aria-label="outlined button group">
-      <Button
+      {/* <Button
         className="btn btn-default"
         onClick={showOpenDialog}
       >
         <AddPhotoAlternateIcon className="icon" />
-      </Button>
+      </Button> */}
       <Button
         className="btn btn-default"
         onClick={selectFolder}
