@@ -51,7 +51,7 @@ const App = () => {
   const initPage = (dbPage) => {
     history.push(dbPage[0].key);
     dbPage.forEach((page) => {
-      console.log(page);
+      // console.log(page);
       dispatch(addPage(page));
     });
   };
@@ -117,7 +117,8 @@ const App = () => {
 
     // Add listener
     receive(FROM_GENERAL, (e, resp) => {
-      if (resp.name === SELECT_FILES) {
+      if (resp.name === SELECT_FILES || resp.name === SELECT_FOLDER) {
+        console.log(resp.contents);
         addNewPage(resp.contents);
         setWorkingPath(path.dirname(resp.contents[0]));
       } else if (resp.name === FIND && resp.type === PAGES) {

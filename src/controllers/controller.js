@@ -7,6 +7,7 @@ const {
   copyFiles,
   createFolder,
   writeFile,
+  readdir,
 } = require('../models/fs_handler');
 
 const { app } = require('electron');
@@ -73,19 +74,38 @@ module.exports = ({win, props}) => {
   const selectFolder = (props) => {
     return dialog.showOpenDialog({
       properties: ['openDirectory'],
-      filters: [{ name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }]
+      // filters: [{ name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }]
     })
       .then(resp => {
-        console.log('selectFolder', resp);
-        // if (!resp.canceled) {
-        //   return sendResponse(
-        //     FROM_GENERAL, 
-        //     {
-        //       ...props,
-        //       contents: resp.filePaths
-        //     }
-        //   );
-        // }
+        if (resp.canceled !== false) {
+          throw 'canceled';
+        }
+        return readdir(resp.filePaths[0])
+          .then((filenames) => {
+            let imageList = filenames.filter((filename) => {
+              let lowerCase = filename.toLowerCase();
+              let types = ['jpg', 'png', 'jpeg'];
+    
+              for (let i=0; i < types.length; i = i+1) {
+                if (lowerCase.indexOf(types[i]) !== -1) {
+                  return true;
+                }
+              }
+    
+              return false;
+            }).map((name) => {
+              return path.join(resp.filePaths[0], name)
+            })
+            
+            console.log(props);
+            return sendResponse(
+              FROM_GENERAL, 
+              {
+                ...props,
+                contents: imageList
+              }
+            );
+          })
       })
       .catch((err) => console.log(err));
   }
@@ -119,7 +139,7 @@ module.exports = ({win, props}) => {
     case SELECT_FILES:
       return selectFiles(props);
     case SELECT_FOLDER:
-      return selectFolder();
+      return selectFolder(props);
     case EXPORT_PROJECT:
       return exportProject();
     default:
