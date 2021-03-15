@@ -12,10 +12,18 @@ const copyFiles = (source, dest) => {
     .then(() => {
       if(Array.isArray(source)) {
         return Promise.all(source.map((src) => (
-          fsPromises.copyFile(src, path.join(dest, path.basename(src)), COPYFILE_EXCL)
+          fsPromises.copyFile(
+            src,
+            path.join(dest, path.basename(src)),
+            COPYFILE_EXCL
+          )
         )))
       } else {
-        return fsPromises.copyFile(source, path.join(dest, path.basename(source)), COPYFILE_EXCL)
+        return fsPromises.copyFile(
+          source,
+          path.join(dest, path.basename(source)),
+          COPYFILE_EXCL
+        )
       }
     })
     .catch((err) => console.log('some thing error', err))
@@ -46,8 +54,11 @@ const syncMediaStore = (pageList, storePath) => fsPromises.readdir(storePath)
         } 
       });
 
+      // console.log('shouldBeRemoved', shouldBeRemoved);
       shouldBeRemoved.forEach((fileName) => {
-        fsPromises.unlink(path.join(storePath, fileName));
+        if (fileName.indexOf('json') === -1) {
+          fsPromises.unlink(path.join(storePath, fileName));
+        }
       })
     }
 
@@ -57,7 +68,8 @@ const syncMediaStore = (pageList, storePath) => fsPromises.readdir(storePath)
           shouldBeCopied.push(page);
         }
       });
-  
+      
+      // console.log('shouldBeCopied', shouldBeCopied);
       copyFiles(shouldBeCopied.map((page) => page.src), storePath);
     }
 
