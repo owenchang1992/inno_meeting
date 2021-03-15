@@ -20,7 +20,10 @@ const SideBarItem = ({ page, handleClick, focusTabName }) => {
         onClick={(e) => handleClick(e, page)}
         onKeyDown={() => {}}
         tabIndex={0}
-        style={{ padding: '10px' }}
+        style={{
+          padding: '10px',
+          color: page.actions.length > 0 ? '#414142' : '#737475',
+        }}
       >
         <span
           className="icon icon-picture pull-left"
