@@ -37,6 +37,7 @@ import {
   FIND_ONE,
   TO_GENERAL,
   FROM_GENERAL,
+  EXPORT_PROJECT,
   PAGES,
 } from '../constants';
 
@@ -87,6 +88,13 @@ const App = () => {
     send2Local(TO_GENERAL, {
       type: PAGES,
       name: SELECT_FILES,
+    });
+  };
+
+  const exportProject = () => {
+    send2Local(TO_GENERAL, {
+      type: PAGES,
+      name: EXPORT_PROJECT,
     });
   };
 
@@ -184,7 +192,10 @@ const App = () => {
       }}
     >
       <div className="window">
-        <Header showOpenDialog={showOpenDialog} />
+        <Header
+          showOpenDialog={showOpenDialog}
+          exportProject={exportProject}
+        />
         <div className="window-content">
           <Main pages={pages} />
         </div>
