@@ -33,7 +33,8 @@ const createFolder = (path) => fsPromises.mkdir(path, { recursive: true });
 
 const writeFile = (file, data) => fsPromises.writeFile(file, data);
 
-const syncMediaStore = (pageList, storePath) => fsPromises.readdir(storePath)
+const syncMediaStore = (pageList, storePath) => createFolder(storePath)
+  .then(() => fsPromises.readdir(storePath))
   .then((files) => {
     const bothHave = [];
     const shouldBeRemoved = [];
@@ -76,7 +77,9 @@ const syncMediaStore = (pageList, storePath) => fsPromises.readdir(storePath)
     syncStore(bothHave, files);
     saveToStore(bothHave, pageList);
   })
-  .catch((err) => console.log(err))
+  .catch((err) => {
+    console.log(err);
+  })
 
 module.exports = {
   copyFiles,
