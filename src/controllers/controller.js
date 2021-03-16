@@ -94,7 +94,10 @@ module.exports = ({win, props}) => {
     
               return false;
             }).map((name) => {
-              return path.join(resp.filePaths[0], name)
+              return {
+                name,
+                src: path.join(resp.filePaths[0], name)
+              }
             })
 
             return sendResponse(

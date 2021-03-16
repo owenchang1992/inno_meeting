@@ -1,13 +1,12 @@
 import CryptoJS from 'crypto-js';
-import path from 'path';
 import { ADD_PAGE, CLOSE_PAGE, UPDATE_PAGE } from './constants';
 
 const IMAGE = 'image';
 
-export const pageCreater = (src, projectName) => ({
-  key: `/${CryptoJS.SHA256(src).toString(CryptoJS.enc.Hex)}`,
-  name: path.basename(src),
-  src,
+export const pageCreater = (img, projectName) => ({
+  key: `/${CryptoJS.SHA256(img.src).toString(CryptoJS.enc.Hex)}`,
+  name: img.name,
+  src: img.src,
   type: IMAGE,
   project: projectName,
   actions: [],

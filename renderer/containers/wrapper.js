@@ -56,11 +56,11 @@ const App = () => {
     });
   };
 
-  const addNewPage = (src) => {
-    if (Array.isArray(src)) {
+  const addNewPage = (imgs) => {
+    if (Array.isArray(imgs)) {
       history.push(
-        src.map((srcItem) => {
-          const newPage = pageCreater(srcItem, PROJECT_NAME);
+        imgs.map((img) => {
+          const newPage = pageCreater(img, PROJECT_NAME);
           console.log(newPage);
           dispatch(addPage(newPage));
           send2Local(TO_GENERAL, update(PAGES, newPage));
@@ -68,7 +68,7 @@ const App = () => {
         })[0].key,
       );
     } else {
-      dispatch(addPage(pageCreater(src, PROJECT_NAME)));
+      dispatch(addPage(pageCreater(imgs, PROJECT_NAME)));
     }
   };
 
