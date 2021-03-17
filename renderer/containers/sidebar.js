@@ -1,5 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import getFilter from '../filters/getFilter';
 import { WORKING_FOLDER } from '../filters/constants';
 
@@ -21,23 +24,19 @@ const SideBarItem = ({ page, handleClick, focusTabName }) => {
         onKeyDown={() => {}}
         tabIndex={0}
         style={{
-          padding: '10px',
+          padding: '5px 10px',
           color: page.actions.length > 0 ? '#414142' : '#737475',
         }}
       >
-        <span
-          className="icon icon-picture pull-left"
-          style={{ marginRight: '10px' }}
-        />
         {
           page.actions.length > 0 ? (
             <span
               className="icon icon-cancel-circled pull-right"
-              style={{ marginLeft: '10px' }}
+              style={{ marginLeft: '15px' }}
             />
           ) : null
         }
-        <strong>{page.name}</strong>
+        { page.name }
       </div>
     </li>
   );
@@ -45,6 +44,7 @@ const SideBarItem = ({ page, handleClick, focusTabName }) => {
 
 const SideBar = ({ pages }) => {
   const history = useHistory();
+  const [sidebarExpand, setSidebarExpand] = useState(false);
   const { removePage, workingPath } = useContext(ContextStore);
 
   const handleClick = (e, page) => {
@@ -70,8 +70,52 @@ const SideBar = ({ pages }) => {
   };
 
   return (
-    <div className="pane-sm sidebar" style={{ overflowY: 'scroll' }}>
+    <div className={`${sidebarExpand ? '' : 'pane-sm'} sidebar`} style={{ overflowY: 'scroll' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          padding: '4px 2%',
+          alignItems: 'center',
+          backgroundColor: '#f5f5f4',
+        }}
+      >
+        <h5
+          style={{
+            margin: '0',
+            padding: '5px 10px',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          {workingPath.split('/')[workingPath.split('/').length - 1]}
+        </h5>
+        <div>
+          {
+            sidebarExpand ? (
+              <IconButton
+                aria-label="expand"
+                size="small"
+                onClick={() => setSidebarExpand(false)}
+              >
+                <ChevronLeftIcon fontSize="inherit" />
+              </IconButton>
+            ) : (
+              <IconButton
+                aria-label="expand"
+                size="small"
+                onClick={() => setSidebarExpand(true)}
+              >
+                <ChevronRightIcon fontSize="inherit" />
+              </IconButton>
+            )
+          }
+        </div>
+      </div>
       <ul className="list-group">
+        {/* <li className="list-group-header">
+          <input className="form-control" type="text" placeholder="Search for media" />
+        </li> */}
         {getList()}
       </ul>
     </div>
