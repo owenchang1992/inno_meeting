@@ -75,7 +75,7 @@ const SideBar = ({ pages }) => {
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          padding: '4px 2%',
+          padding: '4px 5px',
           alignItems: 'center',
           backgroundColor: '#f5f5f4',
         }}
