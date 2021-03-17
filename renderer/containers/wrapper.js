@@ -1,7 +1,6 @@
 import React, { useReducer, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../assets/css/photon.css';
-import path from 'path';
 import ContextStore from '../context_store';
 
 import pageReducer from '../reducers/page_reducer';
@@ -121,7 +120,7 @@ const App = () => {
       if (resp.name === SELECT_FILES || resp.name === SELECT_FOLDER) {
         console.log(resp.contents);
         addNewPage(resp.contents);
-        setWorkingPath(path.dirname(resp.contents[0].src));
+        setWorkingPath(resp.contents[0].dir);
       } else if (resp.name === FIND && resp.type === PAGES) {
         // TODO: ADD Initial page
         initPage(resp.contents);

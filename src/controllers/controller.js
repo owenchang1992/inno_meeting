@@ -88,7 +88,8 @@ module.exports = ({win, props}) => {
         }).map((name) => {
           return {
             name,
-            src: path.join(filePaths, name)
+            src: path.join(filePaths, name),
+            dir: filePaths,
           }
         })
 

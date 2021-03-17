@@ -86,7 +86,7 @@ const SideBar = ({ pages }) => {
             padding: '5px 10px',
           }}
         >
-          {workingPath.split('/')[workingPath.split('/').length - 1]}
+          {workingPath.split('/')[workingPath.split('/').length - 2]}
         </h5>
         <div>
           {
