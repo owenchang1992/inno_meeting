@@ -29,10 +29,14 @@ const SideBarItem = ({ page, handleClick, focusTabName }) => {
           className="icon icon-picture pull-left"
           style={{ marginRight: '10px' }}
         />
-        <span
-          className="icon icon-cancel-circled pull-right"
-          style={{ marginLeft: '10px' }}
-        />
+        {
+          page.actions.length > 0 ? (
+            <span
+              className="icon icon-cancel-circled pull-right"
+              style={{ marginLeft: '10px' }}
+            />
+          ) : null
+        }
         <strong>{page.name}</strong>
       </div>
     </li>
