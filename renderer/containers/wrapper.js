@@ -92,10 +92,11 @@ const App = () => {
     });
   };
 
-  const selectFolder = () => {
+  const selectFolder = (folder) => {
     send2Local(TO_GENERAL, {
       type: PAGES,
       name: SELECT_FOLDER,
+      contents: folder,
     });
   };
 
@@ -167,6 +168,7 @@ const App = () => {
   useEffect(() => {
     const getProjectConfig = (e, resp) => {
       setWorkingPath(resp.contents.workingPath);
+      selectFolder(resp.contents.workingPath);
     };
 
     if (workingPath.length !== 0) {

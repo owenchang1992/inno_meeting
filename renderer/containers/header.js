@@ -32,7 +32,7 @@ const Header = ({
         </Button> */}
         <Button
           className="btn btn-default"
-          onClick={selectFolder}
+          onClick={() => selectFolder('default')}
         >
           <FolderOpenIcon className="icon" />
         </Button>

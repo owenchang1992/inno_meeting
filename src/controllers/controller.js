@@ -72,44 +72,48 @@ module.exports = ({win, props}) => {
   }
 
   const selectFolder = (props) => {
-    return dialog.showOpenDialog({
-      properties: ['openDirectory'],
-      // filters: [{ name: 'Images', extensions: ['jpg', 'png', 'jpeg'] }]
-    })
-      .then(resp => {
-        if (resp.canceled !== false) {
-          throw 'canceled';
-        }
-        return readdir(resp.filePaths[0])
-          .then((filenames) => {
-            let imageList = filenames.filter((filename) => {
-              let lowerCase = filename.toLowerCase();
-              let types = ['jpg', 'png', 'jpeg'];
-    
-              for (let i=0; i < types.length; i = i+1) {
-                if (lowerCase.indexOf(types[i]) !== -1) {
-                  return true;
-                }
-              }
-    
-              return false;
-            }).map((name) => {
-              return {
-                name,
-                src: path.join(resp.filePaths[0], name)
-              }
-            })
+    const parseFolder = (filePaths) => readdir(filePaths)
+      .then((filenames) => {
+        let imageList = filenames.filter((filename) => {
+          let lowerCase = filename.toLowerCase();
+          let types = ['jpg', 'png', 'jpeg'];
 
-            return sendResponse(
-              FROM_GENERAL, 
-              {
-                ...props,
-                contents: imageList
-              }
-            );
-          })
+          for (let i=0; i < types.length; i = i+1) {
+            if (lowerCase.indexOf(types[i]) !== -1) {
+              return true;
+            }
+          }
+
+          return false;
+        }).map((name) => {
+          return {
+            name,
+            src: path.join(filePaths, name)
+          }
+        })
+
+        return sendResponse(
+          FROM_GENERAL, 
+          {
+            ...props,
+            contents: imageList
+          }
+        );
       })
-      .catch((err) => console.log(err));
+    
+    console.log('contents', props.contents);
+    if (props.contents === 'default') {
+      return dialog.showOpenDialog({ properties: ['openDirectory'] })
+        .then(resp => {
+          if (resp.canceled !== false) {
+            throw 'canceled';
+          }
+          return parseFolder(resp.filePaths[0])
+        })
+        .catch((err) => console.log(err));
+    }
+
+    return parseFolder(props.contents);
   }
 
   const exportProject = async () => {
