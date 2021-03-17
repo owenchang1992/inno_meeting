@@ -84,8 +84,6 @@ const SideBar = ({ pages }) => {
           style={{
             margin: '0',
             padding: '5px 10px',
-            display: 'flex',
-            justifyContent: 'space-between',
           }}
         >
           {workingPath.split('/')[workingPath.split('/').length - 1]}
