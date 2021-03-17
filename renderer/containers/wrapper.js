@@ -120,7 +120,7 @@ const App = () => {
       if (resp.name === SELECT_FILES || resp.name === SELECT_FOLDER) {
         console.log(resp.contents);
         addNewPage(resp.contents);
-        setWorkingPath(path.dirname(resp.contents[0]));
+        setWorkingPath(path.dirname(resp.contents[0].src));
       } else if (resp.name === FIND && resp.type === PAGES) {
         // TODO: ADD Initial page
         initPage(resp.contents);
@@ -197,7 +197,6 @@ const App = () => {
         removePage,
         onUpdatePage,
         workingPath,
-        setWorkingPath,
       }}
     >
       <div className="window">
