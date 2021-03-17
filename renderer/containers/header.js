@@ -44,7 +44,7 @@ const Header = ({
         </Button>
       </ButtonGroup>
       <div>
-        {`Working Path: ${workingPath}`}
+        {`Working Path: ${workingPath.replace('\\', '/')}`}
       </div>
     </div>
   );
