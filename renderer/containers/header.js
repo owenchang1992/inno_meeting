@@ -44,7 +44,7 @@ const Header = ({
         </Button>
       </ButtonGroup>
       <div>
-        {`Working Path: ${workingPath}`}
+        {`Selected Folder: ${workingPath}`}
       </div>
     </div>
   );
