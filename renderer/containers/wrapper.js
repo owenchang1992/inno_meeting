@@ -45,9 +45,11 @@ const App = () => {
   const history = useHistory();
   const [pages, dispatch] = useReducer(pageReducer, []);
   const [labels, ldispatch] = useReducer(labelReducer, []);
+  const [init, setInit] = useState(false);
   const [workingPath, setWorkingPath] = useState('');
 
   const initPage = (dbPage) => {
+    setInit(true);
     history.push(dbPage[0].key);
     dbPage.forEach((page) => {
       // console.log(page);
@@ -56,18 +58,20 @@ const App = () => {
   };
 
   const addNewPage = (imgs) => {
-    if (Array.isArray(imgs)) {
-      history.push(
-        imgs.map((img) => {
-          const newPage = pageCreater(img, PROJECT_NAME);
-          console.log(newPage);
-          dispatch(addPage(newPage));
-          send2Local(TO_GENERAL, update(PAGES, newPage));
-          return newPage;
-        })[0].key,
-      );
-    } else {
-      dispatch(addPage(pageCreater(imgs, PROJECT_NAME)));
+    if (init) {
+      if (Array.isArray(imgs)) {
+        history.push(
+          imgs.map((img) => {
+            const newPage = pageCreater(img, PROJECT_NAME);
+            // console.log(newPage);
+            dispatch(addPage(newPage));
+            send2Local(TO_GENERAL, update(PAGES, newPage));
+            return newPage;
+          })[0].key,
+        );
+      } else {
+        dispatch(addPage(pageCreater(imgs, PROJECT_NAME)));
+      }
     }
   };
 
@@ -118,7 +122,7 @@ const App = () => {
     // Add listener
     receive(FROM_GENERAL, (e, resp) => {
       if (resp.name === SELECT_FILES || resp.name === SELECT_FOLDER) {
-        console.log(resp.contents);
+        // console.log(resp.contents);
         addNewPage(resp.contents);
         setWorkingPath(resp.contents[0].dir);
       } else if (resp.name === FIND && resp.type === PAGES) {
