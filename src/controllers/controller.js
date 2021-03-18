@@ -102,7 +102,6 @@ module.exports = ({win, props}) => {
         );
       })
     
-    console.log('contents', props.contents);
     if (props.contents === 'default') {
       return dialog.showOpenDialog({ properties: ['openDirectory'] })
         .then(resp => {
