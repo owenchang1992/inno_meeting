@@ -8,12 +8,31 @@ import { WORKING_FOLDER } from '../filters/constants';
 
 import ContextStore from '../context_store';
 
-const SideBarItem = ({ page, handleClick, focusTabName }) => {
+const SideBarItem = ({
+  page,
+  handleClick,
+  focusTabName,
+  maxLength,
+}) => {
   const getTab = () => (
     page.key === focusTabName
       ? 'active'
       : ''
   );
+
+  const getStyle = () => {
+    const defaultStyle = {
+      padding: '5px 10px',
+      color: page.actions.length > 0 ? '#414142' : '#737475',
+    };
+
+    return maxLength < 25
+      ? defaultStyle
+      : {
+        ...defaultStyle,
+        minWidth: '170px',
+      };
+  };
 
   return (
     <li className={`list-group-item ${getTab()}`}>
@@ -23,10 +42,7 @@ const SideBarItem = ({ page, handleClick, focusTabName }) => {
         onClick={(e) => handleClick(e, page)}
         onKeyDown={() => {}}
         tabIndex={0}
-        style={{
-          padding: '5px 10px',
-          color: page.actions.length > 0 ? '#414142' : '#737475',
-        }}
+        style={getStyle(maxLength)}
       >
         { page.actions.length > 0 ? <strong>{page.name}</strong> : page.name }
       </div>
@@ -34,8 +50,12 @@ const SideBarItem = ({ page, handleClick, focusTabName }) => {
   );
 };
 
-const ExpandIcon = ({ sidebarExpand, setSidebarExpand }) => {
-  if (sidebarExpand) {
+const ExpandIcon = ({
+  sidebarExpand,
+  setSidebarExpand,
+  maxLength,
+}) => {
+  if ((maxLength > 25 && sidebarExpand) || (maxLength < 25 && !sidebarExpand)) {
     return (
       <ChevronLeftIcon
         fontSize="inherit"
@@ -43,6 +63,7 @@ const ExpandIcon = ({ sidebarExpand, setSidebarExpand }) => {
       />
     );
   }
+
   return (
     <ChevronRightIcon
       fontSize="inherit"
@@ -55,6 +76,7 @@ const SideBar = ({ pages }) => {
   const history = useHistory();
   const [sidebarExpand, setSidebarExpand] = useState(false);
   const { removePage, workingPath } = useContext(ContextStore);
+  let maxLength = 0;
 
   const handleClick = (e, page) => {
     if (e.target.className.indexOf('icon-cancel-circled') !== -1) {
@@ -64,27 +86,28 @@ const SideBar = ({ pages }) => {
     }
   };
 
-  const getList = () => {
+  const filterPage = () => {
     if (pages) {
-      return getFilter(WORKING_FOLDER, pages, workingPath).map((page) => (
-        <SideBarItem
-          page={page}
-          handleClick={handleClick}
-          focusTabName={history.location.pathname}
-        />
-      ));
+      const imageInWorkingPath = getFilter(WORKING_FOLDER, pages, workingPath);
+
+      for (let i = 0; i < imageInWorkingPath.length; i += 1) {
+        if (imageInWorkingPath[i].name.length > maxLength) {
+          maxLength = imageInWorkingPath[i].name.length;
+        }
+      }
+
+      return imageInWorkingPath;
     }
 
     return null;
   };
 
+  const imageList = filterPage();
+
   return (
     <div
       className={`${sidebarExpand === true ? '' : 'pane-sm '}sidebar`}
-      style={{
-        overflowY: 'scroll',
-        minWidth: '170px',
-      }}
+      style={{ overflowY: 'scroll' }}
     >
       <div
         style={{
@@ -107,9 +130,12 @@ const SideBar = ({ pages }) => {
           <IconButton
             aria-label="expand"
             size="small"
-            // onClick={() => setSidebarExpand(!sidebarExpand)}
           >
-            <ExpandIcon sidebarExpand={sidebarExpand} setSidebarExpand={setSidebarExpand} />
+            <ExpandIcon
+              sidebarExpand={sidebarExpand}
+              setSidebarExpand={setSidebarExpand}
+              maxLength={maxLength}
+            />
           </IconButton>
         </div>
       </div>
@@ -117,7 +143,16 @@ const SideBar = ({ pages }) => {
         {/* <li className="list-group-header">
           <input className="form-control" type="text" placeholder="Search for media" />
         </li> */}
-        {getList()}
+        {
+          imageList !== null ? imageList.map((page) => (
+            <SideBarItem
+              page={page}
+              handleClick={handleClick}
+              focusTabName={history.location.pathname}
+              maxLength={maxLength}
+            />
+          )) : null
+        }
       </ul>
     </div>
   );
