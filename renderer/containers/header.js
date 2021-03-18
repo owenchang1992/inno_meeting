@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 // import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
-import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import ContextStore from '../context_store';
 
@@ -40,7 +39,7 @@ const Header = ({
           className="btn btn-default"
           onClick={exportProject}
         >
-          <CollectionsBookmarkIcon className="icon" />
+          <span className="icon icon-export" />
         </Button>
       </ButtonGroup>
       <div>
