@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import getFilter from '../filters/getFilter';
 import { WORKING_FOLDER, TAGGED_IMAGE } from '../filters/constants';
 
@@ -98,6 +100,26 @@ const SideBar = ({ pages }) => {
     return null;
   };
 
+  const findTagFilter = () => filterList.findIndex(
+    (filter) => filter.name === TAGGED_IMAGE,
+  );
+
+  const toggleTagFilter = () => {
+    const filterIndex = findTagFilter();
+
+    if (filterIndex === -1) {
+      setFilterList(
+        [
+          ...filterList,
+          { name: TAGGED_IMAGE },
+        ],
+      );
+    } else {
+      filterList.splice(filterIndex, 1);
+      setFilterList([...filterList]);
+    }
+  };
+
   const imageList = filterPage();
 
   useEffect(() => {
@@ -106,9 +128,6 @@ const SideBar = ({ pages }) => {
         {
           name: WORKING_FOLDER,
           options: { workingPath },
-        },
-        {
-          name: TAGGED_IMAGE,
         },
       ],
     );
@@ -140,6 +159,23 @@ const SideBar = ({ pages }) => {
           Images
         </h5>
         <div>
+          <IconButton
+            aria-label="expand"
+            size="small"
+            onClick={() => toggleTagFilter()}
+          >
+            {
+              findTagFilter() === -1 ? (
+                <BookmarkBorderIcon
+                  fontSize="inherit"
+                />
+              ) : (
+                <BookmarkIcon
+                  fontSize="inherit"
+                />
+              )
+            }
+          </IconButton>
           <IconButton
             aria-label="expand"
             size="small"
