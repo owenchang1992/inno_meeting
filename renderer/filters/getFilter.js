@@ -7,7 +7,7 @@ const filterWorkingPath = (pageList, workingPath = '') => (
 export default (filterName, list, options) => {
   switch (filterName) {
     case WORKING_FOLDER:
-      return filterWorkingPath(list, options);
+      return filterWorkingPath(list, options.workingPath);
     default:
       return list;
   }

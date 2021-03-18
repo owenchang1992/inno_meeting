@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -64,6 +64,7 @@ const SideBar = ({ pages }) => {
   const history = useHistory();
   const [sidebarExpand, setSidebarExpand] = useState(false);
   const { removePage, workingPath } = useContext(ContextStore);
+  const [filterList, setFilterList] = useState([]);
   let maxLength = 0;
 
   const handleClick = (e, page) => {
@@ -76,7 +77,9 @@ const SideBar = ({ pages }) => {
 
   const filterPage = () => {
     if (pages) {
-      const imageInWorkingPath = getFilter(WORKING_FOLDER, pages, workingPath);
+      const imageInWorkingPath = filterList.reduce((list, filter) => (
+        getFilter(filter.name, list, filter.options)
+      ), pages);
 
       for (let i = 0; i < imageInWorkingPath.length; i += 1) {
         if (imageInWorkingPath[i].name.length > maxLength) {
@@ -91,6 +94,17 @@ const SideBar = ({ pages }) => {
   };
 
   const imageList = filterPage();
+
+  useEffect(() => {
+    setFilterList(
+      [
+        {
+          name: WORKING_FOLDER,
+          options: { workingPath },
+        },
+      ],
+    );
+  }, [workingPath]);
 
   return (
     <div
