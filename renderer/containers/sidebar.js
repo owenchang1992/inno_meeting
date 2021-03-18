@@ -76,7 +76,7 @@ const SideBar = ({ pages }) => {
   };
 
   const filterPage = () => {
-    if (pages) {
+    if (pages.length > 0) {
       const imageInWorkingPath = filterList.reduce((list, filter) => (
         getFilter(filter.name, list, filter.options)
       ), pages);
@@ -87,6 +87,11 @@ const SideBar = ({ pages }) => {
         }
       }
 
+      if (imageInWorkingPath.length > 0) {
+        history.push(imageInWorkingPath[0].key);
+      } else {
+        history.push('/');
+      }
       return imageInWorkingPath;
     }
 
