@@ -10,6 +10,7 @@ const {
   createFolder,
   writeFile,
   readdir,
+  readFile,
 } = require('../models/fs_handler');
 
 const { app } = require('electron');
@@ -23,6 +24,8 @@ const {
 const SELECT_FILES = 'SELECT_FILES';
 const EXPORT_PROJECT = 'EXPORT_PROJECT';
 const SELECT_FOLDER = 'SELECT_FOLDER';
+
+const supportSuffix = ['jpg', 'png', 'jpeg'];
 
 const db = {};
 db.page = new Datastore({
@@ -74,32 +77,45 @@ module.exports = ({win, props}) => {
   }
 
   const selectFolder = (props) => {
+    const filterSuffix = (filenames) => filenames.filter(
+      (filename) => {
+        let lowerCase = filename.toLowerCase();
+
+        for (let i=0; i < supportSuffix.length; i = i+1) {
+          if (lowerCase.indexOf(supportSuffix[i]) !== -1) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+    )
+
+    const parseName = (name, filePaths) => ({
+      name,
+      src: path.join(filePaths, name),
+      dir: filePaths,
+    });
+
     const parseFolder = (filePaths) => readdir(filePaths)
       .then((filenames) => {
-        let imageList = filenames.filter((filename) => {
-          let lowerCase = filename.toLowerCase();
-          let types = ['jpg', 'png', 'jpeg'];
+        let imageList = filterSuffix(filenames).map((name) => parseName(name, filePaths))
 
-          for (let i=0; i < types.length; i = i+1) {
-            if (lowerCase.indexOf(types[i]) !== -1) {
-              return true;
-            }
-          }
-
-          return false;
-        }).map((name) => {
-          return {
-            name,
-            src: path.join(filePaths, name),
-            dir: filePaths,
-          }
-        })
+        // if ( 
+        //   filenames.indexOf('pages.json' !== -1) &&
+        //   filenames.indexOf('labels.json' !== -1)
+        // ) {
+        //   return Promise()
+        //   readFile(path.join(filePaths, 'pages.json'))
+        //     .then((resp) => JSON.parse(resp))
+        //     .then((ctn) => console.log(ctn))
+        // }
 
         return sendResponse(
           FROM_GENERAL, 
           {
             ...props,
-            contents: imageList
+            contents: imageList,
           }
         );
       })
@@ -124,7 +140,7 @@ module.exports = ({win, props}) => {
         title: 'Export Destination',
         buttonLabel: 'Export',
         properties: ['openDirectory'],
-        defaultPath: `${moment(new Date()).format('YYYYMMDD_HHmmss')}`,
+        defaultPath: `${moment(new Date()).format('YYYYMMDDHHmmss')}`,
       })
 
       if (dest.canceled === false) {

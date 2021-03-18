@@ -86,5 +86,6 @@ module.exports = {
   createFolder,
   writeFile,
   syncMediaStore,
-  readdir: fsPromises.readdir
+  readdir: fsPromises.readdir,
+  readFile: fsPromises.readFile,
 }
