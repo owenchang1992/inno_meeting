@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import getFilter from '../filters/getFilter';
-import { WORKING_FOLDER } from '../filters/constants';
+import { WORKING_FOLDER, TAGGED_IMAGE } from '../filters/constants';
 
 import ContextStore from '../context_store';
 
@@ -101,6 +101,9 @@ const SideBar = ({ pages }) => {
         {
           name: WORKING_FOLDER,
           options: { workingPath },
+        },
+        {
+          name: TAGGED_IMAGE,
         },
       ],
     );
