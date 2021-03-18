@@ -89,11 +89,6 @@ const SideBar = ({ pages }) => {
         }
       }
 
-      if (imageInWorkingPath.length > 0) {
-        history.push(imageInWorkingPath[0].key);
-      } else {
-        history.push('/');
-      }
       return imageInWorkingPath;
     }
 
@@ -131,6 +126,7 @@ const SideBar = ({ pages }) => {
         },
       ],
     );
+    history.push('/');
   }, [workingPath]);
 
   return (

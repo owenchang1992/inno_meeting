@@ -13,14 +13,7 @@ export default function () {
         alignItems: 'center',
       }}
     >
-      Please Click
-      <span
-        className="icon icon-archive"
-        style={{
-          margin: '0 1rem',
-        }}
-      />
-      To Start
+      Please Select an Image
     </div>
   );
 }
