@@ -2,6 +2,8 @@ const Datastore = require('nedb');
 const path = require('path');
 const config = require('../config');
 const { dialog } = require('electron');
+const moment = require('moment');
+
 const {
   syncMediaStore,
   copyFiles,
@@ -121,7 +123,8 @@ module.exports = ({win, props}) => {
       let dest = await dialog.showSaveDialog({
         title: 'Export Destination',
         buttonLabel: 'Export',
-        properties: ['openDirectory']
+        properties: ['openDirectory'],
+        defaultPath: `${moment(new Date()).format('YYYYMMDD_HHmmss')}`,
       })
 
       if (dest.canceled === false) {
