@@ -28,17 +28,26 @@ const SideBarItem = ({ page, handleClick, focusTabName }) => {
           color: page.actions.length > 0 ? '#414142' : '#737475',
         }}
       >
-        {
-          page.actions.length > 0 ? (
-            <span
-              className="icon icon-cancel-circled pull-right"
-              style={{ marginLeft: '15px' }}
-            />
-          ) : null
-        }
-        { page.name }
+        { page.actions.length > 0 ? <strong>{page.name}</strong> : page.name }
       </div>
     </li>
+  );
+};
+
+const ExpandIcon = ({ sidebarExpand, setSidebarExpand }) => {
+  if (sidebarExpand) {
+    return (
+      <ChevronLeftIcon
+        fontSize="inherit"
+        onClick={() => setSidebarExpand(!sidebarExpand)}
+      />
+    );
+  }
+  return (
+    <ChevronRightIcon
+      fontSize="inherit"
+      onClick={() => setSidebarExpand(!sidebarExpand)}
+    />
   );
 };
 
@@ -70,7 +79,13 @@ const SideBar = ({ pages }) => {
   };
 
   return (
-    <div className={`${sidebarExpand ? '' : 'pane-sm'} sidebar`} style={{ overflowY: 'scroll' }}>
+    <div
+      className={`${sidebarExpand === true ? '' : 'pane-sm '}sidebar`}
+      style={{
+        overflowY: 'scroll',
+        minWidth: '170px',
+      }}
+    >
       <div
         style={{
           display: 'flex',
@@ -89,25 +104,13 @@ const SideBar = ({ pages }) => {
           Images
         </h5>
         <div>
-          {
-            sidebarExpand ? (
-              <IconButton
-                aria-label="expand"
-                size="small"
-                onClick={() => setSidebarExpand(false)}
-              >
-                <ChevronLeftIcon fontSize="inherit" />
-              </IconButton>
-            ) : (
-              <IconButton
-                aria-label="expand"
-                size="small"
-                onClick={() => setSidebarExpand(true)}
-              >
-                <ChevronRightIcon fontSize="inherit" />
-              </IconButton>
-            )
-          }
+          <IconButton
+            aria-label="expand"
+            size="small"
+            // onClick={() => setSidebarExpand(!sidebarExpand)}
+          >
+            <ExpandIcon sidebarExpand={sidebarExpand} setSidebarExpand={setSidebarExpand} />
+          </IconButton>
         </div>
       </div>
       <ul className="list-group">
