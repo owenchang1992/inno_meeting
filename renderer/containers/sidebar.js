@@ -12,27 +12,12 @@ const SideBarItem = ({
   page,
   handleClick,
   focusTabName,
-  maxLength,
 }) => {
   const getTab = () => (
     page.key === focusTabName
       ? 'active'
       : ''
   );
-
-  const getStyle = () => {
-    const defaultStyle = {
-      padding: '5px 10px',
-      color: page.actions.length > 0 ? '#414142' : '#737475',
-    };
-
-    return maxLength < 25
-      ? defaultStyle
-      : {
-        ...defaultStyle,
-        minWidth: '170px',
-      };
-  };
 
   return (
     <li className={`list-group-item ${getTab()}`}>
@@ -42,7 +27,10 @@ const SideBarItem = ({
         onClick={(e) => handleClick(e, page)}
         onKeyDown={() => {}}
         tabIndex={0}
-        style={getStyle(maxLength)}
+        style={{
+          padding: '5px 10px',
+          color: page.actions.length > 0 ? '#414142' : '#737475',
+        }}
       >
         { page.actions.length > 0 ? <strong>{page.name}</strong> : page.name }
       </div>
@@ -107,7 +95,10 @@ const SideBar = ({ pages }) => {
   return (
     <div
       className={`${sidebarExpand === true ? '' : 'pane-sm '}sidebar`}
-      style={{ overflowY: 'scroll' }}
+      style={{
+        overflowY: 'scroll',
+        maxWidth: maxLength < 25 ? '170px' : '',
+      }}
     >
       <div
         style={{
