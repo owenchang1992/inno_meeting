@@ -12,12 +12,7 @@ const removePageFromState = (pages, removedPage) => {
 
 const onAddPage = (state, action) => {
   const pageIndex = (targetPage, pageList) => (
-    pageList.findIndex((page) => {
-      if (targetPage.src === page.src) {
-        console.log(targetPage, page);
-      }
-      return targetPage.src === page.src;
-    })
+    pageList.findIndex((page) => targetPage.src === page.src)
   );
 
   if (pageIndex(action.payload, state) !== -1) {
