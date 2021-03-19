@@ -97,28 +97,56 @@ module.exports = ({win, props}) => {
       dir: filePaths,
     });
 
+    const getContents = (fileName, filePaths) => {
+      return readFile(path.join(filePaths, fileName))
+        .then((resp) => JSON.parse(resp))
+        .catch((err) => console.log(err));
+    }
+
+    const checkLabelCol = (filenames, filePaths) => {
+      const labelColName = 'labels.json';
+
+      if (filenames.indexOf(labelColName) !== -1) {
+        return getContents(labelColName, filePaths);
+      }
+
+      return null;
+    }
+
+    const checkPageCol = (filenames, filePaths) => {
+      const pageColName = 'pages.json';
+
+      if (filenames.indexOf(pageColName) !== -1) {
+        return getContents(pageColName, filePaths);
+      }
+
+      return null;
+    }
+
     const parseFolder = (filePaths) => readdir(filePaths)
-      .then((filenames) => {
-        // if ( 
-        //   filenames.indexOf('pages.json' !== -1) &&
-        //   filenames.indexOf('labels.json' !== -1)
-        // ) {
-        //   return Promise()
-        //   readFile(path.join(filePaths, 'pages.json'))
-        //     .then((resp) => JSON.parse(resp))
-        //     .then((ctn) => console.log(ctn))
-        // }
+      .then( async (filenames) => {
+        const labelImportContents = await checkLabelCol(filenames, filePaths);
+        const pageImportContents = await checkPageCol(filenames, filePaths);
+
+        const respCtn = {
+          ...props,
+          contents: filterSuffix(filenames).map(
+            (name) => parseName(name, filePaths)
+          ),
+          options: {
+            labelImportContents,
+            pageImportContents,
+          }
+        }
+
+        console.log(respCtn.options);
 
         return sendResponse(
           FROM_GENERAL, 
-          {
-            ...props,
-            contents: filterSuffix(filenames).map(
-              (name) => parseName(name, filePaths)
-            ),
-          }
+          respCtn,
         );
       })
+      .catch((err) => console.log(err))
     
     if (props.contents === 'default') {
       return dialog.showOpenDialog({ properties: ['openDirectory'] })
