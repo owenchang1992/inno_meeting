@@ -99,8 +99,6 @@ module.exports = ({win, props}) => {
 
     const parseFolder = (filePaths) => readdir(filePaths)
       .then((filenames) => {
-        let imageList = filterSuffix(filenames).map((name) => parseName(name, filePaths))
-
         // if ( 
         //   filenames.indexOf('pages.json' !== -1) &&
         //   filenames.indexOf('labels.json' !== -1)
@@ -115,7 +113,9 @@ module.exports = ({win, props}) => {
           FROM_GENERAL, 
           {
             ...props,
-            contents: imageList,
+            contents: filterSuffix(filenames).map(
+              (name) => parseName(name, filePaths)
+            ),
           }
         );
       })
