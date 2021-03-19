@@ -139,7 +139,7 @@ module.exports = ({win, props}) => {
           }
         }
 
-        console.log(respCtn.options);
+        // console.log(respCtn.options);
 
         return sendResponse(
           FROM_GENERAL, 

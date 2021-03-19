@@ -16,6 +16,7 @@ import {
 
 import Main from './main_pane';
 import Header from './header';
+import Dialog from '../components/pages/import_dialog';
 
 import {
   update,
@@ -46,6 +47,15 @@ const App = () => {
   const [pages, dispatch] = useReducer(pageReducer, []);
   const [labels, ldispatch] = useReducer(labelReducer, []);
   const [workingPath, setWorkingPath] = useState('');
+  const [open] = React.useState(true);
+
+  // const handleDialogClickOpen = () => {
+  //   setOpen(true);
+  // };
+
+  // const handleDialogClose = () => {
+  //   setOpen(false);
+  // };
 
   const initPage = (dbPage) => {
     if (dbPage.length > 0) {
@@ -214,6 +224,7 @@ const App = () => {
           <Main pages={pages} />
         </div>
       </div>
+      <Dialog open={open} />
     </ContextStore.Provider>
   );
 };
