@@ -146,43 +146,33 @@ const SideBar = ({ pages }) => {
           backgroundColor: '#f5f5f4',
         }}
       >
-        <h5
-          style={{
-            margin: '0',
-            padding: '5px 10px',
-          }}
+        <IconButton
+          aria-label="expand"
+          size="small"
+          onClick={() => toggleTagFilter()}
         >
-          Images
-        </h5>
-        <div>
-          <IconButton
-            aria-label="expand"
-            size="small"
-            onClick={() => toggleTagFilter()}
-          >
-            {
-              findTagFilter() === -1 ? (
-                <BookmarkBorderIcon
-                  fontSize="inherit"
-                />
-              ) : (
-                <BookmarkIcon
-                  fontSize="inherit"
-                />
-              )
-            }
-          </IconButton>
-          <IconButton
-            aria-label="expand"
-            size="small"
-          >
-            <ExpandIcon
-              sidebarExpand={sidebarExpand}
-              setSidebarExpand={setSidebarExpand}
-              maxLength={maxLength}
-            />
-          </IconButton>
-        </div>
+          {
+            findTagFilter() === -1 ? (
+              <BookmarkBorderIcon
+                fontSize="inherit"
+              />
+            ) : (
+              <BookmarkIcon
+                fontSize="inherit"
+              />
+            )
+          }
+        </IconButton>
+        <IconButton
+          aria-label="expand"
+          size="small"
+        >
+          <ExpandIcon
+            sidebarExpand={sidebarExpand}
+            setSidebarExpand={setSidebarExpand}
+            maxLength={maxLength}
+          />
+        </IconButton>
       </div>
       <ul className="list-group">
         {/* <li className="list-group-header">
