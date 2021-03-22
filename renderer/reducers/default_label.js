@@ -1,24 +1,24 @@
 export default [
   {
-    title: 'Red',
+    title: 'varicose vein',
     color: '#fc605b',
     project: 'default',
     describe: 'Default',
   },
   {
-    title: 'Orange',
+    title: 'dental line',
     color: '#fdbc40',
     project: 'default',
     describe: 'Default',
   },
   {
-    title: 'Green',
+    title: 'congestion',
     color: '#34c84a',
     project: 'default',
     describe: 'Default',
   },
   {
-    title: 'Blue',
+    title: 'lesion',
     color: '#57acf5',
     project: 'default',
     describe: 'Default',
