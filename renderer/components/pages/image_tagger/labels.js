@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import ContextStore from '../../../context_store';
-import EditBar from './edit_bar';
+// import EditBar from './edit_bar';
 
 import { updateLabel, addNewTaggingLabel } from '../../../reducers/label_actions';
 import defaultabel from '../../../reducers/default_label';
@@ -9,7 +9,7 @@ import defaultabel from '../../../reducers/default_label';
 const PENCIL = 'pencil';
 
 export default ({ setTagConfig }) => {
-  const [enteredLabel, setEnteredLabel] = useState(null);
+  // const [enteredLabel, setEnteredLabel] = useState(null);
   const { labels, ldispatch, projectName } = useContext(ContextStore);
   const [focusedLabel, setFocusLabel] = useState(labels[0]);
   const [currentInput, setCurrentInput] = useState('');
@@ -41,15 +41,15 @@ export default ({ setTagConfig }) => {
     }
   };
 
-  const getEditBar = (label) => {
-    if (enteredLabel && editedLabel === null) {
-      return enteredLabel.key === label.key
-        ? <EditBar name={PENCIL} />
-        : null;
-    }
+  // const getEditBar = (label) => {
+  //   if (enteredLabel && editedLabel === null) {
+  //     return enteredLabel.key === label.key
+  //       ? <EditBar name={PENCIL} />
+  //       : null;
+  //   }
 
-    return null;
-  };
+  //   return null;
+  // };
 
   const taggingLabelFilter = (label) => label.type === 'tagging';
 
@@ -94,8 +94,8 @@ export default ({ setTagConfig }) => {
               }}
               onClick={() => updateCurrentLabel(label)}
               onMouseDown={(e) => editLabel(e, label)}
-              onMouseEnter={() => setEnteredLabel(label)}
-              onMouseLeave={() => setEnteredLabel(null)}
+              // onMouseEnter={() => setEnteredLabel(label)}
+              // onMouseLeave={() => setEnteredLabel(null)}
               onKeyDown={(e) => saveLabel(e, label)}
               tabIndex={0}
             >
@@ -117,7 +117,7 @@ export default ({ setTagConfig }) => {
                   )
                   : <strong>{label.title}</strong>
               }
-              { getEditBar(label) }
+              {/* { getEditBar(label) } */}
             </div>
           )) : null
       }
