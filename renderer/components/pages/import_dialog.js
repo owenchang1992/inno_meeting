@@ -5,9 +5,10 @@ import Button from '@material-ui/core/Button';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
+
 // import ContextStore from '../../context_store';
 
-const CreateDialog = ({ open, handleClose }) => {
+const CreateDialog = ({ open, handleClose, dialogCtn }) => {
   // const { setSelectLabel, projectName, ldispatch } = useContext(ContextStore);
 
   const handleConfirm = () => {
@@ -22,6 +23,8 @@ const CreateDialog = ({ open, handleClose }) => {
     handleClose();
   };
 
+  console.log(dialogCtn);
+
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="alert-dialog-title">
@@ -29,8 +32,7 @@ const CreateDialog = ({ open, handleClose }) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Let Google help apps determine location. This means sending anonymous location data to
-          Google, even when no apps are running.
+          {`Add ${dialogCtn !== null ? dialogCtn.taggedFile.length : null} image(s) to the local storage`}
         </DialogContentText>
       </DialogContent>
       <DialogActions>

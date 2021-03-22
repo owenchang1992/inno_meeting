@@ -134,8 +134,8 @@ module.exports = ({win, props}) => {
             (name) => parseName(name, filePaths)
           ),
           options: {
-            labelImportContents,
-            pageImportContents,
+            label: labelImportContents,
+            taggedFile: pageImportContents,
           }
         }
 

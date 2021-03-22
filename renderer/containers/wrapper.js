@@ -47,15 +47,12 @@ const App = () => {
   const [pages, dispatch] = useReducer(pageReducer, []);
   const [labels, ldispatch] = useReducer(labelReducer, []);
   const [workingPath, setWorkingPath] = useState('');
-  const [open] = React.useState(true);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogCtn, setDialogCtn] = useState(null);
 
-  // const handleDialogClickOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleDialogClose = () => {
-  //   setOpen(false);
-  // };
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
 
   const initPage = (dbPage) => {
     if (dbPage.length > 0) {
@@ -131,9 +128,16 @@ const App = () => {
     // Add listener
     receive(FROM_GENERAL, (e, resp) => {
       if (init && resp.name === SELECT_FOLDER) {
-        // console.log(resp.contents);
+        console.log(resp);
+
+        if (resp.options.taggedFile !== null) {
+          setOpenDialog(true);
+          setDialogCtn(resp.options);
+        }
+
+        // setOpenDialog()
         addNewPage(resp.contents);
-        setWorkingPath(resp.contents[0].dir);
+        // setWorkingPath(resp.contents[0].dir);
       } else if (resp.name === FIND && resp.type === PAGES) {
         // TODO: ADD Initial page
         initPage(resp.contents);
@@ -224,7 +228,11 @@ const App = () => {
           <Main pages={pages} />
         </div>
       </div>
-      <Dialog open={open} />
+      <Dialog
+        open={openDialog}
+        handleClose={handleDialogClose}
+        dialogCtn={dialogCtn}
+      />
     </ContextStore.Provider>
   );
 };
