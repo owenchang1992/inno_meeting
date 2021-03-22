@@ -40,8 +40,6 @@ const onImportPage = (prePages, importCtn) => importCtn.reduce(
       prePage.key === importPage.key
     ));
 
-    console.log(importPage, index);
-
     if (index !== -1) {
       return newPageList;
     }
