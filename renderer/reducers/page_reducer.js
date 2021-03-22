@@ -1,4 +1,9 @@
-import { ADD_PAGE, CLOSE_PAGE, UPDATE_PAGE } from './constants';
+import {
+  ADD_PAGE,
+  CLOSE_PAGE,
+  UPDATE_PAGE,
+  IMPORT_PAGE,
+} from './constants';
 
 const findPageIndex = (targetPage, pageList) => (
   pageList.findIndex((page) => targetPage.key === page.key)
@@ -29,6 +34,23 @@ const onUpdate = (pages, updatedPage) => {
   return [...pages];
 };
 
+const onImportPage = (prePages, importCtn) => importCtn.reduce(
+  (newPageList, importPage) => {
+    const index = newPageList.findIndex((prePage) => (
+      prePage.key === importPage.key
+    ));
+
+    console.log(importPage, index);
+
+    if (index !== -1) {
+      return newPageList;
+    }
+
+    return [...prePages, importPage];
+  },
+  prePages,
+);
+
 export default (state, action) => {
   switch (action.type) {
     case ADD_PAGE:
@@ -37,6 +59,8 @@ export default (state, action) => {
       return onUpdate(state, action.payload);
     case CLOSE_PAGE:
       return removePageFromState(state, action.payload);
+    case IMPORT_PAGE:
+      return onImportPage(state, action.payload);
     default:
       return state;
   }

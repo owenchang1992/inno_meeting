@@ -12,6 +12,7 @@ import {
   closePage,
   pageCreater,
   updatePage,
+  importPage,
 } from '../reducers/page_actions';
 
 import Main from './main_pane';
@@ -80,6 +81,10 @@ const App = () => {
     }
   };
 
+  const importMedia = (page) => {
+    dispatch(importPage(page));
+  };
+
   const onUpdatePage = (targetPage) => {
     dispatch(updatePage(targetPage));
     send2Local(TO_GENERAL, update(PAGES, targetPage));
@@ -133,10 +138,14 @@ const App = () => {
         if (resp.options.taggedFile !== null) {
           setOpenDialog(true);
           setDialogCtn(resp.options);
+          importMedia(resp.options.taggedFile.map((page) => ({
+            ...page,
+            src: resp.contents[0].dir,
+          })));
+        } else {
+          addNewPage(resp.contents);
         }
 
-        // setOpenDialog()
-        addNewPage(resp.contents);
         setWorkingPath(resp.contents[0].dir);
       } else if (resp.name === FIND && resp.type === PAGES) {
         // TODO: ADD Initial page
