@@ -6,7 +6,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import getFilter from '../filters/getFilter';
-import { TAGGED_IMAGE } from '../filters/constants';
+import { TAGGED_IMAGE, WORKING_FOLDER } from '../filters/constants';
 
 import ContextStore from '../context_store';
 
@@ -124,10 +124,10 @@ const SideBar = ({ pages }) => {
   useEffect(() => {
     setFilterList(
       [
-        // {
-        //   name: WORKING_FOLDER,
-        //   options: { workingPath },
-        // },
+        {
+          name: WORKING_FOLDER,
+          options: { workingPath },
+        },
       ],
     );
     history.push('/');
