@@ -137,7 +137,7 @@ const App = () => {
 
         // setOpenDialog()
         addNewPage(resp.contents);
-        // setWorkingPath(resp.contents[0].dir);
+        setWorkingPath(resp.contents[0].dir);
       } else if (resp.name === FIND && resp.type === PAGES) {
         // TODO: ADD Initial page
         initPage(resp.contents);
