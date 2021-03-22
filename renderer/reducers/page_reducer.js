@@ -41,7 +41,11 @@ const onImportPage = (prePages, importCtn) => importCtn.reduce(
     ));
 
     if (index !== -1) {
-      return newPageList;
+      newPageList.splice(index, 1, {
+        ...importPage,
+        src: newPageList[index].src,
+      });
+      return [...newPageList];
     }
 
     return [...prePages, importPage];

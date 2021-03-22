@@ -6,7 +6,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import getFilter from '../filters/getFilter';
-import { WORKING_FOLDER, TAGGED_IMAGE } from '../filters/constants';
+import { TAGGED_IMAGE } from '../filters/constants';
 
 import ContextStore from '../context_store';
 
@@ -124,10 +124,10 @@ const SideBar = ({ pages }) => {
   useEffect(() => {
     setFilterList(
       [
-        {
-          name: WORKING_FOLDER,
-          options: { workingPath },
-        },
+        // {
+        //   name: WORKING_FOLDER,
+        //   options: { workingPath },
+        // },
       ],
     );
     history.push('/');
@@ -157,13 +157,9 @@ const SideBar = ({ pages }) => {
         >
           {
             findTagFilter() === -1 ? (
-              <BookmarkBorderIcon
-                fontSize="inherit"
-              />
+              <BookmarkBorderIcon fontSize="inherit" />
             ) : (
-              <BookmarkIcon
-                fontSize="inherit"
-              />
+              <BookmarkIcon fontSize="inherit" />
             )
           }
         </IconButton>
@@ -179,9 +175,6 @@ const SideBar = ({ pages }) => {
         </IconButton>
       </div>
       <ul className="list-group">
-        {/* <li className="list-group-header">
-          <input className="form-control" type="text" placeholder="Search for media" />
-        </li> */}
         {
           imageList !== null ? imageList.map((page) => (
             <SideBarItem

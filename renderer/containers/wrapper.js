@@ -43,6 +43,10 @@ import {
   PAGES,
 } from '../constants';
 
+import {
+  PARTICULAR,
+} from '../filters/constants';
+
 const App = () => {
   const history = useHistory();
   const [pages, dispatch] = useReducer(pageReducer, []);
@@ -143,6 +147,15 @@ const App = () => {
             ...page,
             src: resp.contents[0].dir,
           })));
+
+          setFilterList([
+            {
+              name: PARTICULAR,
+              options: {
+                nameList: resp.options.taggedFile,
+              },
+            },
+          ]);
         } else {
           addNewPage(resp.contents);
         }
