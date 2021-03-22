@@ -13,7 +13,7 @@ export default function () {
         alignItems: 'center',
       }}
     >
-      Please Select an Image
+      Please Select an Folder
     </div>
   );
 }
