@@ -50,6 +50,7 @@ const App = () => {
   const [workingPath, setWorkingPath] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogCtn, setDialogCtn] = useState(null);
+  const [filterList, setFilterList] = useState([]);
 
   const handleDialogClose = () => {
     setOpenDialog(false);
@@ -225,6 +226,8 @@ const App = () => {
         removePage,
         onUpdatePage,
         workingPath,
+        filterList,
+        setFilterList,
       }}
     >
       <div className="window">

@@ -65,8 +65,12 @@ const ExpandIcon = ({
 const SideBar = ({ pages }) => {
   const history = useHistory();
   const [sidebarExpand, setSidebarExpand] = useState(false);
-  const { removePage, workingPath } = useContext(ContextStore);
-  const [filterList, setFilterList] = useState([]);
+  const {
+    removePage,
+    workingPath,
+    filterList,
+    setFilterList,
+  } = useContext(ContextStore);
   let maxLength = 0;
 
   const handleClick = (e, page) => {
