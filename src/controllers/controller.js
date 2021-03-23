@@ -183,7 +183,6 @@ module.exports = ({win, props}) => {
       if (dest.canceled === false) {
         let dbPage = await require('../models/nedb').find(db.page, {})
         let taggedPages = await dbPage.filter((page) => page.actions.length > 0);
-        console.log(props);
         if (props.contents.workingPath) {
           taggedPages = await taggedPages.filter(
             (page) => page.src.indexOf(props.contents.workingPath) !== -1 
