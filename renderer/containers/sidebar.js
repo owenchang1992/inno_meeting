@@ -5,6 +5,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import Tooltip from '@material-ui/core/Tooltip';
 import getFilter from '../filters/getFilter';
 import {
   TAGGED_IMAGE,
@@ -25,21 +26,23 @@ const SideBarItem = ({
   );
 
   return (
-    <li className={`list-group-item ${getTab()}`}>
-      <div
-        className="tab-body"
-        role="button"
-        onClick={(e) => handleClick(e, page)}
-        onKeyDown={() => {}}
-        tabIndex={0}
-        style={{
-          padding: '5px 10px',
-          color: page.actions.length > 0 ? '#414142' : '#737475',
-        }}
-      >
-        { page.actions.length > 0 ? <strong>{page.name}</strong> : page.name }
-      </div>
-    </li>
+    <Tooltip title={page.name} placement="right">
+      <li className={`list-group-item ${getTab()}`}>
+        <div
+          className="tab-body"
+          role="button"
+          onClick={(e) => handleClick(e, page)}
+          onKeyDown={() => {}}
+          tabIndex={0}
+          style={{
+            padding: '5px 10px',
+            color: page.actions.length > 0 ? '#414142' : '#737475',
+          }}
+        >
+          { page.actions.length > 0 ? <strong>{page.name}</strong> : page.name }
+        </div>
+      </li>
+    </Tooltip>
   );
 };
 
