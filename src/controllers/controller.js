@@ -25,12 +25,14 @@ const SELECT_FILES = 'SELECT_FILES';
 const EXPORT_PROJECT = 'EXPORT_PROJECT';
 const SELECT_FOLDER = 'SELECT_FOLDER';
 
+const getPathStr = 'userData';
+
 const supportSuffix = ['jpg', 'png', 'jpeg'];
 
 const db = {};
 db.page = new Datastore({
   filename: path.join(
-    app.getPath('appData'),
+    app.getPath(getPathStr),
     config.dbPath,
     PAGE_COLLECTION,
   ),
@@ -39,7 +41,7 @@ db.page = new Datastore({
 
 db.label = new Datastore({
   filename: path.join(
-    app.getPath('appData'),
+    app.getPath(getPathStr),
     config.dbPath,
     LABEL_COLLECTION,
   ),
@@ -201,7 +203,7 @@ module.exports = ({win, props}) => {
       require('../models/nedb')[props.name](getDB(props), props)
         .then((resp) => {
           const mediaStorePath = path.join(
-            app.getPath('appData'),
+            app.getPath(getPathStr),
             config.appPath,
             'media_store',
           );
