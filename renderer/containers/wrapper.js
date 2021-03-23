@@ -122,6 +122,9 @@ const App = () => {
     send2Local(TO_GENERAL, {
       type: PAGES,
       name: EXPORT_PROJECT,
+      contents: {
+        workingPath,
+      },
     });
   };
 

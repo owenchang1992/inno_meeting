@@ -164,7 +164,7 @@ module.exports = ({win, props}) => {
     return parseFolder(props.contents);
   }
 
-  const exportProject = async () => {
+  const exportProject = async (props) => {
     try {
       let dest = await dialog.showSaveDialog({
         title: 'Export Destination',
@@ -176,6 +176,12 @@ module.exports = ({win, props}) => {
       if (dest.canceled === false) {
         let dbPage = await require('../models/nedb').find(db.page, {})
         let taggedPages = await dbPage.filter((page) => page.actions.length > 0);
+        console.log(props);
+        if (props.contents.workingPath) {
+          taggedPages = await taggedPages.filter(
+            (page) => page.src.indexOf(props.contents.workingPath) !== -1 
+          );
+        }
 
         await createFolder(dest.filePath);
         await syncMediaStore(taggedPages, dest.filePath);
@@ -198,7 +204,7 @@ module.exports = ({win, props}) => {
     case SELECT_FOLDER:
       return selectFolder(props);
     case EXPORT_PROJECT:
-      return exportProject();
+      return exportProject(props);
     default:
       require('../models/nedb')[props.name](getDB(props), props)
         .then((resp) => {
