@@ -13,7 +13,7 @@ export default function () {
         alignItems: 'center',
       }}
     >
-      Please Select a Folder
+      Empty
     </div>
   );
 }

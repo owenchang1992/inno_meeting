@@ -32,7 +32,7 @@ const CreateDialog = ({ open, handleClose, dialogCtn }) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {`Add ${dialogCtn !== null ? dialogCtn.taggedFile.length : null} image(s) to the local storage`}
+          {`Add ${dialogCtn !== null ? dialogCtn.taggedFile.length : null} image(s)`}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
