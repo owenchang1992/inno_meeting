@@ -3,17 +3,17 @@ import React, { useState, useEffect, useContext } from 'react';
 import ContextStore from '../../../context_store';
 // import EditBar from './edit_bar';
 
-import { updateLabel, addNewTaggingLabel } from '../../../reducers/label_actions';
+import { addNewTaggingLabel } from '../../../reducers/label_actions';
 import defaultabel from '../../../reducers/default_label';
 
-const PENCIL = 'pencil';
+// const PENCIL = 'pencil';
 
 export default ({ setTagConfig }) => {
   // const [enteredLabel, setEnteredLabel] = useState(null);
   const { labels, ldispatch, projectName } = useContext(ContextStore);
   const [focusedLabel, setFocusLabel] = useState(labels[0]);
   const [currentInput, setCurrentInput] = useState('');
-  const [editedLabel, setEditedLabel] = useState(null);
+  const [editedLabel] = useState(null);
 
   const updateCurrentLabel = (selectedLabel) => {
     if (editedLabel === null) {
@@ -22,24 +22,24 @@ export default ({ setTagConfig }) => {
     }
   };
 
-  const saveLabel = (e, selectedLabel) => {
-    if (e.keyCode === 13) {
-      if (editedLabel !== null && currentInput.length !== 0) {
-        ldispatch(updateLabel(selectedLabel, { title: currentInput }));
-      }
-      setEditedLabel(null);
-    }
-  };
+  // const saveLabel = (e, selectedLabel) => {
+  //   if (e.keyCode === 13) {
+  //     if (editedLabel !== null && currentInput.length !== 0) {
+  //       ldispatch(updateLabel(selectedLabel, { title: currentInput }));
+  //     }
+  //     setEditedLabel(null);
+  //   }
+  // };
 
-  const editLabel = (e, selectedLabel) => {
-    setCurrentInput(selectedLabel.title);
-    if (e.target.className.includes(PENCIL)) {
-      setEditedLabel(selectedLabel.key);
-    } else if (e.button === 2) setEditedLabel(selectedLabel.key);
-    else if (editedLabel !== selectedLabel.key) {
-      setEditedLabel(null);
-    }
-  };
+  // const editLabel = (e, selectedLabel) => {
+  //   setCurrentInput(selectedLabel.title);
+  //   if (e.target.className.includes(PENCIL)) {
+  //     setEditedLabel(selectedLabel.key);
+  //   } else if (e.button === 2) setEditedLabel(selectedLabel.key);
+  //   else if (editedLabel !== selectedLabel.key) {
+  //     setEditedLabel(null);
+  //   }
+  // };
 
   // const getEditBar = (label) => {
   //   if (enteredLabel && editedLabel === null) {
@@ -93,10 +93,10 @@ export default ({ setTagConfig }) => {
                 alignItems: 'center',
               }}
               onClick={() => updateCurrentLabel(label)}
-              onMouseDown={(e) => editLabel(e, label)}
+              // onMouseDown={(e) => editLabel(e, label)}
               // onMouseEnter={() => setEnteredLabel(label)}
               // onMouseLeave={() => setEnteredLabel(null)}
-              onKeyDown={(e) => saveLabel(e, label)}
+              onKeyDown={() => console.log('key down')}
               tabIndex={0}
             >
               <span
