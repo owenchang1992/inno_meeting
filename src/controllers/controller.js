@@ -166,11 +166,18 @@ module.exports = ({win, props}) => {
 
   const exportProject = async (props) => {
     try {
+      let filePathName = '';
+
+      if (props.contents.workingPath) {
+        let parsePath = props.contents.workingPath.split(path.sep);
+        filePathName = parsePath[parsePath.length - 1];
+      }
+
       let dest = await dialog.showSaveDialog({
         title: 'Export Destination',
         buttonLabel: 'Export',
         properties: ['openDirectory'],
-        defaultPath: `${moment(new Date()).format('YYYYMMDDHHmmss')}`,
+        defaultPath: `${filePathName}_${moment(new Date()).format('YYYYMMDD_HHmmss')}`,
       })
 
       if (dest.canceled === false) {
