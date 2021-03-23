@@ -83,17 +83,17 @@ const SideBar = ({ pages }) => {
 
   const filterPage = () => {
     if (pages.length > 0) {
-      const imageInWorkingPath = filterList.reduce((list, filter) => (
+      const filteredMedia = filterList.reduce((list, filter) => (
         getFilter(filter.name, list, filter.options)
       ), pages);
 
-      for (let i = 0; i < imageInWorkingPath.length; i += 1) {
-        if (imageInWorkingPath[i].name.length > maxLength) {
-          maxLength = imageInWorkingPath[i].name.length;
+      for (let i = 0; i < filteredMedia.length; i += 1) {
+        if (filteredMedia[i].name.length > maxLength) {
+          maxLength = filteredMedia[i].name.length;
         }
       }
 
-      return imageInWorkingPath;
+      return filteredMedia;
     }
 
     return null;
