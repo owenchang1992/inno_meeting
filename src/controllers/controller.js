@@ -25,7 +25,7 @@ const SELECT_FILES = 'SELECT_FILES';
 const EXPORT_PROJECT = 'EXPORT_PROJECT';
 const SELECT_FOLDER = 'SELECT_FOLDER';
 
-const getPathStr = 'userData';
+const getPathStr = 'appData';
 
 const supportSuffix = ['jpg', 'png', 'jpeg'];
 
