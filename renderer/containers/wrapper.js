@@ -136,20 +136,20 @@ const App = () => {
         if (resp.options.taggedFile !== null) {
           setOpenDialog(true);
           setDialogCtn(resp.options);
+          history.push(
+            resp.contents.map((img) => {
+              const newPage = pageCreater(img, PROJECT_NAME);
 
-          resp.contents.map((img) => {
-            const newPage = pageCreater(img, PROJECT_NAME);
+              const mediaIndex = resp.options.taggedFile.findIndex(
+                (media) => media.name === img.name,
+              );
 
-            const mediaIndex = resp.options.taggedFile.findIndex(
-              (media) => media.name === img.name,
-            );
-
-            newPage.actions = resp.options.taggedFile[mediaIndex].actions;
-            dispatch(addPage(newPage));
-            send2Local(TO_GENERAL, update(PAGES, newPage));
-            console.log(newPage);
-            return newPage;
-          });
+              newPage.actions = resp.options.taggedFile[mediaIndex].actions;
+              dispatch(addPage(newPage));
+              send2Local(TO_GENERAL, update(PAGES, newPage));
+              return newPage;
+            })[0].key,
+          );
         } else {
           addNewPage(resp.contents);
         }
