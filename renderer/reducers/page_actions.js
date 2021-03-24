@@ -14,7 +14,7 @@ export const pageCreater = (img, projectName) => ({
   src: img.src,
   type: IMAGE,
   project: projectName,
-  actions: [],
+  tags: [],
 });
 
 export const addPage = (page) => ({

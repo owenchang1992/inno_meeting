@@ -52,7 +52,7 @@ export default function imageTagger({ page }) {
   const routeHistory = useHistory();
   const [snapshot, setSnapshot] = useState(null);
   const [tagConfig, setTagConfig] = useState({});
-  const [tagList, dispatch] = useReducer(tagListReducer, page.actions);
+  const [tagList, dispatch] = useReducer(tagListReducer, page.tags);
   const [content, setContent] = useState(<div>loading</div>);
   const [mouseDownPoint, setMouseDownPoint] = useState(initialPoint);
   const [currentMousePoint, setCurrentMousePoint] = useState(initialPoint);
@@ -160,7 +160,7 @@ export default function imageTagger({ page }) {
     if (tagList !== null) {
       onUpdatePage({
         ...page,
-        actions: tagList,
+        tags: tagList,
       });
       drawTags(tagList);
     }

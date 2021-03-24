@@ -36,10 +36,10 @@ const SideBarItem = ({
           tabIndex={0}
           style={{
             padding: '5px 10px',
-            color: page.actions.length > 0 ? '#414142' : '#737475',
+            color: page.tags.length > 0 ? '#414142' : '#737475',
           }}
         >
-          { page.actions.length > 0 ? <strong>{page.name}</strong> : page.name }
+          { page.tags.length > 0 ? <strong>{page.name}</strong> : page.name }
         </div>
       </li>
     </Tooltip>

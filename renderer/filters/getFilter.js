@@ -9,7 +9,7 @@ const filterWorkingPath = (pageList, workingPath = '') => (
 );
 
 const filterTaggedImg = (pageList) => (
-  pageList.filter((page) => page.actions.length > 0)
+  pageList.filter((page) => page.tags.length > 0)
 );
 
 const filterList = (perPagelist, pageList) => {

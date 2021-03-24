@@ -144,7 +144,7 @@ const App = () => {
                 (media) => media.name === img.name,
               );
 
-              newPage.actions = resp.options.taggedFile[mediaIndex].actions;
+              newPage.tags = resp.options.taggedFile[mediaIndex].tags;
               dispatch(addPage(newPage));
               send2Local(TO_GENERAL, update(PAGES, newPage));
               return newPage;
