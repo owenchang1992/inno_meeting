@@ -3,7 +3,8 @@ import IconButton from '@material-ui/core/IconButton';
 // import ButtonGroup from '@material-ui/core/ButtonGroup';
 // import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import SaveIcon from '@material-ui/icons/Save';
+import Tooltip from '@material-ui/core/Tooltip';
 import ContextStore from '../context_store';
 
 const Header = ({
@@ -41,16 +42,18 @@ const Header = ({
         >
           <FolderOpenIcon className="icon" />
         </IconButton>
-        {workingPath}
+        <strong>{workingPath}</strong>
       </div>
       {/* </ButtonGroup> */}
-      <IconButton
-        aria-label="expand"
-        size="small"
-        onClick={exportProject}
-      >
-        <SaveAltIcon className="icon" />
-      </IconButton>
+      <Tooltip title="save">
+        <IconButton
+          aria-label="expand"
+          size="small"
+          onClick={exportProject}
+        >
+          <SaveIcon className="icon" />
+        </IconButton>
+      </Tooltip>
     </div>
   );
 };

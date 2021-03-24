@@ -153,34 +153,39 @@ const SideBar = ({ pages }) => {
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          padding: '4px 5px',
+          padding: '4px 10px',
           alignItems: 'center',
           backgroundColor: '#f5f5f4',
         }}
       >
-        <IconButton
-          aria-label="expand"
-          size="small"
-          onClick={() => toggleTagFilter()}
-        >
-          {
-            findTagFilter() === -1 ? (
-              <BookmarkBorderIcon fontSize="inherit" />
-            ) : (
-              <BookmarkIcon fontSize="inherit" />
-            )
-          }
-        </IconButton>
-        <IconButton
-          aria-label="expand"
-          size="small"
-        >
-          <ExpandIcon
-            sidebarExpand={sidebarExpand}
-            setSidebarExpand={setSidebarExpand}
-            maxLength={maxLength}
-          />
-        </IconButton>
+        <div>
+          Images
+        </div>
+        <div>
+          <IconButton
+            aria-label="expand"
+            size="small"
+            onClick={() => toggleTagFilter()}
+          >
+            {
+              findTagFilter() === -1 ? (
+                <BookmarkBorderIcon fontSize="inherit" />
+              ) : (
+                <BookmarkIcon fontSize="inherit" />
+              )
+            }
+          </IconButton>
+          <IconButton
+            aria-label="expand"
+            size="small"
+          >
+            <ExpandIcon
+              sidebarExpand={sidebarExpand}
+              setSidebarExpand={setSidebarExpand}
+              maxLength={maxLength}
+            />
+          </IconButton>
+        </div>
       </div>
       <ul className="list-group">
         {
