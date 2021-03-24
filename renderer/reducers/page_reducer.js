@@ -37,15 +37,11 @@ const onUpdate = (pages, updatedPage) => {
 const onImportPage = (prePages, importCtn) => importCtn.reduce(
   (newPageList, importPage) => {
     const index = newPageList.findIndex((prePage) => (
-      prePage.key === importPage.key
+      prePage.src === importPage.src
     ));
 
     if (index !== -1) {
-      newPageList.splice(index, 1, {
-        ...importPage,
-        src: newPageList[index].src,
-      });
-      return [...newPageList];
+      return newPageList;
     }
 
     return [...prePages, importPage];

@@ -12,7 +12,6 @@ import {
   closePage,
   pageCreater,
   updatePage,
-  importPage,
 } from '../reducers/page_actions';
 
 import Main from './main_pane';
@@ -43,10 +42,6 @@ import {
   PAGES,
 } from '../constants';
 
-import {
-  PARTICULAR,
-} from '../filters/constants';
-
 const App = () => {
   const history = useHistory();
   const [pages, dispatch] = useReducer(pageReducer, []);
@@ -75,7 +70,6 @@ const App = () => {
       history.push(
         imgs.map((img) => {
           const newPage = pageCreater(img, PROJECT_NAME);
-          // console.log(newPage);
           dispatch(addPage(newPage));
           send2Local(TO_GENERAL, update(PAGES, newPage));
           return newPage;
@@ -84,10 +78,6 @@ const App = () => {
     } else {
       dispatch(addPage(pageCreater(imgs, PROJECT_NAME)));
     }
-  };
-
-  const importMedia = (page) => {
-    dispatch(importPage(page));
   };
 
   const onUpdatePage = (targetPage) => {
@@ -146,24 +136,25 @@ const App = () => {
         if (resp.options.taggedFile !== null) {
           setOpenDialog(true);
           setDialogCtn(resp.options);
-          importMedia(resp.options.taggedFile.map((page) => ({
-            ...page,
-            src: resp.contents[0].dir,
-          })));
 
-          setFilterList([
-            {
-              name: PARTICULAR,
-              options: {
-                nameList: resp.options.taggedFile,
-              },
-            },
-          ]);
-          setWorkingPath('import');
+          resp.contents.map((img) => {
+            const newPage = pageCreater(img, PROJECT_NAME);
+
+            const mediaIndex = resp.options.taggedFile.findIndex(
+              (media) => media.name === img.name,
+            );
+
+            newPage.actions = resp.options.taggedFile[mediaIndex].actions;
+            dispatch(addPage(newPage));
+            send2Local(TO_GENERAL, update(PAGES, newPage));
+            console.log(newPage);
+            return newPage;
+          });
         } else {
           addNewPage(resp.contents);
-          setWorkingPath(resp.contents[0].dir);
         }
+
+        setWorkingPath(resp.contents[0].dir);
       } else if (resp.name === FIND && resp.type === PAGES) {
         // TODO: ADD Initial page
         initPage(resp.contents);
