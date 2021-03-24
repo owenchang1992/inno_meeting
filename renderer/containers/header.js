@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
+import IconButton from '@material-ui/core/IconButton';
+// import ButtonGroup from '@material-ui/core/ButtonGroup';
 // import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import ContextStore from '../context_store';
 
 const Header = ({
@@ -22,29 +23,34 @@ const Header = ({
         backgroundColor: '#f5f5f4',
       }}
     >
-      <ButtonGroup aria-label="outlined button group">
-        {/* <Button
+      {/* <ButtonGroup aria-label="outlined button group"> */}
+      {/* <Button
           className="btn btn-default"
           onClick={showOpenDialog}
         >
           <AddPhotoAlternateIcon className="icon" />
         </Button> */}
-        <Button
-          className="btn btn-default"
+      <div>
+        <IconButton
+          aria-label="expand"
+          size="small"
           onClick={() => selectFolder('default')}
+          style={{
+            marginRight: '5px',
+          }}
         >
           <FolderOpenIcon className="icon" />
-        </Button>
-        <Button
-          className="btn btn-default"
-          onClick={exportProject}
-        >
-          <span className="icon icon-export" />
-        </Button>
-      </ButtonGroup>
-      <div>
-        {`Selected Folder: ${workingPath}`}
+        </IconButton>
+        {workingPath}
       </div>
+      {/* </ButtonGroup> */}
+      <IconButton
+        aria-label="expand"
+        size="small"
+        onClick={exportProject}
+      >
+        <SaveAltIcon className="icon" />
+      </IconButton>
     </div>
   );
 };
