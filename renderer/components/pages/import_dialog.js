@@ -23,8 +23,6 @@ const CreateDialog = ({ open, handleClose, dialogCtn }) => {
     handleClose();
   };
 
-  console.log(dialogCtn);
-
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="alert-dialog-title">
